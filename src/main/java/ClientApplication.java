@@ -10,9 +10,10 @@ public class ClientApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(new QuizView());
+        Scene scene = new Scene(new QuizView().getQuizPane());
         stage.setScene(scene);
-
+        stage.setHeight(720);
+        stage.setWidth(1280);
         stage.show();
     }
 }

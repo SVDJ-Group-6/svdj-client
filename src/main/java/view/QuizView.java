@@ -1,8 +1,6 @@
 package view;
 
 import controller.QuizController;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
@@ -15,21 +13,28 @@ import observer.QuizObserver;
 
 import java.util.ArrayList;
 
-public class QuizView extends StackPane implements QuizObserver {
+public class QuizView implements QuizObserver {
 
     private Answer selectedAnswer;
-    private QuizController quizController = QuizController.getInstance();
 
-    private Text question;
-    private Text answer;
-    private TextField inputID;
+    private final QuizController quizController;
+
+    private final Text question;
+    private final Text answer;
+    private final TextField inputID;
 
     public QuizView() {
-        quizController.registerObserver(this);
+        quizController = QuizController.getInstance();
 
         question = new Text("");
         answer = new Text("");
         inputID = new TextField("");
+
+        quizController.registerObserver(this);
+    }
+
+    public StackPane getQuizPane() {
+        StackPane stackPane = new StackPane();
 
         Button retieve = new Button("Retrieve Question");
         retieve.setOnAction((event) -> retrieveQuestion());
@@ -40,7 +45,9 @@ public class QuizView extends StackPane implements QuizObserver {
         vbox.getChildren().add(inputID);
         vbox.getChildren().add(retieve);
 
-        this.getChildren().add(vbox);
+        stackPane.getChildren().add(vbox);
+
+        return stackPane;
     }
 
     private void retrieveQuestion() {

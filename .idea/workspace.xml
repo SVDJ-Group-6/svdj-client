@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe11830-1dc8-4e29-8456-93d34fd385b9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/EditDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/EditDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/QuizDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/QuizDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/StatsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/StatsDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThemeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThemeDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/QuizController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Answer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Question.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Quiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClientApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/QuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/QuizView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -96,7 +89,7 @@
       <updated>1633688276043</updated>
       <workItem from="1633688277576" duration="32000" />
       <workItem from="1633688372744" duration="481000" />
-      <workItem from="1633700668407" duration="7197000" />
+      <workItem from="1633700668407" duration="8043000" />
     </task>
     <servers />
   </component>
