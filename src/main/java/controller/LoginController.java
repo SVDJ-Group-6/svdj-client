@@ -6,7 +6,7 @@ public class LoginController {
 
     private static LoginController loginController;
     //Todo
-    private LoginService loginService;
+//    private LoginService loginService;
     private Login login;
 
     public void login(String username, String password){}

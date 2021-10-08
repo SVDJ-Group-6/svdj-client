@@ -9,12 +9,16 @@ public class QuizController {
 
     public void loadFirst(){}
     public void next(Answer selectedAnswer){}
-    //Todo
-    public nextHasAdvice(Answer selectedAnswer){}
+    //Todo moet iets returnen
+//    public nextHasAdvice(Answer selectedAnswer){}
+
     public void back(){}
     public void showAdvice(int adviceId){}
     //Todo
     public static QuizController getInstance() {
+        if (quizController == null) {
+            quizController = new QuizController();
+        }
         return quizController;
     }
 }

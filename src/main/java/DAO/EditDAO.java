@@ -11,7 +11,7 @@ public class EditDAO {
     private Edit edit;
 
     //Todo what does this return ?
-    public postChanges(ArrayList<Node> nodes){}
+//    public postChanges(ArrayList<Node> nodes){}
 
     public void changeQuestion(int questionId, String newValue){}
     public void changeAnswer(int questionId, int answerId, String newValue){}
