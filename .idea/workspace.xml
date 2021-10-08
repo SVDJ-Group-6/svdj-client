@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="efe11830-1dc8-4e29-8456-93d34fd385b9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/AdviceDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/EditDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/LoginDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/QuizDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/StatsDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/ThemeDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/AdviceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/DashboardController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/EditController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/QuizController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ThemeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Advice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Answer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Edit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Login.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Node.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Question.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Quiz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Stats.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Theme.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observable/AdviceObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observable/EditObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observable/LoginObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observable/QuizObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observable/ThemeObservable.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observer/AdviceObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observer/EditObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observer/LoginObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observer/QuizObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/observer/ThemeObserver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/service/StatsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/AdviceView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/DashboardView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/EditView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/HomeView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/QuizView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/ThemeView.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1zDgs1awpXQgVSrBGTiQdjOVgX3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="efe11830-1dc8-4e29-8456-93d34fd385b9" name="Changes" comment="" />
+      <created>1633688276043</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1633688276043</updated>
+      <workItem from="1633688277576" duration="32000" />
+      <workItem from="1633688372744" duration="323000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>
