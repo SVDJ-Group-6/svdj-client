@@ -31,6 +31,7 @@ public class QuizView implements QuizObserver {
         inputID = new TextField("");
 
         quizController.registerObserver(this);
+        quizController.loadFirst();
     }
 
     public StackPane getQuizPane() {
