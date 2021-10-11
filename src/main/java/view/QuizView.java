@@ -3,6 +3,7 @@ package view;
 import controller.QuizController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -14,6 +15,33 @@ import observer.QuizObserver;
 import java.util.ArrayList;
 
 public class QuizView implements QuizObserver {
+
+
+    private ArrayList<QuizComponent> components;
+    //todo implement which component will be displayed
+    private int index;
+
+    //standard next, back button
+    private Button back;
+    private Button next;
+
+    public QuizView()
+    {
+        this.back = new ButtonCreator("back", "26264c").createCustomButton();
+        this.next = new ButtonCreator("next", "26264c").createCustomButton();
+    }
+
+    public HBox displayComponents(){
+        HBox h = new HBox();
+        h.getChildren().addAll(this.components.get(index).createQuizComponent(), back, next);
+        return h;
+    }
+    //todo this is for editing for admins
+    public void removeCompoent(){}
+    public void addComponent(){}
+
+    //Todo this is from steve dont touch!
+    /*
 
     private Answer selectedAnswer;
 
@@ -57,8 +85,11 @@ public class QuizView implements QuizObserver {
         quizController.next(dummyAnswer);
     }
 
+
+     */
     @Override
     public void update(Quiz quiz) {
+        /*
         ArrayList<Question> questions = quiz.getQuestions();
         Question lastQuestion = questions.get(questions.size() - 1);
 
@@ -73,5 +104,8 @@ public class QuizView implements QuizObserver {
         }
 
         this.answer.setText(stringBuilder.toString());
+
+         */
     }
+    
 }
