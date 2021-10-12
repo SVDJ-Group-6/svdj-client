@@ -29,6 +29,7 @@ public class ClientApplication extends Application {
 
         QuizComponent p = new QuizComponent();
         stage.setScene(new Scene(p.createQuizComponent(), 300, 250));
+
         stage.show();
     }
 }

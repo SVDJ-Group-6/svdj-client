@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe11830-1dc8-4e29-8456-93d34fd385b9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/ButtonCreator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/QuestionCreator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/QuizComponent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_mac_15_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_15_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_mac_15_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_15_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_mac_15_0_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_15_0_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/svdj-client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/svdj-client.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClientApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/QuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/QuizView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/QuizComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/QuizComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +91,7 @@
       <workItem from="1633688372744" duration="481000" />
       <workItem from="1633700668407" duration="8043000" />
       <workItem from="1633946856789" duration="1640000" />
-      <workItem from="1633949389909" duration="3988000" />
+      <workItem from="1633949389909" duration="7260000" />
     </task>
     <servers />
   </component>
