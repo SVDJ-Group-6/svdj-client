@@ -2,11 +2,20 @@ package model;
 
 public class Stats {
     private String uuid;
-    private int order;
+    private int index;
     private String question;
     private String answer;
     private String advice;
     private int timestampUNIX;
+
+    public Stats(String uuid, int index, String question, String answer, String advice, int timestampUNIX) {
+        this.uuid = uuid;
+        this.index = index;
+        this.question = question;
+        this.answer = answer;
+        this.advice = advice;
+        this.timestampUNIX = timestampUNIX;
+    }
 
     public String getUuid() {
         return uuid;
@@ -24,12 +33,12 @@ public class Stats {
         this.uuid = uuid;
     }
 
-    public int getOrder() {
-        return order;
+    public int getIndex() {
+        return index;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getQuestion() {
