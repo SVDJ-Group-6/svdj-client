@@ -7,7 +7,7 @@
     <list default="true" id="efe11830-1dc8-4e29-8456-93d34fd385b9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ClientApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ClientApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/QuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/QuizView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/QuizComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/QuizComponent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,11 +90,25 @@
       <workItem from="1633688277576" duration="32000" />
       <workItem from="1633688372744" duration="481000" />
       <workItem from="1633700668407" duration="8043000" />
+      <workItem from="1633946856789" duration="1640000" />
+      <workItem from="1633949389909" duration="7260000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
