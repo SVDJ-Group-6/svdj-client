@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.layout.StackPane;
 import model.Advice;
 import observer.AdviceObserver;
 
@@ -23,8 +24,9 @@ import java.io.FileNotFoundException;
 public class AdviceView implements AdviceObserver {
 
 
-    private AdviceController adviceController;
+    private AdviceController adviceController = AdviceController.getInstance();
     private Advice advice;
+
 
     public AdviceView() {
 
@@ -144,7 +146,15 @@ public class AdviceView implements AdviceObserver {
     }
 
 
-    public AdviceView(int adviceId){}
+    public AdviceView(int adviceId){
+        adviceController.registerObserver(this);
+        adviceController.loadAdvice(adviceId);
+    }
+
+    public StackPane getAdvicePane() {
+        return new StackPane();
+    }
+
 
     @Override
     public void update(Advice advice) {

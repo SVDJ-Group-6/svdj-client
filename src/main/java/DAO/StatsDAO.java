@@ -8,10 +8,9 @@ public class StatsDAO {
 
     private static StatsDAO statsDAO;
 
-    //Todo What does this return mate :) ?
-//    public ArrayList<Stats> getAllStats(){
-//        return
-//    }
+    public ArrayList<Stats> getAllStats(){
+        return null;
+    }
 
     //Todo this says returns a statsService mate, whachumean bruh?
     public static StatsDAO getInstance() {

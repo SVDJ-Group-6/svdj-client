@@ -5,8 +5,12 @@ public class Answer {
     private int id;
     private String value;
     private int originQuestionId;
-    private int nextQuestionId;
-    private int adviceId;
+    private Integer nextQuestionId;
+    private Integer adviceId;
+
+    public Answer(Integer nextQuestionId) {
+        this.nextQuestionId = nextQuestionId;
+    }
 
     public int getId() {
         return id;
@@ -32,19 +36,19 @@ public class Answer {
         this.originQuestionId = originQuestionId;
     }
 
-    public int getNextQuestionId() {
+    public Integer getNextQuestionId() {
         return nextQuestionId;
     }
 
-    public void setNextQuestionId(int nextQuestionId) {
+    public void setNextQuestionId(Integer nextQuestionId) {
         this.nextQuestionId = nextQuestionId;
     }
 
-    public int getAdviceId() {
+    public Integer getAdviceId() {
         return adviceId;
     }
 
-    public void setAdviceId(int adviceId) {
+    public void setAdviceId(Integer adviceId) {
         this.adviceId = adviceId;
     }
 }
