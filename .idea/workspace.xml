@@ -5,52 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="efe11830-1dc8-4e29-8456-93d34fd385b9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/AdviceDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/EditDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/LoginDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/QuizDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/StatsDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/DAO/ThemeDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/AdviceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/DashboardController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/EditController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/HomeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/QuizController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ThemeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Advice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Answer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Edit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Login.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Node.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Question.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Quiz.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Stats.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Theme.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observable/AdviceObservable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observable/EditObservable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observable/LoginObservable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observable/QuizObservable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observable/ThemeObservable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observer/AdviceObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observer/EditObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observer/LoginObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observer/QuizObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/observer/ThemeObserver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/service/StatsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/AdviceView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/DashboardView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/EditView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/HomeView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/LoginView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/QuizView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/ThemeView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_13_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Launcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/background.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/svdj-client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/svdj-client.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/EditDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/EditDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/StatsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/StatsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/ThemeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/ThemeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/QuizController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/QuizController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/HomeView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/HomeView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -67,11 +56,40 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Programmeren\SVDJ\svdj-client\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Launcher">
+    <configuration name="Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Launcher" />
+      <module name="svdj-client" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="svdj-client" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Launcher" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -88,6 +106,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
