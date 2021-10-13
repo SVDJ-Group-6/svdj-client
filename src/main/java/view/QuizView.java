@@ -1,6 +1,7 @@
 package view;
 
 import controller.QuizController;
+import controller.ThemeController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -10,6 +11,7 @@ import javafx.scene.text.Text;
 import model.Answer;
 import model.Question;
 import model.Quiz;
+import model.Theme;
 import observer.QuizObserver;
 
 import java.util.ArrayList;
@@ -17,12 +19,15 @@ import java.util.ArrayList;
 public class QuizView implements QuizObserver {
 
     private QuizController quizController = QuizController.getInstance();
+    private ThemeController themeController = ThemeController.getInstance();
+    private Theme theme = themeController.getTheme();
 
     private Answer selectedAnswer;
     private Text question;
     private HBox answerButtons;
 
     private Button previous;
+    private Button next;
 
     public QuizView() {
         question = new Text("");
@@ -31,6 +36,13 @@ public class QuizView implements QuizObserver {
         previous = new Button("Previous");
         previous.setOnAction((event -> {
             quizController.back();
+        }));
+
+        next = new Button("Next");
+        next.setOnAction((event -> {
+            if (selectedAnswer != null) {
+                quizController.next(selectedAnswer);
+            }
         }));
 
         quizController.registerObserver(this);
@@ -43,14 +55,6 @@ public class QuizView implements QuizObserver {
         VBox vbox = new VBox();
         vbox.getChildren().add(question);
         vbox.getChildren().add(answerButtons);
-
-        Button next = new Button("Next");
-        next.setOnAction((event -> {
-            if (selectedAnswer != null) {
-                quizController.next(selectedAnswer);
-            }
-        }));
-
         vbox.getChildren().add(previous);
         vbox.getChildren().add(next);
         stackPane.getChildren().add(vbox);
