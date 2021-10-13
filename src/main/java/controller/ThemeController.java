@@ -11,7 +11,7 @@ public class ThemeController {
     private static ThemeController themeController;
     private ThemeDAO themeDAO = ThemeDAO.getInstance();
 
-    public Theme getTheme(){
+    public Theme getTheme() {
         try {
             return themeDAO.getTheme();
         } catch (IOException e) {
@@ -21,7 +21,8 @@ public class ThemeController {
         return new Theme();
     }
 
-    public void submitColors(Theme theme) {
+    public void submitColors(Theme theme) throws IOException {
+        themeDAO.postTheme(theme);
     }
 
     public void navigateBack() {

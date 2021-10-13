@@ -3,6 +3,7 @@ package view;
 import Admin.AdminVariables;
 import controller.EditController;
 import model.Node;
+import model.Question;
 import observer.EditObserver;
 
 import java.util.ArrayList;
@@ -39,6 +40,10 @@ public class EditView implements EditObserver {
     // Todo in class diagram with uppercase "E"
     private EditController editController;
     private ArrayList<Node> nodes;
+
+    public EditView(){
+        
+    }
 
     public Scene Edit() {
         final double buttonPadding = 12.5;
