@@ -1,5 +1,7 @@
 package model;
 
+import com.google.gson.JsonObject;
+
 public class Stats {
     private String uuid;
     private int index;
@@ -63,5 +65,16 @@ public class Stats {
 
     public void setTimestampUNIX(int timestampUNIX) {
         this.timestampUNIX = timestampUNIX;
+    }
+
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("uuid", this.getUuid());
+        jsonObject.addProperty("index", this.getIndex());
+        jsonObject.addProperty("question", this.getQuestion());
+        jsonObject.addProperty("answer", this.getAnswer());
+        jsonObject.addProperty("advice", this.getAdvice());
+        jsonObject.addProperty("timestampUNIX", this.getTimestampUNIX());
+        return jsonObject.toString();
     }
 }

@@ -18,17 +18,9 @@ public class StatsDAO {
     }
 
     public void postStatsToAPI(Stats stats) throws IOException {
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("uuid", stats.getUuid());
-        jsonObject.addProperty("index", stats.getIndex());
-        jsonObject.addProperty("question", stats.getQuestion());
-        jsonObject.addProperty("answer", stats.getAnswer());
-        jsonObject.addProperty("advice", stats.getAdvice());
-        jsonObject.addProperty("timestampUNIX", stats.getTimestampUNIX());
-
-        String body = jsonObject.toString();
+        String body = stats.toJsonString();
         String statsURL = ClientVariables.API_URL + "/api/stats";
-        System.out.println(requestService.postRequest(statsURL, body));
+        requestService.postRequest(statsURL, body);
     }
 
     public static StatsDAO getInstance() {
