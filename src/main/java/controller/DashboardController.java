@@ -17,11 +17,11 @@ public class DashboardController {
     }
 
     public void navigateColorView() {
-        AdminVariables.stage.setScene(new ThemeView().Theme());
+        AdminVariables.stage.setScene(new ThemeView().getThemeScene());
     }
 
     public void navigateEditView() {
-        AdminVariables.stage.setScene(new EditView().Edit());
+        AdminVariables.stage.setScene(new EditView().getEditScene());
     }
 
     public void saveStats() {

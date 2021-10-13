@@ -26,7 +26,7 @@ public class ThemeController {
     }
 
     public void navigateBack() {
-        AdminVariables.stage.setScene(new DashboardView().Dashboard());
+        AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
     }
 
     public static ThemeController getInstance() {

@@ -33,7 +33,7 @@ public class HomeView {
     final String logoutButtonColor = "#FFFFFF";
 
     final String fontFamily = "Arial";
-    public Scene homeScreen() throws FileNotFoundException {
+    public Scene getHomeScene() throws FileNotFoundException {
 
         BackgroundSize backgroundSize = new BackgroundSize(1280, 800, true, true, true, false);
         BackgroundImage bgImage = null;

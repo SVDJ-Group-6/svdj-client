@@ -25,7 +25,7 @@ public class LoginController {
     }
 
     public void switchToDashboard() {
-        AdminVariables.stage.setScene(new DashboardView().Dashboard());
+        AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
     }
 
     public void registerObserver(LoginObserver loginObserver){

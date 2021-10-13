@@ -41,7 +41,7 @@ public class LoginView implements LoginObserver {
         loginController.registerObserver(this);
     }
 
-    public Scene Login() {
+    public Scene getLoginScene() {
         final double buttonPadding = 17.5;
         final int headerFontSize = 64;
         final int buttonFontSize = 22;

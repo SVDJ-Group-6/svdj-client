@@ -42,7 +42,7 @@ public class ThemeView implements ThemeObserver {
         theme = themeController.getTheme();
     }
 
-    public Scene Theme() {
+    public Scene getThemeScene() {
         final double BUTTON_PADDING = 17.5;
         final int HEADER_FONT_SIZE = 64;
         final int BUTTON_FONT_SIZE = 22;
@@ -53,7 +53,7 @@ public class ThemeView implements ThemeObserver {
         final int HORIZONTAL_GRID_GAP = 75;
         final int VERTICAL_GRID_GAP = 50;
 
-        final String fontFamily = "Arial";
+        final String FONT_FAMILY = "Arial";
         /* End Temporary */
 
         FileInputStream logoInput, backgroundInput;
@@ -74,7 +74,7 @@ public class ThemeView implements ThemeObserver {
         }
 
         Text headerText = new Text("Kleuren aanpassen");
-        headerText.setFont(Font.font(fontFamily, FontWeight.NORMAL, HEADER_FONT_SIZE));
+        headerText.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, HEADER_FONT_SIZE));
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.LEFT);
 
@@ -87,7 +87,7 @@ public class ThemeView implements ThemeObserver {
         HBox seventhColumnBox = new HBox(10);
 
         Text primaryColorText = new Text("Primary Color");
-        primaryColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        primaryColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker primaryColorPicker = new ColorPicker(Color.web(theme.getPrimaryColor())); // Get color from model
                                                                                               // from api ofzo
         primaryColorPicker
@@ -100,7 +100,7 @@ public class ThemeView implements ThemeObserver {
         firstColumnBox.getChildren().addAll(primaryColorText, primaryColorPicker);
 
         Text ctaButtonColorText = new Text("Cta Button Color");
-        ctaButtonColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        ctaButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker ctaButtonColorPicker = new ColorPicker(Color.web(theme.getCtaButtonColor()));
         ctaButtonColorPicker
                 .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(ctaButtonColorPicker.getValue())),
@@ -112,7 +112,7 @@ public class ThemeView implements ThemeObserver {
         secondColumnBox.getChildren().addAll(ctaButtonColorText, ctaButtonColorPicker);
 
         Text secondaryColorText = new Text("Secondary Color");
-        secondaryColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        secondaryColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker secondaryColorPicker = new ColorPicker(Color.web(theme.getSecondaryColor()));
         secondaryColorPicker
                 .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(secondaryColorPicker.getValue())),
@@ -124,7 +124,7 @@ public class ThemeView implements ThemeObserver {
         thirdColumnBox.getChildren().addAll(secondaryColorText, secondaryColorPicker);
 
         Text answerButtonColorText = new Text("Answer Button Color");
-        answerButtonColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        answerButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker answerButtonColorPicker = new ColorPicker(Color.web(theme.getAnswerButtonColor()));
         answerButtonColorPicker.setBackground(new Background(new BackgroundFill(
                 Color.web(toRGBCode(answerButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -135,7 +135,7 @@ public class ThemeView implements ThemeObserver {
         fourthColumnBox.getChildren().addAll(answerButtonColorText, answerButtonColorPicker);
 
         Text tertaireColorText = new Text("Tertaire Color");
-        tertaireColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        tertaireColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker tertaireColorPicker = new ColorPicker(Color.web(theme.getTertaireColor()));
         tertaireColorPicker
                 .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(tertaireColorPicker.getValue())),
@@ -147,7 +147,7 @@ public class ThemeView implements ThemeObserver {
         fifthColumnBox.getChildren().addAll(tertaireColorText, tertaireColorPicker);
 
         Text selectedButtonColorText = new Text("Selected Button Color");
-        selectedButtonColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        selectedButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker selectedButtonColorPicker = new ColorPicker(Color.web(theme.getSelectedButtonColor()));
         selectedButtonColorPicker.setBackground(new Background(new BackgroundFill(
                 Color.web(toRGBCode(selectedButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -158,7 +158,7 @@ public class ThemeView implements ThemeObserver {
         sixthColumnBox.getChildren().addAll(selectedButtonColorText, selectedButtonColorPicker);
 
         Text previousButtonColorText = new Text("Previous Button Color");
-        previousButtonColorText.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+        previousButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         ColorPicker previousButtonColorPicker = new ColorPicker(Color.web(theme.getPreviousButtonColor()));
         previousButtonColorPicker.setBackground(new Background(new BackgroundFill(
                 Color.web(toRGBCode(previousButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -170,13 +170,13 @@ public class ThemeView implements ThemeObserver {
 
         Button backButton = new Button("Terug");
         backButton.setPadding(new Insets(BUTTON_PADDING));
-        backButton.setFont(Font.font(fontFamily, FontWeight.BOLD, BUTTON_FONT_SIZE));
+        backButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         backButton.setTextFill(Color.BLACK);
         backButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
         backButton.setOnMouseClicked(e -> themeController.navigateBack());
         backButton.setOnMouseEntered(e -> {
-            backButton.setStyle(
-                    String.format("-fx-background-color: %s; -fx-text-fill: %s;", theme.getSecondaryColor(), theme.getPrimaryColor()));
+            backButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;", theme.getSecondaryColor(),
+                    theme.getPrimaryColor()));
         });
         backButton.setOnMouseExited(e -> {
             backButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
@@ -184,13 +184,13 @@ public class ThemeView implements ThemeObserver {
 
         Button applyButton = new Button("Bevestigen");
         applyButton.setPadding(new Insets(BUTTON_PADDING));
-        applyButton.setFont(Font.font(fontFamily, FontWeight.BOLD, BUTTON_FONT_SIZE));
+        applyButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         applyButton.setTextFill(Color.BLACK);
         applyButton.setPrefWidth(160);
         applyButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
         applyButton.setOnMouseEntered(e -> {
-            applyButton.setStyle(
-                    String.format("-fx-background-color: %s; -fx-text-fill: %s;", theme.getSecondaryColor(), theme.getPrimaryColor()));
+            applyButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;",
+                    theme.getSecondaryColor(), theme.getPrimaryColor()));
         });
         applyButton.setOnMouseExited(e -> {
             applyButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));

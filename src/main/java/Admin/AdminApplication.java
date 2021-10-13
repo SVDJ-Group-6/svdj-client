@@ -18,7 +18,7 @@ public class AdminApplication extends Application {
         AdminVariables.stage.centerOnScreen();
         AdminVariables.stage.setResizable(false);
 
-        AdminVariables.stage.setScene(new LoginView().Login());
+        AdminVariables.stage.setScene(new LoginView().getLoginScene());
         AdminVariables.stage.show();
     }
 
