@@ -6,7 +6,6 @@ import model.Login;
 public class LoginController {
 
     private static LoginController loginController;
-    //Todo
     private LoginDAO loginDAO;
     private Login login;
 

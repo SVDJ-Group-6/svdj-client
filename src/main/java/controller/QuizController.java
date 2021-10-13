@@ -80,7 +80,6 @@ public class QuizController {
         if (quizController == null) {
             quizController = new QuizController();
         }
-
-        return  quizController;
+        return quizController;
     }
 }

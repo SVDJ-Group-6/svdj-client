@@ -8,7 +8,6 @@ public class StatsDAO {
 
     private static StatsDAO statsDAO;
 
-    //Todo What does this return mate :) ?
     public ArrayList<Stats> getAllStats(){
         return null;
     }
