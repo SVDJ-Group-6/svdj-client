@@ -1,5 +1,6 @@
 package DAO;
 
+import ClientApplication.ClientVariables;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Answer;
@@ -16,17 +17,16 @@ public class QuizDAO {
 
     private static QuizDAO quizDAO;
 
-    private final String API_URL = "http://localhost:8080";
     private final Gson gson = new Gson();
 
     public Question getQuestionFromAPI(String questionID) throws IOException {
-        String questionURL = API_URL + "/api/questions/" + questionID;
+        String questionURL = ClientVariables.API_URL + "/api/questions/" + questionID;
         Question question = gson.fromJson(getResponse(questionURL), Question.class);
         return question;
     }
 
     public ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
-        String answersURL = API_URL + "/api/answers/question/" + questionID;
+        String answersURL = ClientVariables.API_URL + "/api/answers/question/" + questionID;
         ArrayList<Answer> answers = gson.fromJson(getResponse(answersURL), new TypeToken<ArrayList<Answer>>(){}.getType());
         return answers;
     }

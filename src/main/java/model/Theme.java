@@ -12,6 +12,18 @@ public class Theme implements ThemeObservable {
     private String selectedButtonColor;
     private String previousButtonColor;
 
+    public Theme() {}
+
+    public Theme(String primaryColor, String secondaryColor, String tertaireColor, String ctaButtonColor, String answerButtonColor, String selectedButtonColor, String previousButtonColor) {
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
+        this.tertaireColor = tertaireColor;
+        this.ctaButtonColor = ctaButtonColor;
+        this.answerButtonColor = answerButtonColor;
+        this.selectedButtonColor = selectedButtonColor;
+        this.previousButtonColor = previousButtonColor;
+    }
+
     public String getPrimaryColor() {
         return primaryColor;
     }
