@@ -14,8 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import model.Theme;
 
 import java.awt.*;
@@ -57,14 +55,12 @@ public class HomeView {
 
 
         HBox logoContainer = new HBox(25);
-//        logoContainer.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         logoContainer.setPadding(new Insets(20, 0, 0,20));
         logoContainer.getChildren().addAll(logoView);
 
 
         VBox TitleContainer = new VBox(25);
         TitleContainer.setPadding(new Insets(0,0,0,40));
-//        TitleContainer.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Text title = new Text("Weten welke subsidie bij jou past?");
         title.setFont(Font.font (fontFamily, FontWeight.BOLD, headerFontSize));
@@ -79,7 +75,6 @@ public class HomeView {
 
         HBox bottomContainer = new HBox(400);
         bottomContainer.setPadding(new Insets(0, 0, 0,40));
-//        bottomContainer.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         bottomContainer.setAlignment(Pos.BOTTOM_LEFT);
         bottomContainer.setPrefHeight(300);
         Button start_vragenlijst = new Button("Start vragenlijst");
@@ -115,7 +110,6 @@ public class HomeView {
         });
 
         VBox madeByText = new VBox(madeBy,svdjHyperLink);
-//        madeByText.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         madeByText.setAlignment(Pos.BOTTOM_LEFT);
 
 
