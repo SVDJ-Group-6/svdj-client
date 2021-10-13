@@ -17,7 +17,7 @@ public class ClientApplication extends Application {
         ClientVariables.stage = stage;
 
         // Set own scene!
-        Scene scene  = new Scene(new HomeView().homeScreen());
+        Scene scene  = new Scene(new HomeView().getHomePane());
         stage.setScene(scene);
 
         stage.setHeight(720);

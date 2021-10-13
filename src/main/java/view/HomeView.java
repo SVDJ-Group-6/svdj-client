@@ -1,6 +1,7 @@
 package view;
 
 import Client.ClientVariables;
+import controller.ThemeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import model.Theme;
 
 import java.awt.*;
 import java.io.FileInputStream;
@@ -23,7 +25,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
+
 public class HomeView {
+    ThemeController themeController = ThemeController.getInstance();
+    Theme theme = themeController.getTheme();
     final double buttonPadding = 17.5;
     final int headerFontSize = 64;
     final int buttonFontSize = 22;
@@ -31,15 +37,14 @@ public class HomeView {
     final int logoWidth = 480;
     final int logoHeight = 128;
 
-    final String buttonColor = "#9CC2D4";
-    final String hoverButtonColor = "#E4F6FF";
-
+    final String buttonColor = theme.getCtaButtonColor();
+    final String hoverButtonColor = theme.getPrimaryColor();
 
     final String fontFamily = "Arial";
-    public VBox homeScreen(){
+    public VBox getHomePane(){
         BackgroundImage bgImage = null;
         FileInputStream logoInput = null;
-        Stage stage = ClientVariables.stage;
+
         try {
             bgImage = new BackgroundImage(new Image(new FileInputStream("./src/main/resources/background.png")),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
@@ -91,8 +96,8 @@ public class HomeView {
             start_vragenlijst.setStyle(String.format("-fx-background-color: %s;", buttonColor));
         });
         start_vragenlijst.setOnAction(e->{
-            Scene scene  = new Scene(new QuizView().getQuizPane());
-            stage.setScene(scene);
+            Scene scene = new Scene(new QuizView().getQuizPane());
+            ClientVariables.stage.setScene(scene);
         });
         Text madeBy = new Text("De beslissingsmatrix wordt medemogelijk gemaakt door\n" + "het Stimuleringsfonds voor de Journalistiek\n");
         madeBy.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
@@ -104,9 +109,7 @@ public class HomeView {
             try {
                 svdjHyperLink.setVisited(false);
                 Desktop.getDesktop().browse(new URI("https://www.svdj.nl/"));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (URISyntaxException ex) {
+            } catch (IOException | URISyntaxException ex) {
                 ex.printStackTrace();
             }
         });
