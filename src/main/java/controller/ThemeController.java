@@ -1,6 +1,5 @@
 package controller;
 
-import ClientApplication.ClientVariables;
 import DAO.ThemeDAO;
 import model.Theme;
 

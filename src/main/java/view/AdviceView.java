@@ -32,7 +32,7 @@ public class AdviceView implements AdviceObserver {
 
     }
 
-    public Scene AdviceView() throws FileNotFoundException {
+    public VBox getAdvicePane() {
         final double buttonPadding = 17.5;
         final int headerFontSize = 64;
         final int buttonFontSize = 22;
@@ -61,7 +61,12 @@ public class AdviceView implements AdviceObserver {
             e.printStackTrace();
         }
 
-        Image logo = new Image(new FileInputStream("./src/main/resources/SVDJ_logo.png"));
+        Image logo = null;
+        try {
+            logo = new Image(new FileInputStream("./src/main/resources/SVDJ_logo.png"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         ImageView logoView = new ImageView(logo);
         logoView.setFitHeight(128);
         logoView.setFitWidth(480);
@@ -142,17 +147,13 @@ public class AdviceView implements AdviceObserver {
         layout.setPadding(new Insets(25));
         layout.getChildren().addAll(logoView, titleContainer, adviceContainer, descriptionContainer, moreInformationContainer,homeButtonContainer);
 
-        return new Scene(layout, 1280, 720);
+        return layout;
     }
 
 
     public AdviceView(int adviceId){
         adviceController.registerObserver(this);
         adviceController.loadAdvice(adviceId);
-    }
-
-    public StackPane getAdvicePane() {
-        return new StackPane();
     }
 
 

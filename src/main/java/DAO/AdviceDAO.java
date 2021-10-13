@@ -1,6 +1,6 @@
 package DAO;
 
-import ClientApplication.ClientVariables;
+import Client.ClientVariables;
 import com.google.gson.Gson;
 import model.Advice;
 import service.RequestService;

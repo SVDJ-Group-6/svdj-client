@@ -1,16 +1,11 @@
 package DAO;
 
-import ClientApplication.ClientVariables;
+import Client.ClientVariables;
 import com.google.gson.Gson;
 import model.Theme;
 import service.RequestService;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class ThemeDAO {
     private static ThemeDAO themeDAO;

@@ -1,18 +1,13 @@
 package DAO;
 
-import ClientApplication.ClientVariables;
+import Client.ClientVariables;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Answer;
 import model.Question;
 import service.RequestService;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class QuizDAO {

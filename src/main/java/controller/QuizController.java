@@ -1,6 +1,6 @@
 package controller;
 
-import ClientApplication.ClientVariables;
+import Client.ClientVariables;
 import DAO.QuizDAO;
 import javafx.scene.Scene;
 import model.Answer;
