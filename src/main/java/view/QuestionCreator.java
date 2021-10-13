@@ -21,4 +21,12 @@ public class QuestionCreator extends Text {
         text.setFill(Color.RED);
         return text;
     }
+
+    public void setQuestionNumber(int questionNumber) {
+        this.questionNumber = questionNumber;
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
 }
