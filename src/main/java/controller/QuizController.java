@@ -1,10 +1,13 @@
 package controller;
 
+import ClientApplication.ClientVariables;
 import DAO.QuizDAO;
+import javafx.scene.Scene;
 import model.Answer;
 import model.Question;
 import model.Quiz;
 import observer.QuizObserver;
+import view.AdviceView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +60,8 @@ public class QuizController {
     }
 
     public void showAdvice(int adviceId){
-
+        Scene scene = new Scene(new AdviceView(adviceId).getAdvicePane());
+        ClientVariables.stage.setScene(scene);
     }
 
     private boolean hasAdviceID(Answer selectedAnswer){

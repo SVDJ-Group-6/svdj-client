@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Answer;
 import model.Question;
+import service.RequestService;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,44 +18,20 @@ import java.util.ArrayList;
 public class QuizDAO {
 
     private static QuizDAO quizDAO;
+    private RequestService requestService = RequestService.getInstance();
 
     private final Gson gson = new Gson();
 
     public Question getQuestionFromAPI(String questionID) throws IOException {
         String questionURL = ClientVariables.API_URL + "/api/questions/" + questionID;
-        Question question = gson.fromJson(getResponse(questionURL), Question.class);
+        Question question = gson.fromJson(requestService.getResponse(questionURL), Question.class);
         return question;
     }
 
     public ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
         String answersURL = ClientVariables.API_URL + "/api/answers/question/" + questionID;
-        ArrayList<Answer> answers = gson.fromJson(getResponse(answersURL), new TypeToken<ArrayList<Answer>>(){}.getType());
+        ArrayList<Answer> answers = gson.fromJson(requestService.getResponse(answersURL), new TypeToken<ArrayList<Answer>>(){}.getType());
         return answers;
-    }
-
-    private String getResponse(String URL) throws IOException {
-        System.out.println(URL);
-        URL endpointURL = new URL(URL);
-        HttpURLConnection connection = (HttpURLConnection) endpointURL.openConnection();
-        connection.setRequestMethod("GET");
-
-        InputStream inputStream = connection.getInputStream();
-        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-        StringBuilder stringBuilder = new StringBuilder();
-
-        while (true) {
-            String line = bufferedReader.readLine();
-
-            if (line == null) {
-                break;
-            }
-
-            stringBuilder.append(line);
-        }
-
-        return stringBuilder.toString();
     }
 
     public static QuizDAO getInstance() {
