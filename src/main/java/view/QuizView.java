@@ -59,8 +59,7 @@ public class QuizView implements QuizObserver {
         inputID = new TextField("");
 
         quizController.registerObserver(this);
-
-        // TODO: Load first node.
+        quizController.loadFirst();
     }
 
     public StackPane getQuizPane() {

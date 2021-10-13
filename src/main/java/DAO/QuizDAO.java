@@ -4,20 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.Answer;
 import model.Question;
-import model.Quiz;
-import observer.QuizObserver;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class QuizDAO {
 
@@ -25,35 +18,14 @@ public class QuizDAO {
 
     private final String API_URL = "http://localhost:8080";
     private final Gson gson = new Gson();
-    private final Quiz quiz = new Quiz();
 
-    public void getFirst() throws IOException {
-        Question question = getQuestionFromAPI("first");
-        ArrayList<Answer> answers = getAnswersFromAPI(Integer.toString(question.getId()));
-
-        quiz.addNewQuestionAndAnswers(question, answers);
-    }
-
-    public void getNext(int questionID) throws IOException {
-        Question question = getQuestionFromAPI(Integer.toString(questionID));
-        ArrayList<Answer> answers = getAnswersFromAPI(Integer.toString(questionID));
-
-        quiz.addNewQuestionAndAnswers(question, answers);
-    }
-
-    public void getPrevious() {
-        if (quiz.getQuestions().size() > 1) {
-            quiz.deleteLastQuestionAndAnswers();
-        }
-    }
-
-    private Question getQuestionFromAPI(String questionID) throws IOException {
+    public Question getQuestionFromAPI(String questionID) throws IOException {
         String questionURL = API_URL + "/api/questions/" + questionID;
         Question question = gson.fromJson(getResponse(questionURL), Question.class);
         return question;
     }
 
-    private ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
+    public ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
         String answersURL = API_URL + "/api/answers/question/" + questionID;
         ArrayList<Answer> answers = gson.fromJson(getResponse(answersURL), new TypeToken<ArrayList<Answer>>(){}.getType());
         return answers;
@@ -82,10 +54,6 @@ public class QuizDAO {
         }
 
         return stringBuilder.toString();
-    }
-
-    public void registerObserver(QuizObserver quizObserver) {
-        quiz.registerObserver(quizObserver);
     }
 
     public static QuizDAO getInstance() {
