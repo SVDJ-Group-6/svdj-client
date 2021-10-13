@@ -16,47 +16,22 @@ import java.util.ArrayList;
 
 public class QuizView implements QuizObserver {
 
-
-    private ArrayList<QuizComponent> components;
-    //todo implement which component will be displayed
-    private int index;
-
-    //standard next, back button
-    private Button back;
-    private Button next;
-
-    public QuizView()
-    {
-        this.back = new ButtonCreator("back", "26264c").createCustomButton();
-        this.next = new ButtonCreator("next", "26264c").createCustomButton();
-    }
-
-    public HBox displayComponents(){
-        HBox h = new HBox();
-        h.getChildren().addAll(this.components.get(index).createQuizComponent(), back, next);
-        return h;
-    }
-    //todo this is for editing for admins
-    public void removeCompoent(){}
-    public void addComponent(){}
-
-    //Todo this is from steve dont touch!
-    /*
+    private QuizController quizController = QuizController.getInstance();
 
     private Answer selectedAnswer;
+    private Text question;
+    private HBox answerButtons;
 
-    private final QuizController quizController;
-
-    private final Text question;
-    private final Text answer;
-    private final TextField inputID;
+    private Button previous;
 
     public QuizView() {
-        quizController = QuizController.getInstance();
-
         question = new Text("");
-        answer = new Text("");
-        inputID = new TextField("");
+        answerButtons = new HBox();
+
+        previous = new Button("Previous");
+        previous.setOnAction((event -> {
+            quizController.back();
+        }));
 
         quizController.registerObserver(this);
         quizController.loadFirst();
@@ -65,46 +40,49 @@ public class QuizView implements QuizObserver {
     public StackPane getQuizPane() {
         StackPane stackPane = new StackPane();
 
-        Button retieve = new Button("Retrieve Question");
-        retieve.setOnAction((event) -> retrieveQuestion());
-
         VBox vbox = new VBox();
         vbox.getChildren().add(question);
-        vbox.getChildren().add(answer);
-        vbox.getChildren().add(inputID);
-        vbox.getChildren().add(retieve);
+        vbox.getChildren().add(answerButtons);
 
+        Button next = new Button("Next");
+        next.setOnAction((event -> {
+            if (selectedAnswer != null) {
+                quizController.next(selectedAnswer);
+            }
+        }));
+
+        vbox.getChildren().add(previous);
+        vbox.getChildren().add(next);
         stackPane.getChildren().add(vbox);
 
         return stackPane;
     }
 
-    private void retrieveQuestion() {
-        Answer dummyAnswer = new Answer(Integer.parseInt(inputID.getText()));
-        quizController.next(dummyAnswer);
-    }
-
-
-     */
     @Override
     public void update(Quiz quiz) {
-        /*
         ArrayList<Question> questions = quiz.getQuestions();
-        Question lastQuestion = questions.get(questions.size() - 1);
-
         ArrayList<ArrayList<Answer>> allAnswers = quiz.getAnswers();
-        ArrayList<Answer> answers = allAnswers.get(allAnswers.size() - 1);
 
-        question.setText(lastQuestion.getValue());
+        Question currentQuestion = questions.get(questions.size() - 1);
+        ArrayList<Answer> currentAnswers = allAnswers.get(allAnswers.size() - 1);
 
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Answer answer : answers) {
-            stringBuilder.append(answer.getValue()).append("\n");
+        // Empty HBOX for the new Buttons.
+        this.answerButtons.getChildren().removeAll(this.answerButtons.getChildren());
+
+        ArrayList<Button> newButtons = new ArrayList<>();
+        for (Answer answer : currentAnswers) {
+            Button tmpBtn = new Button(answer.getValue());
+            tmpBtn.setOnAction((event -> {
+                this.selectedAnswer = answer;
+            }));
+            newButtons.add(tmpBtn);
         }
 
-        this.answer.setText(stringBuilder.toString());
-
-         */
+        // Change value of elements
+        this.previous.setVisible(questions.size() != 1);
+        this.question.setText(currentQuestion.getValue());
+        this.answerButtons.getChildren().addAll(newButtons);
+        this.selectedAnswer = null;
     }
     
 }
