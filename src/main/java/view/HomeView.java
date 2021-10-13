@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -11,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -84,23 +86,23 @@ public class HomeView {
         start_vragenlijst.setOnMouseExited(e -> {
             start_vragenlijst.setStyle(String.format("-fx-background-color: %s;", buttonColor));
         });
-
         Text madeBy = new Text("De beslissingsmatrix wordt medemogelijk gemaakt door\n" +
-                "het Stimuleringsfonds voor de Journalistiek\n" +
-                "www.svdj.nl");
+                "het Stimuleringsfonds voor de Journalistiek\n");
         madeBy.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
         madeBy.setFill(Color.WHITE);
 
+        TextFlow madeByText = new TextFlow(
+                madeBy, new Hyperlink("www.svdj.nl")
+        );
 
-        bottomContainer.getChildren().addAll(start_vragenlijst,madeBy);
+
+        bottomContainer.getChildren().addAll(start_vragenlijst,madeByText);
 
         VBox layout = new VBox(25);
         layout.setSpacing(25);
         layout.setMinWidth(1000);
         layout.setBackground(new Background(bgImage));
         layout.getChildren().addAll(logoContainer,TitleContainer,bottomContainer);
-
-
 
         return new Scene(layout, 1280,720);
     }
