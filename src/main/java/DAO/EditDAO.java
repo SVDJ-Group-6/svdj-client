@@ -10,7 +10,6 @@ public class EditDAO {
     private static EditDAO editDAO;
     private Edit edit;
 
-    //Todo what does this return ?
     public void postChanges(ArrayList<Node> nodes){}
 
     public void changeQuestion(int questionId, String newValue){}
