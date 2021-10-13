@@ -13,7 +13,7 @@ public class AdviceDAO {
     private RequestService requestService = RequestService.getInstance();
 
     public Advice getAdviceFromAPI(int adviceId) throws IOException {
-        String adviceURL = ClientVariables.API_URL + "/advices/" + adviceId;
+        String adviceURL = ClientVariables.API_URL + "/api/advices/" + adviceId;
         Advice advice = gson.fromJson(requestService.getResponse(adviceURL), Advice.class);
         return advice;
     }
