@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import view.AdviceView;
+import view.HomeView;
 import view.QuizView;
 
 public class ClientApplication extends Application {
@@ -16,7 +17,7 @@ public class ClientApplication extends Application {
         ClientVariables.stage = stage;
 
         // Set own scene!
-        Scene scene  = new Scene(new QuizView().getQuizPane());
+        Scene scene  = new Scene(new HomeView().homeScreen());
         stage.setScene(scene);
 
         stage.setHeight(720);
