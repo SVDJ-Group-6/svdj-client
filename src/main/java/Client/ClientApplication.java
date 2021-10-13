@@ -16,11 +16,12 @@ public class ClientApplication extends Application {
         ClientVariables.stage = stage;
 
         // Set own scene!
-        Scene scene  = new Scene(new QuizView().getQuizPane());
+        Scene scene  = new Scene(new AdviceView().getAdvicePane());
         stage.setScene(scene);
 
-        stage.setHeight(720);
+        stage.setTitle("svdj-client");
         stage.setWidth(1280);
+        stage.setHeight(720);
         stage.setResizable(false);
         stage.show();
     }
