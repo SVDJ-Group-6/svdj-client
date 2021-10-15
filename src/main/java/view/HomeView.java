@@ -23,10 +23,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+
+
 public class HomeView {
     ThemeController themeController = ThemeController.getInstance();
     Theme theme = themeController.getTheme();
-  
     final double buttonPadding = 17.5;
     final int headerFontSize = 64;
     final int buttonFontSize = 22;
@@ -38,11 +39,6 @@ public class HomeView {
     final String hoverButtonColor = theme.getPrimaryColor();
 
     final String fontFamily = "Arial";
-  
-    public Scene getHomeScene() throws FileNotFoundException {
-
-    BackgroundSize backgroundSize = new BackgroundSize(1280, 800, true, true, true, false);
-
     public VBox getHomePane(){
         BackgroundImage bgImage = null;
         FileInputStream logoInput = null;
@@ -103,6 +99,8 @@ public class HomeView {
         madeBy.setFill(Color.WHITE);
 
         Hyperlink svdjHyperLink = new Hyperlink("svdj.nl");
+
+        svdjHyperLink.setStyle("-fx-border-color: transparent;");
         svdjHyperLink.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
         svdjHyperLink.setOnAction(e-> {
             try {
