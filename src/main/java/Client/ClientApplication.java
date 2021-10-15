@@ -20,8 +20,9 @@ public class ClientApplication extends Application {
         Scene scene  = new Scene(new HomeView().getHomePane());
         stage.setScene(scene);
 
-        stage.setHeight(720);
+        stage.setTitle("svdj-client");
         stage.setWidth(1280);
+        stage.setHeight(720);
         stage.setResizable(false);
         stage.show();
     }
