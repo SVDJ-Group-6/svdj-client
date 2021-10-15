@@ -13,8 +13,9 @@ public class ThemeDAO {
     private RequestService requestService = RequestService.getInstance();
 
     /**
-     * Returns a Theme object that is either fetched from the API,
-     * if this the theme object is not cached.
+     * Returns a Theme object that is either fetched from the API, if this the theme
+     * object is not cached.
+     * 
      * @return The theme object from API
      * @throws IOException
      */
@@ -23,6 +24,13 @@ public class ThemeDAO {
             ClientVariables.theme = getThemeFromAPI();
         }
         return ClientVariables.theme;
+    }
+
+    public void postTheme(Theme theme) throws IOException {
+        String themeURL = ClientVariables.API_URL + "/api/theme" + "?token=a612078c8a93ccc084ee565cfc471bb6";
+        String json = gson.toJson(theme);
+
+        // requestService.postRequest(themeURL, json);
     }
 
     private Theme getThemeFromAPI() throws IOException {

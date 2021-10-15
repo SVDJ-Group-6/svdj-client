@@ -99,6 +99,7 @@ public class HomeView {
         madeBy.setFill(Color.WHITE);
 
         Hyperlink svdjHyperLink = new Hyperlink("svdj.nl");
+
         svdjHyperLink.setStyle("-fx-border-color: transparent;");
         svdjHyperLink.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
         svdjHyperLink.setOnAction(e-> {
@@ -116,6 +117,7 @@ public class HomeView {
 
         bottomContainer.getChildren().addAll(start_vragenlijst,madeByText);
 
+        
         VBox layout = new VBox(NODE_SPACING);
         layout.setMinWidth(1000);
         layout.setBackground(new Background(bgImage));
