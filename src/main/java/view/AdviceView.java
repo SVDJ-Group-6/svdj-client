@@ -1,5 +1,6 @@
 package view;
 
+import Client.ClientVariables;
 import controller.AdviceController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -17,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import model.Advice;
 import observer.AdviceObserver;
 
@@ -76,8 +78,11 @@ public class AdviceView implements AdviceObserver {
         final int LAYOUT_CONTAINER_PADDING = 10;
         final int TEXT_CONTAINER_INSETS = 25;
         final String WEB_URL = "https://ww.svdj.nl/";
+        final String VIDEO_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        final String CONTACT_URL = "https://www.svdj.nl/contact/";
         final String FX_BACKGROUND_COLOR = "-fx-background-color: %s;";
 
+        Stage stage = ClientVariables.stage;
 
         BackgroundImage background = null;
         try {
@@ -176,10 +181,9 @@ public class AdviceView implements AdviceObserver {
         homeButton.setOnMouseExited(e -> {
             homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
         });
-        //TODO veranderen naar HomeView
         homeButton.setOnMouseClicked(e -> {
-//            dashboardController.navigateEditView();
-            System.out.println("Er is geklikt");
+            stage.setScene(new Scene(new HomeView().getHomePane()));
+            System.out.println("Veranderd naar HomeView");
         });
         homeButtonContainer.getChildren().addAll(homeButton);
 
@@ -201,7 +205,14 @@ public class AdviceView implements AdviceObserver {
             videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
         });
         videoButton.setOnMouseClicked(e -> {
-            System.out.println("Er is geklikt");
+            try {
+                Desktop.getDesktop().browse(new URI(VIDEO_URL));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+            System.out.println("Er is op de video geklikt");
         });
         adviceVideoContainer.getChildren().addAll(videoButton);
 
@@ -224,7 +235,13 @@ public class AdviceView implements AdviceObserver {
         });
         //TODO verander naar website
         contactButton.setOnMouseClicked(e -> {
-//            dashboardController.navigateEditView();
+            try {
+                Desktop.getDesktop().browse(new URI(CONTACT_URL));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
             System.out.println("Er is geklikt op contact");
         });
         contactContainer.getChildren().addAll(contactButton);
@@ -236,7 +253,7 @@ public class AdviceView implements AdviceObserver {
         TextField emailTextfield = new TextField();
         emailTextfield.setPrefWidth(EMAIL_TEXTFIELD_WIDTH);
         emailTextfield.setPrefHeight(EMAIL_TEXTFIELD_HEIGHT);
-        emailTextfield.setPromptText("John.Doe@gmail.com");
+        emailTextfield.setPromptText("Mail mijn advies!");
         emailTextfield.setStyle("-fx-background-radius: 0;");
 
         FileInputStream input = null;
@@ -264,6 +281,7 @@ public class AdviceView implements AdviceObserver {
         });
         sendEmailButton.setOnMouseClicked(e -> {
 //            dashboardController.navigateEditView();
+
             System.out.println("Email is verstuurd");
         });
         sendEmailContainer.getChildren().addAll(emailTextfield, sendEmailButton);
