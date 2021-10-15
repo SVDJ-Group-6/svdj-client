@@ -138,7 +138,6 @@ public class AdviceView implements AdviceObserver {
         descriptionContainer.setMaxHeight(DESCRIPTION_CONTAINER_HEIGHT);
         Text descriptionText = new Text();
         descriptionText.setWrappingWidth(DESCRIPTION_WRAPPING_WIDTH);
-//        descriptionText.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.");
         description.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk");
         descriptionText.setText(description.getText());
         descriptionText.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
@@ -243,7 +242,6 @@ public class AdviceView implements AdviceObserver {
         contactButton.setOnMouseExited(e -> {
             contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
         });
-        //TODO verander naar website
         contactButton.setOnMouseClicked(e -> {
             try {
                 Desktop.getDesktop().browse(new URI(CONTACT_URL));
