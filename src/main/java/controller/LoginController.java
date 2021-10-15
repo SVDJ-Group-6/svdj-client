@@ -1,18 +1,34 @@
 package controller;
 
+import Admin.AdminVariables;
 import DAO.LoginDAO;
-import model.Login;
+import observer.LoginObserver;
+import view.DashboardView;
 
 public class LoginController {
-
-    private static LoginController loginController;
+    static private LoginController loginController;
     private LoginDAO loginDAO;
-    private Login login;
 
-    public void login(String username, String password){}
-    public void switchToDashboard(){}
-    //Todo
-    public static LoginController getInstance(){
+    public LoginController(){
+        loginDAO = LoginDAO.getInstance();
+    }
+
+    static public LoginController getInstance(){
+        if(loginController == null){
+            loginController = new LoginController();
+        } 
         return loginController;
+    }
+
+    public void login(String username, String password){
+        loginDAO.requestToken(username, password);
+    }
+
+    public void switchToDashboard() {
+        AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
+    }
+
+    public void registerObserver(LoginObserver loginObserver){
+        loginDAO.registerObserver(loginObserver);
     }
 }
