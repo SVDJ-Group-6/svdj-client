@@ -183,7 +183,6 @@ public class AdviceView implements AdviceObserver {
         });
         homeButton.setOnMouseClicked(e -> {
             stage.setScene(new Scene(new HomeView().getHomePane()));
-            System.out.println("Veranderd naar HomeView");
         });
         homeButtonContainer.getChildren().addAll(homeButton);
 
@@ -212,7 +211,6 @@ public class AdviceView implements AdviceObserver {
             } catch (URISyntaxException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("Er is op de video geklikt");
         });
         adviceVideoContainer.getChildren().addAll(videoButton);
 
@@ -242,7 +240,6 @@ public class AdviceView implements AdviceObserver {
             } catch (URISyntaxException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("Er is geklikt op contact");
         });
         contactContainer.getChildren().addAll(contactButton);
 
