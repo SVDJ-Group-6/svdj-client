@@ -17,7 +17,7 @@ public class ClientApplication extends Application {
         ClientVariables.stage = stage;
 
         // Set own scene!
-        Scene scene  = new Scene(new HomeView().getHomePane());
+        Scene scene  = new Scene(new AdviceView(1).getAdvicePane());
         stage.setScene(scene);
 
         stage.setTitle("svdj-client");

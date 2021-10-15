@@ -30,14 +30,21 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class AdviceView implements AdviceObserver {
-
-
     private AdviceController adviceController = AdviceController.getInstance();
-    private Advice advice;
+    private Text advice;
+    private Text description;
+    private Text web_url;
+    private Text intro_video;
 
 
-    public AdviceView() {
+    public AdviceView(int adviceId){
+        advice = new Text();
+        description = new Text();
+        web_url = new Text();
+        intro_video = new Text();
 
+        adviceController.registerObserver(this);
+        adviceController.loadAdvice(adviceId);
     }
 
     public VBox getAdvicePane() {
@@ -77,12 +84,13 @@ public class AdviceView implements AdviceObserver {
         final int BODY_CONTAINER_PADDING = 30;
         final int LAYOUT_CONTAINER_PADDING = 10;
         final int TEXT_CONTAINER_INSETS = 25;
-        final String WEB_URL = "https://ww.svdj.nl/";
-        final String VIDEO_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
         final String CONTACT_URL = "https://www.svdj.nl/contact/";
+
         final String FX_BACKGROUND_COLOR = "-fx-background-color: %s;";
 
         Stage stage = ClientVariables.stage;
+
 
         BackgroundImage background = null;
         try {
@@ -116,9 +124,9 @@ public class AdviceView implements AdviceObserver {
         adviceContainer.setMaxWidth(ADVICE_CONTAINER_WIDTH);
         adviceContainer.setStyle(paddingSize(10));
         Text adviceText = new Text();
-        String advice = "'Talent ontwikkeling'";
+        advice.setText("'Talent Ontwikkeling'");
         adviceText.setWrappingWidth(ADVICE_CONTAINER_WRAPPING_WIDTH);
-        adviceText.setText("Uit het vragenlijst is gebleken dat u mogelijk in aanmerking kom voor " + advice);
+        adviceText.setText("Uit het vragenlijst is gebleken dat u mogelijk in aanmerking kom voor " + advice.getText());
         adviceText.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, UNDER_TITLE_FONT_SIZE));
         adviceText.setFill(Color.WHITE);
         adviceContainer.getChildren().addAll(adviceText);
@@ -130,7 +138,9 @@ public class AdviceView implements AdviceObserver {
         descriptionContainer.setMaxHeight(DESCRIPTION_CONTAINER_HEIGHT);
         Text descriptionText = new Text();
         descriptionText.setWrappingWidth(DESCRIPTION_WRAPPING_WIDTH);
-        descriptionText.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.");
+//        descriptionText.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.");
+        description.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk");
+        descriptionText.setText(description.getText());
         descriptionText.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
         descriptionText.setFill(Color.WHITE);
         ScrollPane sp = new ScrollPane();
@@ -142,10 +152,11 @@ public class AdviceView implements AdviceObserver {
 
         Hyperlink svdjLink = new Hyperlink("www.svdj.nl");
         svdjLink.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
+        web_url.setText("https://www.svdj.nl/");
         svdjLink.setOnAction(e-> {
             try {
                 svdjLink.setVisited(false);
-                Desktop.getDesktop().browse(new URI(WEB_URL));
+                Desktop.getDesktop().browse(new URI(web_url.getText()));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             } catch (URISyntaxException uriSyntaxException) {
@@ -203,9 +214,10 @@ public class AdviceView implements AdviceObserver {
         videoButton.setOnMouseExited(e -> {
             videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
         });
+        intro_video.setText("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         videoButton.setOnMouseClicked(e -> {
             try {
-                Desktop.getDesktop().browse(new URI(VIDEO_URL));
+                Desktop.getDesktop().browse(new URI(intro_video.getText()));
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (URISyntaxException ex) {
@@ -314,10 +326,7 @@ public class AdviceView implements AdviceObserver {
     }
 
 
-    public AdviceView(int adviceId){
-        adviceController.registerObserver(this);
-        adviceController.loadAdvice(adviceId);
-    }
+
 
 
     @Override
