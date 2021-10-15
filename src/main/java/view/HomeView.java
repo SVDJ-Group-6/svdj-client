@@ -99,6 +99,8 @@ public class HomeView {
         madeBy.setFill(Color.WHITE);
 
         Hyperlink svdjHyperLink = new Hyperlink("svdj.nl");
+
+        svdjHyperLink.setStyle("-fx-border-color: transparent;");
         svdjHyperLink.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
         svdjHyperLink.setOnAction(e-> {
             try {
