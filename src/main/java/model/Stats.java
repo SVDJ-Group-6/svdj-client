@@ -1,12 +1,23 @@
 package model;
 
+import com.google.gson.JsonObject;
+
 public class Stats {
     private String uuid;
-    private int order;
+    private int index;
     private String question;
     private String answer;
     private String advice;
     private int timestampUNIX;
+
+    public Stats(String uuid, int index, String question, String answer, String advice, int timestampUNIX) {
+        this.uuid = uuid;
+        this.index = index;
+        this.question = question;
+        this.answer = answer;
+        this.advice = advice;
+        this.timestampUNIX = timestampUNIX;
+    }
 
     public String getUuid() {
         return uuid;
@@ -24,12 +35,12 @@ public class Stats {
         this.uuid = uuid;
     }
 
-    public int getOrder() {
-        return order;
+    public int getIndex() {
+        return index;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getQuestion() {
@@ -54,5 +65,16 @@ public class Stats {
 
     public void setTimestampUNIX(int timestampUNIX) {
         this.timestampUNIX = timestampUNIX;
+    }
+
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("uuid", this.getUuid());
+        jsonObject.addProperty("index", this.getIndex());
+        jsonObject.addProperty("question", this.getQuestion());
+        jsonObject.addProperty("answer", this.getAnswer());
+        jsonObject.addProperty("advice", this.getAdvice());
+        jsonObject.addProperty("timestampUNIX", this.getTimestampUNIX());
+        return jsonObject.toString();
     }
 }
