@@ -23,27 +23,14 @@ public class QuizComponent {
         this.answers = new ArrayList<>();
     }
 
-    private void makeQuestionFromJSon(){
-         //todo get the question text from a json
-        //todo get the question number as well
-        int questionNumber = 1;
-        this.question = new QuestionCreator(questionNumber,"Am i made from json").createCustomQuestion();
-    }
 
-    private void makeAnswersFromJSon(){
-        final int MAX = 4;
-        String answer = "the answer from the json";
-        for (int i = 0; i < MAX; i++) {
-            Button b = new ButtonCreator(answer,"d3d3db").createCustomButton();
-            this.answers.add(b);
-        }
-    }
+
     public HBox createQuizComponent(){
         //make a bunch  of test buttons
-        makeAnswersFromJSon();
+      //  makeAnswersFromJSon();
 
         //make a test question
-        makeQuestionFromJSon();
+      //  makeQuestionFromJSon();
 
         HBox hBox = new HBox();
         Text question = this.question;
@@ -55,4 +42,22 @@ public class QuizComponent {
         }
         return hBox;
     }
+
+    public HBox createQuestion() {
+
+        HBox hBox = new HBox();
+        Text question = new QuestionCreator(1, this.question.getText()).createCustomQuestion();
+        hBox.getChildren().add(question);
+        System.out.println("I made a Questiom");
+        return hBox;
+    }
+
+    public HBox createAnswers() {
+        HBox hBox = new HBox();
+        for(Button answer : answers) {
+            hBox.getChildren().add(new ButtonCreator(answer.getText(),"ccccff"));
+        }
+        return hBox;
+    }
+
 }

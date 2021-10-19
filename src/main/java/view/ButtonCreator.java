@@ -12,6 +12,7 @@ import javafx.scene.text.FontWeight;
 public class ButtonCreator extends Button {
     final double buttonPadding = 17.5;
 
+    private int preferedWidth;
     final int buttonFontSize = 22;
 
 
@@ -34,6 +35,15 @@ public class ButtonCreator extends Button {
     {
         this.buttonText = buttonText;
         this.buttonColorHash = "#" + buttonColor;
+        this.preferedWidth = 250;
+
+    }
+
+    public ButtonCreator(String buttonText)
+    {
+        this.buttonText = buttonText;
+        this.buttonColorHash = "#9CC2D4";
+        this.preferedWidth = 500;
 
     }
 
@@ -43,7 +53,7 @@ public class ButtonCreator extends Button {
         button.setTextFill(Color.BLACK);
         button.setAlignment(Pos.CENTER_LEFT);
         button.setPadding(new Insets(buttonPadding));
-        button.setPrefWidth(326);
+        button.setPrefWidth(preferedWidth);
         button.setStyle(String.format("-fx-background-color: %s;", buttonColor));
         button.setOnMouseEntered(e -> {
             button.setStyle(String.format("-fx-background-color: %s;", hoverButtonColor));
@@ -53,5 +63,9 @@ public class ButtonCreator extends Button {
         });
 
         return button;
+    }
+
+    public void setPreferedWidth(int preferedWidth) {
+        this.preferedWidth = preferedWidth;
     }
 }
