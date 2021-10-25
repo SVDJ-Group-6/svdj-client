@@ -2,9 +2,11 @@ package view;
 
 import controller.QuizController;
 import controller.ThemeController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -104,7 +106,7 @@ public class QuizView implements QuizObserver {
         //make a question
         HBox questionBox = new HBox();
         questionBox.getChildren().add(new QuestionCreator(1, question.getText()).createCustomQuestion());
-        questionBox.setStyle("-fx-background-color: rgb(100, 6, 25); -fx-background-radius: 10;");
+        //questionBox.setStyle("-fx-background-color: rgb(100, 6, 25); -fx-background-radius: 10;");
 
         question_Answers_box.getChildren().add(questionBox);
         question_Answers_box.getChildren().add(answerButtonsContainer);
@@ -170,8 +172,10 @@ public class QuizView implements QuizObserver {
         vbox.getChildren().add(next);
         mainContainer.getChildren().add(vbox);
 
-
  */
+
+
+
 
 
         return mainContainer;
@@ -201,7 +205,62 @@ public class QuizView implements QuizObserver {
         // Change value of elements
         this.previous.setVisible(questions.size() != 1);
         this.question.setText(currentQuestion.getValue());
-        this.answerButtonsContainer.getChildren().addAll(newButtons);
+
+        /*Todo scrollpane
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setPrefViewportWidth(answerButtonsContainer.getPrefWidth());
+        scrollPane.setPrefViewportHeight(answerButtonsContainer.getPrefHeight());
+
+         */
+
+        //Creating a Grid Pane
+        GridPane gridPane = new GridPane();
+
+        //Setting size for the pane
+        gridPane.setMinSize(400, 200);
+
+        //Setting the padding
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
+
+        //Setting the vertical and horizontal gaps between the columns
+        gridPane.setVgap(25);
+        gridPane.setHgap(80);
+
+        //Setting the Grid alignment
+        gridPane.setAlignment(Pos.CENTER);
+
+        int rows;
+        if(newButtons.size() % 2 == 0){
+            rows = newButtons.size() / 2;
+        }else
+        {
+            rows = (int) Math.floor(((newButtons.size() / 2) + 1));
+        }
+
+        int currentCol = 0;
+        int currentRow = 0;
+        boolean rowSpan = false;
+
+        for (Button button: newButtons) {
+            //add button
+            gridPane.add(button, currentCol, currentRow);
+            // keep column between 0, 1
+            if(!(currentCol % 2 == 0)){currentCol = 0;}else {currentCol++;}
+
+            if(rowSpan && currentRow < rows){
+                currentRow++;
+                rowSpan = false;
+            }
+            else {
+                rowSpan = true;
+            }
+
+        }
+
+        //scrollPane.setContent(gridPane);
+        //gridPane.add(new Pane(newButtons.get(i)), i, j);
+        //this.answerButtonsContainer.getChildren().addAll(newButtons);
+        this.answerButtonsContainer.getChildren().add(gridPane);
         this.selectedAnswer = null;
     }
 
