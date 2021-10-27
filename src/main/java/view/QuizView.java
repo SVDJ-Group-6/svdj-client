@@ -22,7 +22,7 @@ public class QuizView implements QuizObserver {
     private ThemeController themeController = ThemeController.getInstance();
     private Theme theme = themeController.getTheme();
 
-
+    private Question currentQuestion;
     private Answer selectedAnswer;
     private Text question;
     private HBox answerButtons;
@@ -44,7 +44,7 @@ public class QuizView implements QuizObserver {
         next = new ButtonCreator("Next","d3d3db").createCustomButton();
         next.setOnAction((event -> {
             if (selectedAnswer != null) {
-                quizController.next(selectedAnswer);
+                quizController.next(currentQuestion, selectedAnswer);
             }
         }));
 
@@ -92,6 +92,7 @@ public class QuizView implements QuizObserver {
         this.question.setText(currentQuestion.getValue());
         this.answerButtons.getChildren().addAll(newButtons);
         this.selectedAnswer = null;
+        this.currentQuestion = currentQuestion;
     }
     
 }

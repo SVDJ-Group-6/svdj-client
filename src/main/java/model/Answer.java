@@ -1,5 +1,9 @@
 package model;
 
+import com.google.gson.JsonObject;
+
+import java.util.Formatter;
+
 public class Answer {
 
     private int id;
@@ -8,8 +12,10 @@ public class Answer {
     private Integer nextQuestionId;
     private Integer adviceId;
 
-    public Answer(Integer nextQuestionId) {
-        this.nextQuestionId = nextQuestionId;
+    public Answer(int id, String value, int originQuestionId) {
+        this.id = id;
+        this.value = value;
+        this.originQuestionId = originQuestionId;
     }
 
     public int getId() {
@@ -50,5 +56,15 @@ public class Answer {
 
     public void setAdviceId(Integer adviceId) {
         this.adviceId = adviceId;
+    }
+
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("value", value);
+        jsonObject.addProperty("originQuestionId", originQuestionId);
+        jsonObject.addProperty("nextQuestionId", nextQuestionId);
+        jsonObject.addProperty("adviceId", adviceId);
+        return jsonObject.toString();
     }
 }

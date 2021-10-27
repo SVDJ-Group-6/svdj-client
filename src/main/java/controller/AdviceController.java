@@ -2,19 +2,43 @@ package controller;
 
 import DAO.AdviceDAO;
 import model.Advice;
+import observer.AdviceObserver;
+
+import java.io.IOException;
 
 public class AdviceController {
 
     private static AdviceController adviceController;
-    private AdviceDAO adviceDAO;
+    private AdviceDAO adviceDAO = AdviceDAO.getInstance();
+    private Advice advice = new Advice();
 
-    public void loadAdvice(int adviceId){}
-    public void sendAdviceToMail(String mail, Advice advice){}
-    public void openUrl(String url){}
-    public void navigateHome(){}
+    public void loadAdvice(int adviceId){
+        try {
+            Advice newAdvice = adviceDAO.getAdviceFromAPI(adviceId);
+            advice.replaceAdvice(newAdvice);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    //Todo
+    public void sendAdviceToMail(String mail, Advice advice){
+
+    }
+    public void openUrl(String url){
+
+    }
+    public void navigateHome(){
+
+    }
+
     public static AdviceController getInstance(){
+        if (adviceController == null) {
+            adviceController = new AdviceController();
+        }
         return adviceController;
+    }
+
+    public void registerObserver(AdviceObserver adviceObserver) {
+        advice.registerObserver(adviceObserver);
     }
 }
