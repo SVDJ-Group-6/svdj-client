@@ -1,9 +1,14 @@
 package model;
 
+import com.google.gson.JsonObject;
 import observable.AdviceObservable;
 import observer.AdviceObserver;
 
+import java.util.ArrayList;
+
 public class Advice implements AdviceObservable {
+
+    private final ArrayList<AdviceObserver> observers = new ArrayList<>();
 
     private int id;
     private String value;
@@ -12,12 +17,24 @@ public class Advice implements AdviceObservable {
     private String videoUrl;
     private String otherFundUrl;
 
+    public Advice() {}
+
+    public Advice(int id, String value, String description, String moreInfoUrl, String videoUrl, String otherFundUrl) {
+        this.id = id;
+        this.value = value;
+        this.description = description;
+        this.moreInfoUrl = moreInfoUrl;
+        this.videoUrl = videoUrl;
+        this.otherFundUrl = otherFundUrl;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+        notifyObservers();
     }
 
     public String getValue() {
@@ -26,6 +43,7 @@ public class Advice implements AdviceObservable {
 
     public void setValue(String value) {
         this.value = value;
+        notifyObservers();
     }
 
     public String getDescription() {
@@ -34,6 +52,7 @@ public class Advice implements AdviceObservable {
 
     public void setDescription(String description) {
         this.description = description;
+        notifyObservers();
     }
 
     public String getMoreInfoUrl() {
@@ -42,6 +61,7 @@ public class Advice implements AdviceObservable {
 
     public void setMoreInfoUrl(String moreInfoUrl) {
         this.moreInfoUrl = moreInfoUrl;
+        notifyObservers();
     }
 
     public String getVideoUrl() {
@@ -50,6 +70,7 @@ public class Advice implements AdviceObservable {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+        notifyObservers();
     }
 
     public String getOtherFundUrl() {
@@ -58,20 +79,44 @@ public class Advice implements AdviceObservable {
 
     public void setOtherFundUrl(String otherFundUrl) {
         this.otherFundUrl = otherFundUrl;
+        notifyObservers();
+    }
+
+    public void replaceAdvice(Advice newAdvice) {
+        this.id = newAdvice.getId();
+        this.value = newAdvice.getValue();
+        this.description = newAdvice.getDescription();
+        this.moreInfoUrl = newAdvice.getMoreInfoUrl();
+        this.videoUrl = newAdvice.getVideoUrl();
+        this.otherFundUrl = newAdvice.getOtherFundUrl();
+        notifyObservers();
     }
 
     @Override
     public void registerObserver(AdviceObserver adviceObserver) {
-
+        observers.add(adviceObserver);
     }
 
     @Override
     public void unregisterObserver(AdviceObserver adviceObserver) {
-
+        observers.remove(adviceObserver);
     }
 
     @Override
     public void notifyObservers() {
+        for (AdviceObserver adviceObserver: observers) {
+            adviceObserver.update(this);
+        }
+    }
 
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("value", value);
+        jsonObject.addProperty("description", description);
+        jsonObject.addProperty("moreInfoUrl", moreInfoUrl);
+        jsonObject.addProperty("videoUrl", videoUrl);
+        jsonObject.addProperty("otherFundUrl", otherFundUrl);
+        return jsonObject.toString();
     }
 }

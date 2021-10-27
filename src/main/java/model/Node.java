@@ -8,9 +8,13 @@ public class Node {
     private ArrayList<Answer> answers;
     private Advice advice;
 
-    //Todo what is being initialized ?
-    public Node(Question question, ArrayList<Answer> answers){}
-    public Node(Advice advice){}
+    public Node(Question question, ArrayList<Answer> answers){
+        this.question = question;
+        this.answers = answers;
+    }
+    public Node(Advice advice){
+        this.advice = advice;
+    }
 
     public Question getQuestion() {
         return question;

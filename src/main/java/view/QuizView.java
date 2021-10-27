@@ -22,7 +22,7 @@ public class QuizView implements QuizObserver {
     private ThemeController themeController = ThemeController.getInstance();
     private Theme theme = themeController.getTheme();
 
-
+    private Question currentQuestion;
     private Answer selectedAnswer;
     private Text question;
     private HBox answerButtons;
@@ -31,20 +31,18 @@ public class QuizView implements QuizObserver {
     private Button next;
 
     public QuizView() {
-
-        this.quizController = QuizController.getInstance();
-        this.question = new QuestionCreator(0,"").createCustomQuestion();
+        question = new Text("");
         answerButtons = new HBox();
 
-        previous = new ButtonCreator("Previous","d3d3db").createCustomButton();
+        previous = new Button("Previous");
         previous.setOnAction((event -> {
             quizController.back();
         }));
-      
-        next = new ButtonCreator("Next","d3d3db").createCustomButton();
+
+        next = new Button("Next");
         next.setOnAction((event -> {
             if (selectedAnswer != null) {
-                quizController.next(selectedAnswer);
+                quizController.next(currentQuestion, selectedAnswer);
             }
         }));
 
@@ -52,18 +50,17 @@ public class QuizView implements QuizObserver {
         quizController.loadFirst();
     }
 
-    public HBox getQuizPane() {
-        HBox quizBox = new HBox();
+    public StackPane getQuizPane() {
+        StackPane stackPane = new StackPane();
 
-        HBox vbox = new HBox();
+        VBox vbox = new VBox();
         vbox.getChildren().add(question);
         vbox.getChildren().add(answerButtons);
-
         vbox.getChildren().add(previous);
         vbox.getChildren().add(next);
-        quizBox.getChildren().add(vbox);
+        stackPane.getChildren().add(vbox);
 
-        return quizBox;
+        return stackPane;
     }
 
     @Override
@@ -79,7 +76,7 @@ public class QuizView implements QuizObserver {
 
         ArrayList<Button> newButtons = new ArrayList<>();
         for (Answer answer : currentAnswers) {
-            Button tmpBtn = new ButtonCreator(answer.getValue(),"d3d3db").createCustomButton();
+            Button tmpBtn = new Button(answer.getValue());
             tmpBtn.setOnAction((event -> {
                 this.selectedAnswer = answer;
             }));
@@ -88,10 +85,10 @@ public class QuizView implements QuizObserver {
 
         // Change value of elements
         this.previous.setVisible(questions.size() != 1);
-
         this.question.setText(currentQuestion.getValue());
         this.answerButtons.getChildren().addAll(newButtons);
         this.selectedAnswer = null;
+        this.currentQuestion = currentQuestion;
     }
     
 }

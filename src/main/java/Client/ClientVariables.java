@@ -1,4 +1,4 @@
-package ClientApplication;
+package Client;
 
 import javafx.stage.Stage;
 import model.Theme;
