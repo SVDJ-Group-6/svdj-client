@@ -5,6 +5,9 @@ import DAO.LoginDAO;
 import observer.LoginObserver;
 import view.DashboardView;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+
 public class LoginController {
     static private LoginController loginController;
     private LoginDAO loginDAO;
@@ -21,7 +24,20 @@ public class LoginController {
     }
 
     public void login(String username, String password){
-        loginDAO.requestToken(username, password);
+        if (username.isEmpty() && password.isEmpty()) {
+            loginDAO.setMessage("Fill in all the required fields!");
+            return;
+        }
+
+        try {
+            loginDAO.setMessage("Checking credentials...");
+            String token = loginDAO.requestToken(username, password);
+            AdminVariables.token = token;
+            switchToDashboard();
+        } catch (NoSuchAlgorithmException | IOException e) {
+            loginDAO.setMessage("Combination does not exists.");
+            e.printStackTrace();
+        }
     }
 
     public void switchToDashboard() {

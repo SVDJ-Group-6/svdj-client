@@ -36,8 +36,10 @@ import javafx.scene.image.Image;
 
 public class LoginView implements LoginObserver {
     private LoginController loginController = LoginController.getInstance();
+    private Text message;
 
     public LoginView() {
+        message = new Text();
         loginController.registerObserver(this);
     }
 
@@ -45,6 +47,7 @@ public class LoginView implements LoginObserver {
         final double buttonPadding = 17.5;
         final int headerFontSize = 64;
         final int buttonFontSize = 22;
+        final int messageFontSize = 20;
 
         final int logoWidth = 480;
         final int logoHeight = 128;
@@ -79,10 +82,16 @@ public class LoginView implements LoginObserver {
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.CENTER);
 
+        message.setFont(Font.font(fontFamily, FontWeight.NORMAL, messageFontSize));
+        message.setFill(Color.WHITE);
+        message.setTextAlignment(TextAlignment.CENTER);
+
         VBox headerContainer = new VBox();
         headerContainer.setPadding(new Insets(25, 0, 0, 0));
         headerContainer.setAlignment(Pos.CENTER);
         headerContainer.getChildren().add(headerText);
+        headerContainer.getChildren().add(message);
+
 
         TextField usernameField = new TextField();
         usernameField.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
@@ -101,7 +110,7 @@ public class LoginView implements LoginObserver {
         VBox loginFormBox = new VBox(20);
         loginFormBox.setAlignment(Pos.CENTER);
         loginFormBox.setMaxWidth(900);
-        loginFormBox.setPadding(new Insets(25, 0, 0, 0));
+        loginFormBox.setPadding(new Insets(0, 0, 0, 0));
         loginFormBox.getChildren().addAll(usernameField, passwordField);
 
         Button loginButton = new Button("Login");
@@ -122,8 +131,7 @@ public class LoginView implements LoginObserver {
             String password = passwordField.getText();
 
             loginController.login(username, password);
-
-            loginController.switchToDashboard();
+            passwordField.setText("");
         });
 
         GridPane actionList = new GridPane();
@@ -152,8 +160,6 @@ public class LoginView implements LoginObserver {
 
     @Override
     public void update(Login login) {
-        Platform.runLater(() -> {
-            System.out.println(login.getMessage());
-        });
+        message.setText(login.getMessage());
     }
 }
