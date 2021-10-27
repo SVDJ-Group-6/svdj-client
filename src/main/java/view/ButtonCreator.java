@@ -11,21 +11,11 @@ import javafx.scene.text.FontWeight;
 
 public class ButtonCreator extends Button {
     final double buttonPadding = 17.5;
-
     private int preferedWidth;
-    final int buttonFontSize = 22;
-
-
-        final String buttonColor = "#9CC2D4";
-        final String hoverButtonColor = "#E4F6FF";
-
-
-
-        final String fontFamily = "Arial";
-
-
-
-
+    private int buttonFontSize = 22;
+    final String buttonColor = "#9CC2D4";
+    final String hoverButtonColor = "#E4F6FF";
+    final String fontFamily = "Arial";
     private String buttonText;
     private String buttonColorHash;
 
