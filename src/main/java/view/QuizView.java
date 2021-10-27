@@ -241,11 +241,14 @@ public class QuizView implements QuizObserver {
         int currentRow = 0;
         boolean rowSpan = false;
 
+
         for (Button button: newButtons) {
             //add button
             gridPane.add(button, currentCol, currentRow);
+
             // keep column between 0, 1
-            if(!(currentCol % 2 == 0)){currentCol = 0;}else {currentCol++;}
+            //if(!(currentCol % 2 == 0)){currentCol = 0;}else {currentCol++;}
+            currentCol = (currentCol + 1) % 2;
 
             if(rowSpan && currentRow < rows){
                 currentRow++;
