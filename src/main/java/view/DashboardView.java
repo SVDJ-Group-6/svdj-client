@@ -144,7 +144,7 @@ public class DashboardView {
             logoutButton.setStyle(String.format("-fx-background-color: %s;", LOGOUT_BUTTON_COLOR));
         });
         logoutButton.setOnMouseClicked(e -> {
-            AdminVariables.stage.setScene(new LoginView().getLoginScene());
+            dashboardController.logout();
         });
 
         GridPane actionList = new GridPane();
