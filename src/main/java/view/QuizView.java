@@ -1,12 +1,9 @@
 package view;
 
 import controller.QuizController;
-import controller.ThemeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,7 +13,6 @@ import javafx.scene.text.Text;
 import model.Answer;
 import model.Question;
 import model.Quiz;
-import model.Theme;
 import observer.QuizObserver;
 
 import java.io.FileInputStream;
@@ -25,15 +21,11 @@ import java.util.ArrayList;
 
 public class QuizView implements QuizObserver {
 
-
-    VBox question_Answers_box;
-    private QuizController quizController = QuizController.getInstance();
-    private ThemeController themeController = ThemeController.getInstance();
-    private Theme theme = themeController.getTheme();
-
+    private QuizController quizController;
     private Answer selectedAnswer;
     private Text question;
     private HBox answerButtonsContainer;
+    HBox questionBox;
 
     private Button previous;
     private Button next;
@@ -44,49 +36,63 @@ public class QuizView implements QuizObserver {
 
     private void intializeQuiz(){
 
-        question_Answers_box = new VBox(20);
+        questionBox = new HBox();
         // initialize the text element
-        question = new QuestionCreator(1, "").createCustomQuestion();
+        question = new Text();
         //Make a new Container to hold buttons
         answerButtonsContainer = new HBox();
 
         //initialize the back and next buttons
         previous = new ButtonCreator("Previous","9CC2D4").createCustomButton();
-        previous.setOnAction((event -> {
-            quizController.back();
-        }));
+        setActionListenerToPreviousButton();
 
         next = new ButtonCreator("Next","9CC2D4").createCustomButton();
-        next.setOnAction((event -> {
-            if (selectedAnswer != null) {
-                quizController.next(selectedAnswer);
-            }
-        }));
+        setActionListenerToNextButton();
 
+        quizController = QuizController.getInstance();
         quizController.registerObserver(this);
         quizController.loadFirst();
     }
 
-    public VBox getQuizPane() {
-        VBox mainContainer = new VBox();
+    /**
+     * Adds an action listener to the previous button
+     */
+    private void setActionListenerToPreviousButton(){
+        previous.setOnAction((event -> {
+        quizController.back();
+        }));
+    }
 
-        //picture of svdj
+    /**
+     * Adds an action listener to the next button
+     */
+    private void setActionListenerToNextButton(){
+        next.setOnAction((event -> {
+        if (selectedAnswer != null) {
+            quizController.next(selectedAnswer);
+        }}));
+    }
+
+
+    //supporting methods
+    private Background makeBackground(String image){
         BackgroundImage background = null;
         try {
-            background = new BackgroundImage(new Image(new FileInputStream("./src/main/resources/background.png")),
+            background = new BackgroundImage(new Image(new FileInputStream(image)),
                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        // give the main container a background
-        mainContainer.setBackground(new Background(background));
+        return new Background(background);
+    }
+    private VBox makeLogoContainer(String image){
 
         //put logo in container
         VBox logoContainer = new VBox();
         Image logo = null;
         try {
-            logo = new Image(new FileInputStream("./src/main/resources/SVDJ_logo.png"));
+            logo = new Image(new FileInputStream(image));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -96,21 +102,19 @@ public class QuizView implements QuizObserver {
         logoView.setPreserveRatio(true);
         logoContainer.getChildren().add(logoView);
 
-        VBox secondaryContainer = new VBox();
-
-        question_Answers_box.setMaxWidth(1000);
-        question_Answers_box.setMaxHeight(600);
-        question_Answers_box.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 10;");
-        secondaryContainer.setAlignment(Pos.CENTER);
+        return logoContainer;
+    }
+    private HBox makeQuestionContainer(){
 
         //make a question
-        HBox questionBox = new HBox();
-        questionBox.getChildren().add(new QuestionCreator(1, question.getText()).createCustomQuestion());
+        questionBox.getChildren().add(new QuestionCreator(question.getText()).createCustomQuestion());
         //questionBox.setStyle("-fx-background-color: rgb(100, 6, 25); -fx-background-radius: 10;");
-
-        question_Answers_box.getChildren().add(questionBox);
-        question_Answers_box.getChildren().add(answerButtonsContainer);
-
+        return questionBox;
+    }
+    private HBox makeAnswerContainer(){
+        return answerButtonsContainer;
+    }
+    private HBox makeNavigationContainer(){
         //create navigation container
         HBox navGrid = new HBox(80);
         //navGrid.setStyle("-fx-background-color: rgb(83,129,215); -fx-background-radius: 10;");
@@ -158,40 +162,56 @@ public class QuizView implements QuizObserver {
         navGrid.getChildren().add(next);
         navGrid.setAlignment(Pos.CENTER);
 
-        question_Answers_box.getChildren().add(navGrid);
+        return navGrid;
+    }
+    private VBox makeSecondaryContainer(){
 
+        VBox secondaryContainer = new VBox();
+        secondaryContainer.setAlignment(Pos.CENTER);
+
+        VBox question_Answers_box = new VBox(20);
+
+        question_Answers_box.setMaxWidth(1000);
+        question_Answers_box.setMaxHeight(600);
+        question_Answers_box.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 10;");
+
+        question_Answers_box.getChildren().add(makeQuestionContainer());
+        question_Answers_box.getChildren().add(makeAnswerContainer());
+
+        question_Answers_box.getChildren().add(makeNavigationContainer());
         secondaryContainer.getChildren().add(question_Answers_box);
 
-        mainContainer.getChildren().add(logoContainer);
-        mainContainer.getChildren().add(secondaryContainer);
-/*
-        VBox vbox = new VBox();
-        vbox.getChildren().add(question);
-        vbox.getChildren().add(answerButtonsContainer);
-        vbox.getChildren().add(previous);
-        vbox.getChildren().add(next);
-        mainContainer.getChildren().add(vbox);
-
- */
-
-
-
-
-
+        return secondaryContainer;
+    }
+    private VBox makeMainContainer(){
+        VBox mainContainer = new VBox(20);
+        // give the main container a background
+        mainContainer.setBackground(makeBackground("./src/main/resources/background.png"));
+        mainContainer.getChildren().add(makeLogoContainer("./src/main/resources/SVDJ_logo.png"));
+        mainContainer.getChildren().add(makeSecondaryContainer());
         return mainContainer;
     }
 
-    @Override
-    public void update(Quiz quiz) {
+    //main method that draws shit
+    public VBox drawQuiz() {
+        return makeMainContainer();
+    }
+
+    private void updateQuestion(Quiz quiz){
         ArrayList<Question> questions = quiz.getQuestions();
-        ArrayList<ArrayList<Answer>> allAnswers = quiz.getAnswers();
+        for (Question q: questions) {
 
+            System.out.println(q.getValue());
+
+        }
         Question currentQuestion = questions.get(questions.size() - 1);
+        // Change value of elements
+        this.previous.setVisible(questions.size() != 1);
+        this.question.setText(currentQuestion.getValue());
+    }
+    private void updateAnswers(Quiz quiz){
+        ArrayList<ArrayList<Answer>> allAnswers = quiz.getAnswers();
         ArrayList<Answer> currentAnswers = allAnswers.get(allAnswers.size() - 1);
-
-        // Empty HBOX for the new Buttons.
-        this.answerButtonsContainer.getChildren().removeAll(this.answerButtonsContainer.getChildren());
-
         ArrayList<Button> newButtons = new ArrayList<>();
         for (Answer answer : currentAnswers) {
             Button tmpBtn = new ButtonCreator(answer.getValue()).createCustomButton();
@@ -201,17 +221,6 @@ public class QuizView implements QuizObserver {
             }));
             newButtons.add(tmpBtn);
         }
-
-        // Change value of elements
-        this.previous.setVisible(questions.size() != 1);
-        this.question.setText(currentQuestion.getValue());
-
-        /*Todo scrollpane
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setPrefViewportWidth(answerButtonsContainer.getPrefWidth());
-        scrollPane.setPrefViewportHeight(answerButtonsContainer.getPrefHeight());
-
-         */
 
         //Creating a Grid Pane
         GridPane gridPane = new GridPane();
@@ -257,7 +266,6 @@ public class QuizView implements QuizObserver {
             else {
                 rowSpan = true;
             }
-
         }
 
         //scrollPane.setContent(gridPane);
@@ -265,9 +273,23 @@ public class QuizView implements QuizObserver {
         //this.answerButtonsContainer.getChildren().addAll(newButtons);
         this.answerButtonsContainer.getChildren().add(gridPane);
         this.selectedAnswer = null;
+
+    }
+    @Override
+    public void update(Quiz quiz) {
+
+        // Empty HBOX for the new Qeustion.
+        this.questionBox.getChildren().removeAll(this.questionBox.getChildren());
+        updateQuestion(quiz);
+
+        this.makeQuestionContainer();
+
+        // Empty HBOX for the new Buttons.
+        this.answerButtonsContainer.getChildren().removeAll(this.answerButtonsContainer.getChildren());
+        updateAnswers(quiz);
+
+        this.selectedAnswer = null;
+
     }
 
-    public VBox getQuestion_Answers_box() {
-        return question_Answers_box;
-    }
 }
