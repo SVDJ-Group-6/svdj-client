@@ -12,9 +12,9 @@ public class Advice implements AdviceObservable {
     private int id;
     private String value;
     private String description;
-    private String moreInfoUrl;
-    private String videoUrl;
-    private String otherFundUrl;
+    private String moreInfoURL;
+    private String videoURL;
+    private String otherFundURL;
 
     public Advice() {}
 
@@ -22,9 +22,9 @@ public class Advice implements AdviceObservable {
         this.id = id;
         this.value = value;
         this.description = description;
-        this.moreInfoUrl = moreInfoUrl;
-        this.videoUrl = videoUrl;
-        this.otherFundUrl = otherFundUrl;
+        this.moreInfoURL = moreInfoUrl;
+        this.videoURL = videoUrl;
+        this.otherFundURL = otherFundUrl;
     }
 
     public int getId() {
@@ -55,29 +55,37 @@ public class Advice implements AdviceObservable {
     }
 
     public String getMoreInfoUrl() {
-        return moreInfoUrl;
+        return moreInfoURL;
     }
 
     public void setMoreInfoUrl(String moreInfoUrl) {
-        this.moreInfoUrl = moreInfoUrl;
+        this.moreInfoURL = moreInfoUrl;
         notifyObservers();
     }
 
     public String getVideoUrl() {
-        return videoUrl;
+        return videoURL;
+    }
+
+    public boolean hasVideoUrl() {
+        if (videoURL == null){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+        this.videoURL = videoUrl;
         notifyObservers();
     }
 
     public String getOtherFundUrl() {
-        return otherFundUrl;
+        return otherFundURL;
     }
 
     public void setOtherFundUrl(String otherFundUrl) {
-        this.otherFundUrl = otherFundUrl;
+        this.otherFundURL = otherFundUrl;
         notifyObservers();
     }
 
@@ -85,9 +93,9 @@ public class Advice implements AdviceObservable {
         this.id = newAdvice.getId();
         this.value = newAdvice.getValue();
         this.description = newAdvice.getDescription();
-        this.moreInfoUrl = newAdvice.getMoreInfoUrl();
-        this.videoUrl = newAdvice.getVideoUrl();
-        this.otherFundUrl = newAdvice.getOtherFundUrl();
+        this.moreInfoURL = newAdvice.getMoreInfoUrl();
+        this.videoURL = newAdvice.getVideoUrl();
+        this.otherFundURL = newAdvice.getOtherFundUrl();
         notifyObservers();
     }
 

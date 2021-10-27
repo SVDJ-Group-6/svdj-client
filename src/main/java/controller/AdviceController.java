@@ -41,4 +41,7 @@ public class AdviceController {
     public void registerObserver(AdviceObserver adviceObserver) {
         advice.registerObserver(adviceObserver);
     }
+    public void unregisterObserver(AdviceObserver adviceObserver) {
+        advice.unregisterObserver(adviceObserver);
+    }
 }
