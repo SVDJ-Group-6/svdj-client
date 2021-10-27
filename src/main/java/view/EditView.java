@@ -2,10 +2,9 @@ package view;
 
 import Admin.AdminVariables;
 import controller.EditController;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import model.Advice;
 import model.Answer;
 import model.Edit;
 import model.Node;
@@ -43,7 +42,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class EditView implements EditObserver {
-    // Todo in class diagram with uppercase "E"
     private EditController editController = EditController.getInstance();
 
     private final double BUTTON_PADDING = 12.5;
@@ -54,7 +52,6 @@ public class EditView implements EditObserver {
     private final int LOGO_WIDTH = 480;
     private final int LOGO_HEIGHT = 128;
 
-    /* Begin Temporary */
     private final String BUTTON_COLOR = "#FFFFFF";
     private final String HOVER_BUTTON_COLOR = "#000000";
 
@@ -63,7 +60,6 @@ public class EditView implements EditObserver {
     private final String QUESTION_ACTION_COLOR = "#9CC2D4";
 
     private final String FONT_FAMILY = "Arial";
-    /* End Temporary */
 
     private VBox questionList = new VBox(10);
 
@@ -171,22 +167,7 @@ public class EditView implements EditObserver {
         headerContainer.setHgrow(actionContainer, Priority.ALWAYS);
         headerContainer.getChildren().addAll(headerText, actionContainer);
 
-        /**
-         * Scrollpane Each container = one question one question contains more answers
-         * answer contains list of reference
-         */
-
         ScrollPane questionScrollPane = new ScrollPane();
-        /**
-         * Begin Temporary
-         * 
-         * QUESTION [HBox -> (Text, HBox -> ((HBox -> Text, Button), Text, ComboBox),
-         * Button, Button)]
-         */
-
-        /**
-         * Voor elke vraag een questionBox
-         */
 
         // TODO: Add alit if questionBoxes
         questionList.setMinWidth(1200);
@@ -212,6 +193,14 @@ public class EditView implements EditObserver {
             ex.printStackTrace();
         }
         root.getChildren().addAll(logoHeader, headerContainer, questionScrollPane);
+
+        return new Scene(root);
+    }
+
+    public Scene getAdviceEditScene() {
+        VBox root = new VBox(25);
+        root.setAlignment(Pos.TOP_CENTER);
+        root.setPadding(new Insets(25));
 
         return new Scene(root);
     }
@@ -265,8 +254,6 @@ public class EditView implements EditObserver {
 
         return header;
     }
-
-    // TODO ACTIONS DELETE ENPOINT
 
     private VBox createAnswerBox(ArrayList<Node> nodes, Question question, Answer answer) {
         VBox answerBox = new VBox(5);
@@ -418,6 +405,22 @@ public class EditView implements EditObserver {
         referQuestionBox.setStyle("-fx-font-weight: bold;");
 
         return referQuestionBox;
+    }
+
+    private VBox createAdviceBox(Advice advice) {
+        return new VBox(25);
+    }
+
+    private HBox createAdviceHeader() {
+        return new HBox(25);
+    }
+
+    private VBox createAdviceBody() {
+        return new VBox(25);
+    }
+
+    private HBox createAdviceAction() {
+        return new HBox(25);
     }
 
     @Override

@@ -24,6 +24,10 @@ public class DashboardController {
         AdminVariables.stage.setScene(new EditView().getEditScene());
     }
 
+    public void navigateAdviceView() {
+        AdminVariables.stage.setScene(new EditView().getAdviceEditScene());
+    }
+
     public void saveStats() {
         // StatsService.getStatsAsCSVFormat();
     }
