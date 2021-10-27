@@ -1,8 +1,15 @@
 package model;
 
+import com.google.gson.JsonObject;
+
 public class Question {
     private int id;
     private String value;
+
+    public Question(int id, String value) {
+        this.id = id;
+        this.value = value;
+    }
 
     public int getId() {
         return id;
@@ -18,5 +25,12 @@ public class Question {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("value", value);
+        return jsonObject.toString();
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import com.google.gson.JsonObject;
 import observable.AdviceObservable;
 import observer.AdviceObserver;
 
@@ -106,5 +107,16 @@ public class Advice implements AdviceObservable {
         for (AdviceObserver adviceObserver: observers) {
             adviceObserver.update(this);
         }
+    }
+
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("value", value);
+        jsonObject.addProperty("description", description);
+        jsonObject.addProperty("moreInfoUrl", moreInfoUrl);
+        jsonObject.addProperty("videoUrl", videoUrl);
+        jsonObject.addProperty("otherFundUrl", otherFundUrl);
+        return jsonObject.toString();
     }
 }
