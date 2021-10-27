@@ -37,7 +37,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -45,12 +44,22 @@ public class EditView implements EditObserver {
     private EditController editController = EditController.getInstance();
 
     private final double BUTTON_PADDING = 12.5;
+
     private final int HEADER_FONT_SIZE = 64;
-    private final int BUTTON_FONT_SIZE = 22;
-    private final int QUESTION_TITLE_FONT_SIZE = 22;
+    private final int BUTTON_FONT_SIZE = 20;
+    private final int TITLE_FONT_SIZE = 20;
+    private final int FIELD_FONT_SIZE = 16;
 
     private final int LOGO_WIDTH = 480;
     private final int LOGO_HEIGHT = 128;
+
+    private final int ADD_BUTTON_WIDTH = 25;
+    private final int ADD_BUTTON_HEIGHT = 25;
+
+    private final int CONTAINER_SPACING = 25;
+
+    private final int SCROLLPANE_CONTENT_WIDTH = 585;
+    private final int SCROLLPANE_CONTAINER_WIDTH = 600;
 
     private final String BUTTON_COLOR = "#FFFFFF";
     private final String HOVER_BUTTON_COLOR = "#000000";
@@ -61,38 +70,71 @@ public class EditView implements EditObserver {
 
     private final String FONT_FAMILY = "Arial";
 
-    private VBox questionList = new VBox(10);
+    private Text headerText = new Text();
+    private VBox questionItemList = new VBox(10);
+    private VBox adviceItemList = new VBox(10);
+    private VBox questionParent = new VBox();
+    private VBox adviceParent = new VBox();
+    private VBox headerContainer = new VBox();
+    private HBox logoHeader = new HBox();
+    private GridPane actionContainer;
+    private ScrollPane questionScrollPane = new ScrollPane();
+    private ScrollPane adviceScrollPane = new ScrollPane();
+    private Button backButton, applyButton;
+    private Button addQuestionButton = new Button();
+    private Button addAdviceButton = new Button();
+    private HBox scrollParent;
+    private HBox leftSideScrollPane = new HBox();
+    private HBox rightSideScrollPane = new HBox();
+
+    private Text leftScrollPaneHeader = new Text("Vragen & Antwoorden: ");
+    private Text rightScrollPaneHeader = new Text("Adviezen: ");
+    private HBox questionActionContainer = new HBox();
+    private HBox adviceActionContainer = new HBox();
+    private HBox leftScrollPaneHeaderBox = new HBox();
+    private HBox rightScrollPaneHeaderBox = new HBox();
+
+    private FileInputStream logoInput, backgroundInput, deleteInput, addInput;
+    private Image logoImage, backgroundImage, deleteImage, addImage;
+    private ImageView logoImageView, deleteImageView, addQuestionImageView, addAdviceImageView;
 
     public EditView() {
-        editController.registerObserver(this);
-        editController.loadAllNodes();
-    }
-
-    public Scene getEditScene() {
-
-        FileInputStream logoInput, backgroundInput, deleteInput;
-        Image logoImage, backgroundImage, deleteImage;
-        ImageView logoImageView, deleteImageView;
-
-        HBox logoHeader = new HBox();
-        logoHeader
-                .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         try {
             logoInput = new FileInputStream("./src/main/resources/logo.png");
             logoImage = new Image(logoInput, LOGO_WIDTH, LOGO_HEIGHT, true, false);
             logoImageView = new ImageView(logoImage);
 
+            backgroundInput = new FileInputStream("./src/main/resources/background.png");
+            backgroundImage = new Image(backgroundInput);
+
+            addInput = new FileInputStream("./src/main/resources/add_btn.png");
+            addImage = new Image(addInput);
+            addQuestionImageView = new ImageView(addImage);
+            addQuestionImageView.setFitWidth(ADD_BUTTON_WIDTH);
+            addQuestionImageView.setFitHeight(ADD_BUTTON_HEIGHT);
+
+            addAdviceImageView = new ImageView(addImage);
+            addAdviceImageView.setFitWidth(ADD_BUTTON_WIDTH);
+            addAdviceImageView.setFitHeight(ADD_BUTTON_HEIGHT);
+
+            logoHeader.setBackground(
+                    new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
             logoHeader.getChildren().add(logoImageView);
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
 
-        Text headerText = new Text("Vragenlijst");
+        editController.registerObserver(this);
+        editController.loadAllNodes();
+    }
+
+    public Scene getEditScene() {
+        headerText.setText("Vragenlijst");
         headerText.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, HEADER_FONT_SIZE));
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.LEFT);
 
-        Button backButton = new Button("Terug");
+        backButton = new Button("Terug");
         backButton.setPadding(new Insets(BUTTON_PADDING));
         backButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         backButton.setTextFill(Color.BLACK);
@@ -106,38 +148,7 @@ public class EditView implements EditObserver {
             backButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
         });
 
-        Button addButton = new Button("Vraag toevoegen");
-        addButton.setPadding(new Insets(BUTTON_PADDING));
-        addButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        addButton.setTextFill(Color.BLACK);
-        addButton.setPrefWidth(246);
-        addButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
-        addButton.setOnMouseEntered(e -> {
-            addButton.setStyle(
-                    String.format("-fx-background-color: %s; -fx-text-fill: %s;", HOVER_BUTTON_COLOR, BUTTON_COLOR));
-        });
-        addButton.setOnMouseExited(e -> {
-            addButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
-        });
-        addButton.setOnAction(e -> {
-            editController.addQuestion();
-        });
-
-        Button cancelButton = new Button("Annuleren");
-        cancelButton.setPadding(new Insets(BUTTON_PADDING));
-        cancelButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        cancelButton.setTextFill(Color.BLACK);
-        cancelButton.setPrefWidth(143);
-        cancelButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
-        cancelButton.setOnMouseEntered(e -> {
-            cancelButton.setStyle(
-                    String.format("-fx-background-color: %s; -fx-text-fill: %s;", HOVER_BUTTON_COLOR, BUTTON_COLOR));
-        });
-        cancelButton.setOnMouseExited(e -> {
-            cancelButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
-        });
-
-        Button applyButton = new Button("Bevestigen");
+        applyButton = new Button("Bevestigen");
         applyButton.setPadding(new Insets(BUTTON_PADDING));
         applyButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         applyButton.setTextFill(Color.BLACK);
@@ -154,82 +165,123 @@ public class EditView implements EditObserver {
             editController.submitChanges();
         });
 
-        GridPane actionContainer = new GridPane();
-        actionContainer.setHgap(25);
+        actionContainer = new GridPane();
+        actionContainer.setHgap(CONTAINER_SPACING);
         actionContainer.setAlignment(Pos.CENTER_RIGHT);
         actionContainer.add(backButton, 0, 0);
-        actionContainer.add(addButton, 1, 0);
-        actionContainer.add(cancelButton, 2, 0);
-        actionContainer.add(applyButton, 3, 0);
+        actionContainer.add(applyButton, 1, 0);
 
-        HBox headerContainer = new HBox();
         headerContainer.setAlignment(Pos.CENTER_LEFT);
-        headerContainer.setHgrow(actionContainer, Priority.ALWAYS);
+        HBox.setHgrow(actionContainer, Priority.ALWAYS);
         headerContainer.getChildren().addAll(headerText, actionContainer);
 
-        ScrollPane questionScrollPane = new ScrollPane();
+        leftScrollPaneHeader.setTextAlignment(TextAlignment.CENTER);
+        leftScrollPaneHeader.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, TITLE_FONT_SIZE));
 
-        // TODO: Add alit if questionBoxes
-        questionList.setMinWidth(1200);
+        rightScrollPaneHeader.setTextAlignment(TextAlignment.CENTER);
+        rightScrollPaneHeader.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, TITLE_FONT_SIZE));
+
+        questionActionContainer.setAlignment(Pos.CENTER_RIGHT);
+        questionActionContainer.getChildren().add(addQuestionButton);
+
+        adviceActionContainer.setAlignment(Pos.CENTER_RIGHT);
+        adviceActionContainer.getChildren().add(addAdviceButton);
+
+        leftScrollPaneHeaderBox.setPadding(new Insets(0, 0, 0, 10));
+        leftScrollPaneHeaderBox.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(questionActionContainer, Priority.ALWAYS);
+        leftScrollPaneHeaderBox
+                .setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+        leftScrollPaneHeaderBox.getChildren().addAll(leftScrollPaneHeader, questionActionContainer);
+
+        rightScrollPaneHeaderBox.setPadding(new Insets(0, 0, 0, 10));
+        rightScrollPaneHeaderBox.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(adviceActionContainer, Priority.ALWAYS);
+        rightScrollPaneHeaderBox
+                .setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+        rightScrollPaneHeaderBox.getChildren().addAll(rightScrollPaneHeader, adviceActionContainer);
+
+        addQuestionButton.setGraphic(addQuestionImageView);
+        addQuestionButton.setAlignment(Pos.CENTER_RIGHT);
+        addQuestionButton
+                .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        addQuestionButton.setOnMouseClicked(e -> {
+            editController.addQuestion();
+        });
+
+        addAdviceButton.setGraphic(addAdviceImageView);
+        addAdviceButton.setAlignment(Pos.CENTER_RIGHT);
+        addAdviceButton
+                .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        addAdviceButton.setOnMouseClicked(e -> {
+            // editController.addAdvice();
+        });
+
+        questionItemList.setPadding(new Insets(0, 0, 10, 0));
+
+        adviceItemList.setPadding(new Insets(0, 0, 10, 0));
 
         questionScrollPane
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         questionScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         questionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        questionScrollPane.setContent(questionList);
-        /**
-         * End Temporary
-         */
+        questionScrollPane.setMinWidth(SCROLLPANE_CONTAINER_WIDTH);
+        questionScrollPane.setContent(questionItemList);
 
-        VBox root = new VBox(25);
+        leftSideScrollPane.setAlignment(Pos.BASELINE_LEFT);
+        leftSideScrollPane.getChildren().add(questionScrollPane);
+
+        adviceScrollPane
+                .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        adviceScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        adviceScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        adviceScrollPane.setMinWidth(SCROLLPANE_CONTAINER_WIDTH);
+        adviceScrollPane.setContent(adviceItemList);
+
+        rightSideScrollPane.setAlignment(Pos.BASELINE_RIGHT);
+        rightSideScrollPane.getChildren().add(adviceScrollPane);
+
+        questionParent.setAlignment(Pos.CENTER_LEFT);
+        questionParent.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        HBox.setHgrow(questionParent, Priority.ALWAYS);
+
+        adviceParent.setAlignment(Pos.CENTER_RIGHT);
+        adviceParent.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        HBox.setHgrow(adviceParent, Priority.ALWAYS);
+
+        scrollParent = new HBox(CONTAINER_SPACING);
+        scrollParent.getChildren().addAll(questionParent, adviceParent);
+
+        VBox root = new VBox(CONTAINER_SPACING);
         root.setAlignment(Pos.TOP_CENTER);
-        root.setPadding(new Insets(25));
-        try {
-            backgroundInput = new FileInputStream("./src/main/resources/background.png");
-            backgroundImage = new Image(backgroundInput);
-            root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        root.getChildren().addAll(logoHeader, headerContainer, questionScrollPane);
-
-        return new Scene(root);
-    }
-
-    public Scene getAdviceEditScene() {
-        VBox root = new VBox(25);
-        root.setAlignment(Pos.TOP_CENTER);
-        root.setPadding(new Insets(25));
+        root.setPadding(new Insets(CONTAINER_SPACING));
+        root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+        root.getChildren().addAll(headerContainer, scrollParent);
 
         return new Scene(root);
     }
 
     private VBox createQuestionBox(ArrayList<Node> nodes, Node node) {
         VBox questionBox = new VBox(10);
-        questionBox.setPadding(new Insets(17.5));
-        questionBox.setStyle("-fx-border-width: 10; -fx-border-color: black; -fx-border-style: hidden hidden solid hidden;");
-        /**
-         * Question box is made out of
-         * - questionHeader: HBox
-         * - answerBox: VBox
-         * - actionRow: HBox
-         */
+        questionBox.setPadding(new Insets(0, 0, 10, 0));
+        questionBox.setStyle(
+                "-fx-border-width: 10; -fx-border-color: black; -fx-border-style: hidden hidden solid hidden;");
 
-        // Question
         HBox questionHeader = createQuestionHeader(node.getQuestion());
         questionBox.getChildren().add(questionHeader);
 
-        // AnswerBox
         ArrayList<Answer> answers = node.getAnswers();
         for (Answer answer : answers) {
             VBox answerBox = createAnswerBox(nodes, node.getQuestion(), answer);
             questionBox.getChildren().add(answerBox);
         }
 
-        // ActionRow
         HBox actionRow = createActionRow(node.getQuestion().getId());
+
+        questionBox.setMinWidth(SCROLLPANE_CONTENT_WIDTH);
         questionBox.getChildren().add(actionRow);
+
         return questionBox;
     }
 
@@ -238,12 +290,9 @@ public class EditView implements EditObserver {
         Text questionID = new Text(question.getId() + ": ");
         TextField questionField = new TextField(question.getValue());
 
-        header.setAlignment(Pos.CENTER_LEFT);
-        header.getChildren().addAll(questionID, questionField);
-
-        questionID.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, QUESTION_TITLE_FONT_SIZE));
+        questionID.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, TITLE_FONT_SIZE));
         HBox.setHgrow(questionField, Priority.ALWAYS);
-        questionField.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, QUESTION_TITLE_FONT_SIZE));
+        questionField.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, TITLE_FONT_SIZE));
         questionField.setFocusTraversable(false);
 
         questionField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
@@ -251,6 +300,9 @@ public class EditView implements EditObserver {
                 editController.changeQuestion(question.getId(), questionField.getText());
             }
         });
+
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.getChildren().addAll(questionID, questionField);
 
         return header;
     }
@@ -260,24 +312,23 @@ public class EditView implements EditObserver {
 
         TextField answerText = new TextField(answer.getValue()); // Get answer value
         HBox.setHgrow(answerText, Priority.ALWAYS);
-        answerText.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, QUESTION_TITLE_FONT_SIZE));
+        answerText.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, TITLE_FONT_SIZE));
         answerText.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
                 editController.changeAnswer(question.getId(), answer.getId(), answerText.getText());
             }
         });
 
-        Button deleteAnswerButton = new Button("");
-
         try {
-            FileInputStream deleteInput = new FileInputStream("./src/main/resources/delete_btn.png");
-            Image deleteImage = new Image(deleteInput);
-            ImageView deleteImageView = new ImageView(deleteImage);
-            deleteAnswerButton.setGraphic(deleteImageView);
-        } catch (FileNotFoundException ex) {
+            deleteInput = new FileInputStream("./src/main/resources/delete_btn.png");
+            deleteImage = new Image(deleteInput);
+            deleteImageView = new ImageView(deleteImage);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
+        Button deleteAnswerButton = new Button("");
+        deleteAnswerButton.setGraphic(deleteImageView);
         deleteAnswerButton
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         deleteAnswerButton.setAlignment(Pos.CENTER_RIGHT);
@@ -297,7 +348,6 @@ public class EditView implements EditObserver {
         Text referText = new Text("Refereer door naar vraag:");
         referText.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, 18));
 
-        // TODO SHOW ALL POSSIBLE QUESTIONS AND ADVICES
         ComboBox<Node> referQuestionBox = createReferQuestionBox(nodes, question, answer);
 
         answerBox.setPadding(new Insets(10));
@@ -310,15 +360,15 @@ public class EditView implements EditObserver {
     }
 
     private HBox createActionRow(int questionID) {
-        HBox actionRow = new HBox(25);
+        HBox actionRow = new HBox(12.5);
         Button addAnswerButton = new Button("Antwoord toevoegen");
-        addAnswerButton.setPadding(new Insets(BUTTON_PADDING));
-        addAnswerButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, QUESTION_TITLE_FONT_SIZE));
+        addAnswerButton.setPadding(new Insets(BUTTON_PADDING / 2));
+        addAnswerButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, FIELD_FONT_SIZE));
         addAnswerButton.setTextFill(Color.WHITE);
         addAnswerButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
         addAnswerButton.setOnMouseEntered(e -> {
-            addAnswerButton.setStyle(
-                    String.format("-fx-background-color: %s; -fx-text-fill: %s;", QUESTION_ACTION_COLOR, HOVER_BUTTON_COLOR));
+            addAnswerButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;",
+                    QUESTION_ACTION_COLOR, HOVER_BUTTON_COLOR));
         });
         addAnswerButton.setOnMouseExited(e -> {
             addAnswerButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
@@ -328,13 +378,13 @@ public class EditView implements EditObserver {
         });
 
         Button deleteQuestionButton = new Button("Verwijderen");
-        deleteQuestionButton.setPadding(new Insets(BUTTON_PADDING));
-        deleteQuestionButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, QUESTION_TITLE_FONT_SIZE));
+        deleteQuestionButton.setPadding(new Insets(BUTTON_PADDING / 2));
+        deleteQuestionButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, FIELD_FONT_SIZE));
         deleteQuestionButton.setTextFill(Color.WHITE);
         deleteQuestionButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
         deleteQuestionButton.setOnMouseEntered(e -> {
-            deleteQuestionButton.setStyle(
-                    String.format("-fx-background-color: %s; -fx-text-fill: %s;", QUESTION_ACTION_COLOR, HOVER_BUTTON_COLOR));
+            deleteQuestionButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;",
+                    QUESTION_ACTION_COLOR, HOVER_BUTTON_COLOR));
         });
         deleteQuestionButton.setOnMouseExited(e -> {
             deleteQuestionButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
@@ -377,14 +427,12 @@ public class EditView implements EditObserver {
             referQuestionBox.getItems().add(node);
 
             if (node.getQuestion() != null) {
-                // If the next question id is that node, select it
                 if (answer.getNextQuestionId() != null && answer.getNextQuestionId() == node.getQuestion().getId()) {
                     referQuestionBox.getSelectionModel().select(i);
                 }
             }
 
             if (node.getAdvice() != null) {
-                // If the next question id is that node, select it
                 if (answer.getAdviceId() != null && answer.getAdviceId() == node.getAdvice().getId()) {
                     referQuestionBox.getSelectionModel().select(i);
                 }
@@ -408,35 +456,169 @@ public class EditView implements EditObserver {
     }
 
     private VBox createAdviceBox(Advice advice) {
-        return new VBox(25);
+        VBox adviceBox = new VBox(10);
+        adviceBox.setPadding(new Insets(0, 0, 10, 0));
+        adviceBox.setStyle(
+                "-fx-border-width: 10; -fx-border-color: black; -fx-border-style: hidden hidden solid hidden;");
+
+        HBox adviceHeader = createAdviceHeader(advice);
+        VBox adviceBody = createAdviceBody(advice);
+
+        adviceBox.setMinWidth(SCROLLPANE_CONTENT_WIDTH);
+        adviceBox.getChildren().addAll(adviceHeader, adviceBody);
+
+        return adviceBox;
     }
 
-    private HBox createAdviceHeader() {
-        return new HBox(25);
+    private HBox createAdviceHeader(Advice advice) {
+        HBox header = new HBox(5);
+        Text adviceID = new Text(advice.getId() + ": ");
+        TextField adviceField = new TextField(advice.getValue());
+
+        adviceID.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, TITLE_FONT_SIZE));
+        HBox.setHgrow(adviceField, Priority.ALWAYS);
+        adviceField.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, TITLE_FONT_SIZE));
+        adviceField.setFocusTraversable(false);
+
+        adviceField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                // editController.changeQuestion(advice.getId(), adviceField.getText());
+            }
+        });
+
+        header.setAlignment(Pos.CENTER_LEFT);
+        header.getChildren().addAll(adviceID, adviceField);
+
+        return header;
     }
 
-    private VBox createAdviceBody() {
-        return new VBox(25);
+    private Text createAdviceLabel(String labelString) {
+        Text adviceLabel = new Text(labelString);
+        adviceLabel.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, FIELD_FONT_SIZE));
+
+        return adviceLabel;
     }
 
-    private HBox createAdviceAction() {
-        return new HBox(25);
+    private TextField createAdviceTextField(String textFieldString) {
+        TextField adviceTextField = new TextField(textFieldString);
+        adviceTextField.setPadding(new Insets(5));
+        adviceTextField.setFont(Font.font(FONT_FAMILY, FontWeight.BLACK, FIELD_FONT_SIZE));
+
+        return adviceTextField;
+    }
+
+    private VBox createAdviceGroup(Text label, TextField field) {
+        VBox adviceGroup = new VBox();
+        adviceGroup.setPadding(new Insets(5));
+        adviceGroup.getChildren().addAll(label, field);
+
+        return adviceGroup;
+    }
+
+    private VBox createAdviceBody(Advice advice) {
+        VBox advicePropertyBox = new VBox(5);
+
+        Text adviceDescriptionLabel = createAdviceLabel("Description");
+        TextField adviceDescriptionField = createAdviceTextField(advice.getDescription());
+        adviceDescriptionField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                // editController.changeDescription(advice.getId(),
+                // adviceDescriptionField.getText());
+            }
+        });
+
+        Text adviceInfoURLLabel = createAdviceLabel("Info url");
+        TextField adviceInfoURLField = createAdviceTextField(advice.getMoreInfoURL());
+        adviceInfoURLField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                // editController.changeDescription(advice.getId(),
+                // adviceDescriptionField.getText());
+            }
+        });
+
+        Text adviceVideoURLLabel = createAdviceLabel("Video url");
+        TextField adviceVideoURLField = createAdviceTextField(advice.getVideoURL());
+        adviceVideoURLField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                // editController.changeDescription(advice.getId(),
+                // adviceDescriptionField.getText());
+            }
+        });
+
+        Text adviceOtherFundLabel = createAdviceLabel("Other fund url");
+        TextField adviceOtherFundField = createAdviceTextField(advice.getOtherFundURL());
+        adviceOtherFundField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                // editController.changeDescription(advice.getId(),
+                // adviceDescriptionField.getText());
+            }
+        });
+
+        VBox adviceDescriptionGroup = createAdviceGroup(adviceDescriptionLabel, adviceDescriptionField);
+        VBox adviceInfoURLGroup = createAdviceGroup(adviceInfoURLLabel, adviceInfoURLField);
+        VBox adviceVideoURLGroup = createAdviceGroup(adviceVideoURLLabel, adviceVideoURLField);
+        VBox adviceOtherFundGroup = createAdviceGroup(adviceOtherFundLabel, adviceOtherFundField);
+
+        try {
+            deleteInput = new FileInputStream("./src/main/resources/delete_btn.png");
+            deleteImage = new Image(deleteInput);
+            deleteImageView = new ImageView(deleteImage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        Button deleteAdviceButton = new Button("");
+        deleteAdviceButton.setGraphic(deleteImageView);
+        deleteAdviceButton
+                .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        deleteAdviceButton.setAlignment(Pos.CENTER_RIGHT);
+        deleteAdviceButton.setOnMouseClicked(e -> {
+            // editController.removeAdvice(advice.getId());
+        });
+
+        HBox deleteAdviceContainer = new HBox();
+        deleteAdviceContainer.setAlignment(Pos.TOP_LEFT);
+        deleteAdviceContainer.getChildren().add(deleteAdviceButton);
+
+        HBox firstRow = new HBox();
+        firstRow.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(adviceDescriptionGroup, Priority.ALWAYS);
+        firstRow.getChildren().addAll(adviceDescriptionGroup, deleteAdviceContainer);
+
+        VBox secondRow = new VBox();
+        secondRow.setAlignment(Pos.CENTER_LEFT);
+        secondRow.getChildren().addAll(adviceInfoURLGroup, adviceVideoURLGroup, adviceOtherFundGroup);
+
+        advicePropertyBox.setPadding(new Insets(10));
+        advicePropertyBox.setAlignment(Pos.CENTER_LEFT);
+        advicePropertyBox.setBackground(new Background(
+                new BackgroundFill(Color.web(ANSWER_BACKGROUND_COLOR), CornerRadii.EMPTY, Insets.EMPTY)));
+        advicePropertyBox.getChildren().addAll(firstRow, secondRow);
+
+        return advicePropertyBox;
     }
 
     @Override
     public void update(Edit edit) {
-        questionList.getChildren().removeAll(questionList.getChildren());
+        questionParent.getChildren().removeAll(questionParent.getChildren());
+        adviceParent.getChildren().removeAll(adviceParent.getChildren());
+        questionItemList.getChildren().removeAll(questionItemList.getChildren());
+        adviceItemList.getChildren().removeAll(adviceItemList.getChildren());
 
         ArrayList<Node> nodes = edit.getNodes();
         for (Node node : nodes) {
             if (node.getQuestion() != null) {
                 VBox questionBox = createQuestionBox(nodes, node);
-                questionList.getChildren().add(questionBox);
+                questionItemList.getChildren().add(questionBox);
             }
 
             if (node.getAdvice() != null) {
-                //TODO AdviceBox?
+                VBox adviceBox = createAdviceBox(node.getAdvice());
+                adviceItemList.getChildren().add(adviceBox);
             }
         }
+
+        questionParent.getChildren().addAll(leftScrollPaneHeaderBox, leftSideScrollPane);
+        adviceParent.getChildren().addAll(rightScrollPaneHeaderBox, rightSideScrollPane);
     }
 }

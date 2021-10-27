@@ -13,19 +13,19 @@ public class Advice implements AdviceObservable {
     private int id;
     private String value;
     private String description;
-    private String moreInfoUrl;
-    private String videoUrl;
-    private String otherFundUrl;
+    private String moreInfoURL;
+    private String videoURL;
+    private String otherFundURL;
 
     public Advice() {}
 
-    public Advice(int id, String value, String description, String moreInfoUrl, String videoUrl, String otherFundUrl) {
+    public Advice(int id, String value, String description, String moreInfoURL, String videoURL, String otherFundURL) {
         this.id = id;
         this.value = value;
         this.description = description;
-        this.moreInfoUrl = moreInfoUrl;
-        this.videoUrl = videoUrl;
-        this.otherFundUrl = otherFundUrl;
+        this.moreInfoURL = moreInfoURL;
+        this.videoURL = videoURL;
+        this.otherFundURL = otherFundURL;
     }
 
     public int getId() {
@@ -55,30 +55,30 @@ public class Advice implements AdviceObservable {
         notifyObservers();
     }
 
-    public String getMoreInfoUrl() {
-        return moreInfoUrl;
+    public String getMoreInfoURL() {
+        return moreInfoURL;
     }
 
-    public void setMoreInfoUrl(String moreInfoUrl) {
-        this.moreInfoUrl = moreInfoUrl;
+    public void setMoreInfoURL(String moreInfoURL) {
+        this.moreInfoURL = moreInfoURL;
         notifyObservers();
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getVideoURL() {
+        return videoURL;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
         notifyObservers();
     }
 
-    public String getOtherFundUrl() {
-        return otherFundUrl;
+    public String getOtherFundURL() {
+        return otherFundURL;
     }
 
-    public void setOtherFundUrl(String otherFundUrl) {
-        this.otherFundUrl = otherFundUrl;
+    public void setOtherFundURL(String otherFundURL) {
+        this.otherFundURL = otherFundURL;
         notifyObservers();
     }
 
@@ -86,9 +86,9 @@ public class Advice implements AdviceObservable {
         this.id = newAdvice.getId();
         this.value = newAdvice.getValue();
         this.description = newAdvice.getDescription();
-        this.moreInfoUrl = newAdvice.getMoreInfoUrl();
-        this.videoUrl = newAdvice.getVideoUrl();
-        this.otherFundUrl = newAdvice.getOtherFundUrl();
+        this.moreInfoURL = newAdvice.getMoreInfoURL();
+        this.videoURL = newAdvice.getVideoURL();
+        this.otherFundURL = newAdvice.getOtherFundURL();
         notifyObservers();
     }
 
@@ -114,9 +114,9 @@ public class Advice implements AdviceObservable {
         jsonObject.addProperty("id", id);
         jsonObject.addProperty("value", value);
         jsonObject.addProperty("description", description);
-        jsonObject.addProperty("moreInfoUrl", moreInfoUrl);
-        jsonObject.addProperty("videoUrl", videoUrl);
-        jsonObject.addProperty("otherFundUrl", otherFundUrl);
+        jsonObject.addProperty("moreInfoURL", moreInfoURL);
+        jsonObject.addProperty("videoURL", videoURL);
+        jsonObject.addProperty("otherFundURL", otherFundURL);
         return jsonObject.toString();
     }
 }

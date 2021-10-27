@@ -94,23 +94,6 @@ public class DashboardView {
             dashboardController.navigateEditView();
         });
 
-        Button editAdviceButton = new Button("Adviezen");
-        editAdviceButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        editAdviceButton.setTextFill(Color.BLACK);
-        editAdviceButton.setAlignment(Pos.CENTER_LEFT);
-        editAdviceButton.setPadding(new Insets(BUTTON_PADDING));
-        editAdviceButton.setPrefWidth(326);
-        editAdviceButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
-        editAdviceButton.setOnMouseEntered(e -> {
-            editAdviceButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
-        });
-        editAdviceButton.setOnMouseExited(e -> {
-            editAdviceButton.setStyle(String.format("-fx-background-color: %s;", BUTTON_COLOR));
-        });
-        editAdviceButton.setOnMouseClicked(e -> {
-            dashboardController.navigateEditView();
-        });
-
         Button showStatsButton = new Button("Statistieken");
         showStatsButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         showStatsButton.setTextFill(Color.BLACK);
@@ -168,10 +151,9 @@ public class DashboardView {
         actionList.setHgap(HORIZONTAL_GRID_GAP);
         actionList.setVgap(VERTICAL_GRID_GAP);
         actionList.add(editQuizButton, 1, 0);
-        actionList.add(editAdviceButton, 2, 0);
-        actionList.add(showStatsButton, 1, 1);
-        actionList.add(editColorsButton, 2, 1);
-        actionList.add(logoutButton, 3, 0);
+        actionList.add(showStatsButton, 2, 0);
+        actionList.add(editColorsButton, 1, 1);
+        actionList.add(logoutButton, 2, 1);
 
         VBox root = new VBox(25);
         root.setAlignment(Pos.TOP_CENTER);
