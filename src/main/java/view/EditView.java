@@ -175,9 +175,11 @@ public class EditView implements EditObserver {
         HBox.setHgrow(actionContainer, Priority.ALWAYS);
         headerContainer.getChildren().addAll(headerText, actionContainer);
 
+        leftScrollPaneHeader.setFill(Color.BLACK);
         leftScrollPaneHeader.setTextAlignment(TextAlignment.CENTER);
         leftScrollPaneHeader.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, TITLE_FONT_SIZE));
 
+        rightScrollPaneHeader.setFill(Color.BLACK);
         rightScrollPaneHeader.setTextAlignment(TextAlignment.CENTER);
         rightScrollPaneHeader.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, TITLE_FONT_SIZE));
 
@@ -191,14 +193,14 @@ public class EditView implements EditObserver {
         leftScrollPaneHeaderBox.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(questionActionContainer, Priority.ALWAYS);
         leftScrollPaneHeaderBox
-                .setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+                .setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         leftScrollPaneHeaderBox.getChildren().addAll(leftScrollPaneHeader, questionActionContainer);
 
         rightScrollPaneHeaderBox.setPadding(new Insets(0, 0, 0, 10));
         rightScrollPaneHeaderBox.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(adviceActionContainer, Priority.ALWAYS);
         rightScrollPaneHeaderBox
-                .setBackground(new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY)));
+                .setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         rightScrollPaneHeaderBox.getChildren().addAll(rightScrollPaneHeader, adviceActionContainer);
 
         addQuestionButton.setGraphic(addQuestionImageView);
@@ -241,11 +243,11 @@ public class EditView implements EditObserver {
         rightSideScrollPane.setAlignment(Pos.BASELINE_RIGHT);
         rightSideScrollPane.getChildren().add(adviceScrollPane);
 
-        questionParent.setAlignment(Pos.CENTER_LEFT);
+        questionParent.setAlignment(Pos.TOP_CENTER);
         questionParent.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         HBox.setHgrow(questionParent, Priority.ALWAYS);
 
-        adviceParent.setAlignment(Pos.CENTER_RIGHT);
+        adviceParent.setAlignment(Pos.TOP_CENTER);
         adviceParent.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         HBox.setHgrow(adviceParent, Priority.ALWAYS);
 
@@ -277,7 +279,7 @@ public class EditView implements EditObserver {
             questionBox.getChildren().add(answerBox);
         }
 
-        HBox actionRow = createActionRow(node.getQuestion().getId());
+        HBox actionRow = createQuestionActionRow(node.getQuestion().getId());
 
         questionBox.setMinWidth(SCROLLPANE_CONTENT_WIDTH);
         questionBox.getChildren().add(actionRow);
@@ -359,7 +361,7 @@ public class EditView implements EditObserver {
         return answerBox;
     }
 
-    private HBox createActionRow(int questionID) {
+    private HBox createQuestionActionRow(int questionID) {
         HBox actionRow = new HBox(12.5);
         Button addAnswerButton = new Button("Antwoord toevoegen");
         addAnswerButton.setPadding(new Insets(BUTTON_PADDING / 2));
@@ -559,51 +561,58 @@ public class EditView implements EditObserver {
         VBox adviceVideoURLGroup = createAdviceGroup(adviceVideoURLLabel, adviceVideoURLField);
         VBox adviceOtherFundGroup = createAdviceGroup(adviceOtherFundLabel, adviceOtherFundField);
 
-        try {
-            deleteInput = new FileInputStream("./src/main/resources/delete_btn.png");
-            deleteImage = new Image(deleteInput);
-            deleteImageView = new ImageView(deleteImage);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        Button deleteAdviceButton = new Button("");
-        deleteAdviceButton.setGraphic(deleteImageView);
-        deleteAdviceButton
-                .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-        deleteAdviceButton.setAlignment(Pos.CENTER_RIGHT);
-        deleteAdviceButton.setOnMouseClicked(e -> {
-            // editController.removeAdvice(advice.getId());
-        });
-
-        HBox deleteAdviceContainer = new HBox();
-        deleteAdviceContainer.setAlignment(Pos.TOP_LEFT);
-        deleteAdviceContainer.getChildren().add(deleteAdviceButton);
+        HBox adviceActionRow = createAdviceActionRow(advice.getId());
 
         HBox firstRow = new HBox();
         firstRow.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(adviceDescriptionGroup, Priority.ALWAYS);
-        firstRow.getChildren().addAll(adviceDescriptionGroup, deleteAdviceContainer);
+        firstRow.getChildren().addAll(adviceDescriptionGroup);
 
         VBox secondRow = new VBox();
         secondRow.setAlignment(Pos.CENTER_LEFT);
+        secondRow.setBackground(new Background(
+                new BackgroundFill(Color.web(ANSWER_BACKGROUND_COLOR), CornerRadii.EMPTY, Insets.EMPTY)));
+
         secondRow.getChildren().addAll(adviceInfoURLGroup, adviceVideoURLGroup, adviceOtherFundGroup);
 
         advicePropertyBox.setPadding(new Insets(10));
         advicePropertyBox.setAlignment(Pos.CENTER_LEFT);
-        advicePropertyBox.setBackground(new Background(
-                new BackgroundFill(Color.web(ANSWER_BACKGROUND_COLOR), CornerRadii.EMPTY, Insets.EMPTY)));
-        advicePropertyBox.getChildren().addAll(firstRow, secondRow);
+        advicePropertyBox.getChildren().addAll(firstRow, secondRow, adviceActionRow);
 
         return advicePropertyBox;
     }
 
+    private HBox createAdviceActionRow(int adviceID) {
+        HBox adviceactionrow = new HBox(12.5);
+
+        Button deleteAdviceButton = new Button("Verwijderen");
+        deleteAdviceButton.setPadding(new Insets(BUTTON_PADDING / 2));
+        deleteAdviceButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, FIELD_FONT_SIZE));
+        deleteAdviceButton.setTextFill(Color.WHITE);
+        deleteAdviceButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
+        deleteAdviceButton.setOnMouseEntered(e -> {
+            deleteAdviceButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;",
+                    QUESTION_ACTION_COLOR, HOVER_BUTTON_COLOR));
+        });
+        deleteAdviceButton.setOnMouseExited(e -> {
+            deleteAdviceButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
+        });
+        deleteAdviceButton.setOnMouseClicked(e -> {
+            // editController.removeAdvice(adviceID);
+            System.out.println(adviceID);
+        });
+
+        adviceactionrow.getChildren().addAll(deleteAdviceButton);
+
+        return adviceactionrow;
+    }
+
     @Override
     public void update(Edit edit) {
-        questionParent.getChildren().removeAll(questionParent.getChildren());
-        adviceParent.getChildren().removeAll(adviceParent.getChildren());
         questionItemList.getChildren().removeAll(questionItemList.getChildren());
         adviceItemList.getChildren().removeAll(adviceItemList.getChildren());
+        questionParent.getChildren().removeAll(questionParent.getChildren());
+        adviceParent.getChildren().removeAll(adviceParent.getChildren());
 
         ArrayList<Node> nodes = edit.getNodes();
         for (Node node : nodes) {
