@@ -1,34 +1,48 @@
 package view;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
-import java.awt.*;
+
 
 public class ButtonCreator extends Button {
 
     private String buttonText;
-    private String buttonColorHash;
+    private final double buttonPadding = 17.5;
+    private final int buttonFontSize = 22;
+    private String buttonColor;
+    final String hoverButtonColor = "#E4F6FF";
+    final String fontFamily = "Arial";
 
-    //Todo
-    private Point buttonSize;
 
     public ButtonCreator(String buttonText, String buttonColor)
     {
         this.buttonText = buttonText;
-        this.buttonColorHash = "#" + buttonColor;
-
+        this.buttonColor = "#" + buttonColor;
     }
 
     public Button createCustomButton(){
-        System.out.println("Creating a CustomButton for you...");
         Button button = new Button(buttonText);
-        button.setBackground(
-                new Background(new BackgroundFill(Color.web(buttonColorHash), CornerRadii.EMPTY, Insets.EMPTY)));
+        button.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
+        button.setTextFill(Color.BLACK);
+        button.setAlignment(Pos.CENTER_LEFT);
+        button.setPadding(new Insets(buttonPadding));
+        button.setPrefWidth(326);
+        button.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        button.setOnMouseEntered(e -> {
+            button.setStyle(String.format("-fx-background-color: %s;", hoverButtonColor));
+        });
+        button.setOnMouseExited(e -> {
+            button.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        });
+
         return button;
     }
 }
