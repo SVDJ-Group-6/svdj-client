@@ -1,5 +1,6 @@
 package Admin;
 
+import view.EmailView;
 import view.LoginView;
 
 import java.io.FileNotFoundException;
@@ -18,7 +19,7 @@ public class AdminApplication extends Application {
         AdminVariables.stage.centerOnScreen();
         AdminVariables.stage.setResizable(false);
 
-        AdminVariables.stage.setScene(new LoginView().getLoginScene());
+        AdminVariables.stage.setScene(new EmailView().getEmailPane());
         AdminVariables.stage.show();
     }
 
