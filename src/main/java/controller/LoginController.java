@@ -3,7 +3,9 @@ package controller;
 import Admin.AdminVariables;
 import DAO.LoginDAO;
 import observer.LoginObserver;
+import view.ChangePasswordView;
 import view.DashboardView;
+import view.RecoveryCodeView;
 
 public class LoginController {
     static private LoginController loginController;
@@ -26,6 +28,9 @@ public class LoginController {
 
     public void switchToDashboard() {
         AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
+    }
+    public void switchToRecovery() {
+        AdminVariables.stage.setScene(new RecoveryCodeView().getRecoveryCodeView());
     }
 
     public void registerObserver(LoginObserver loginObserver){

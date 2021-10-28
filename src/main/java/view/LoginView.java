@@ -126,12 +126,31 @@ public class LoginView implements LoginObserver {
             loginController.switchToDashboard();
         });
 
+        Button ChangePassword = new Button("Change Password");
+        ChangePassword.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
+        ChangePassword.setTextFill(Color.BLACK);
+        ChangePassword.setAlignment(Pos.CENTER_LEFT);
+        ChangePassword.setPadding(new Insets(buttonPadding));
+        ChangePassword.setPrefWidth(326);
+        ChangePassword.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        ChangePassword.setOnMouseEntered(e -> {
+            ChangePassword.setStyle(String.format("-fx-background-color: %s;", hoverButtonColor));
+        });
+        ChangePassword.setOnMouseExited(e -> {
+            ChangePassword.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        });
+        ChangePassword.setOnMouseClicked(e -> {
+
+            loginController.switchToRecovery();
+        });
+
         GridPane actionList = new GridPane();
         actionList.setPadding(new Insets(25, 150, 100, 75));
         actionList.setAlignment(Pos.CENTER);
         actionList.setHgap(gridHGap);
         actionList.setVgap(gridVGap);
         actionList.add(loginButton, 1, 0);
+        actionList.add(ChangePassword, 2, 0);
 
         VBox root = new VBox(25);
         root.setAlignment(Pos.TOP_CENTER);
