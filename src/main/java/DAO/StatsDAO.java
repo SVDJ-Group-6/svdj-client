@@ -1,20 +1,32 @@
 package DAO;
 
+import Client.ClientVariables;
+import com.google.gson.JsonObject;
 import model.Stats;
+import service.RequestService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class StatsDAO {
 
     private static StatsDAO statsDAO;
+    private RequestService requestService = RequestService.getInstance();
 
-    //Todo What does this return mate :) ?
-//    public ArrayList<Stats> getAllStats(){
-//        return
-//    }
+    public ArrayList<Stats> getAllStats(){
+        return null;
+    }
 
-    //Todo this says returns a statsService mate, whachumean bruh?
+    public void postStatsToAPI(Stats stats) throws IOException {
+        String body = stats.toJsonString();
+        String statsURL = ClientVariables.API_URL + "/api/stats";
+        requestService.postRequest(statsURL, body);
+    }
+
     public static StatsDAO getInstance() {
+        if (statsDAO == null) {
+            statsDAO = new StatsDAO();
+        }
         return statsDAO;
     }
 }

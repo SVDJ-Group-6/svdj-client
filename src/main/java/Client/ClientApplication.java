@@ -1,8 +1,10 @@
-package ClientApplication;
+package Client;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.AdviceView;
+import view.HomeView;
 import view.QuizView;
 
 public class ClientApplication extends Application {
@@ -12,19 +14,16 @@ public class ClientApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        ClientVariables.stage = stage;
 
-        //Todo this is from Steve
-        Scene scene = new Scene(new QuizView().getQuizPane());
+        // Set own scene!
+        Scene scene  = new Scene(new AdviceView(1).getAdvicePane());
         stage.setScene(scene);
-        stage.setHeight(720);
+
+        stage.setTitle("svdj-client");
         stage.setWidth(1280);
+        stage.setHeight(720);
+        stage.setResizable(false);
         stage.show();
-
-        /*
-        QuizComponent p = new QuizComponent();
-        stage.setScene(new Scene(p.createQuizComponent(), 1280, 720));
-
-        stage.show();
-        */
     }
 }
