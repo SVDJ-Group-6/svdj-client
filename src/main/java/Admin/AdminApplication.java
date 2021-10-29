@@ -1,5 +1,6 @@
 package Admin;
 
+import model.Login;
 import view.EmailView;
 import view.LoginView;
 
@@ -19,7 +20,8 @@ public class AdminApplication extends Application {
         AdminVariables.stage.centerOnScreen();
         AdminVariables.stage.setResizable(false);
 
-        AdminVariables.stage.setScene(new EmailView().getEmailPane());
+//        AdminVariables.stage.setScene(new EmailView().getEmailPane());
+        AdminVariables.stage.setScene(new LoginView().getLoginScene());
         AdminVariables.stage.show();
     }
 

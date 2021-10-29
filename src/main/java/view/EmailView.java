@@ -6,26 +6,33 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import model.Email;
+import observer.EmailObserver;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class EmailView {
+public class EmailView implements EmailObserver {
 
     private EmailController emailController = EmailController.getInstance();
+    private Text message = new Text();
+
+    public EmailView () {
+        this.emailController.registerObserver(this);
+    }
 
     public Scene getEmailPane() {
 
         final double buttonPadding = 17.5;
         final int headerFontSize = 64;
         final int buttonFontSize = 22;
+        final int messageFontSize = 20;
 
         final int logoWidth = 480;
         final int logoHeight = 128;
@@ -60,10 +67,15 @@ public class EmailView {
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.CENTER);
 
+        message.setFont(Font.font(fontFamily, FontWeight.NORMAL, messageFontSize));
+        message.setFill(Color.WHITE);
+        message.setTextAlignment(TextAlignment.CENTER);
+
         VBox headerContainer = new VBox();
         headerContainer.setPadding(new Insets(25, 0, 0, 0));
         headerContainer.setAlignment(Pos.CENTER);
         headerContainer.getChildren().add(headerText);
+        headerContainer.getChildren().add(message);
 
         TextField emailField = new TextField();
         emailField.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
@@ -111,8 +123,8 @@ public class EmailView {
         });
         requestButton.setOnMouseClicked(e -> {
 //TODO verander naar recovery code scene
-
-
+            String emailInput = emailField.getText();
+            emailController.checkEmailInput(emailInput);
         });
 
         GridPane actionList = new GridPane();
@@ -138,6 +150,14 @@ public class EmailView {
         root.getChildren().addAll(logoHeader, headerContainer, loginFormBox, actionList);
 
         return new Scene(root);
+    }
+
+    @Override
+    public void update(Email email) {
+        if (!email.getValidEmail()) {
+            message.setText("De email moet geldig zijn!");
+            System.out.println(email.getValidEmail());
+        }
     }
 
 }

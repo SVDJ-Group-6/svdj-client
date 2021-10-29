@@ -5,6 +5,7 @@ import DAO.LoginDAO;
 import observer.LoginObserver;
 import view.ChangePasswordView;
 import view.DashboardView;
+import view.EmailView;
 import view.RecoveryCodeView;
 
 public class LoginController {
@@ -29,8 +30,8 @@ public class LoginController {
     public void switchToDashboard() {
         AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
     }
-    public void switchToRecovery() {
-        AdminVariables.stage.setScene(new RecoveryCodeView().getRecoveryCodeView());
+    public void switchToEmail() {
+        AdminVariables.stage.setScene(new EmailView().getEmailPane());
     }
 
     public void registerObserver(LoginObserver loginObserver){

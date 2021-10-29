@@ -141,7 +141,7 @@ public class LoginView implements LoginObserver {
         });
         ChangePassword.setOnMouseClicked(e -> {
 
-            loginController.switchToRecovery();
+            loginController.switchToEmail();
         });
 
         GridPane actionList = new GridPane();

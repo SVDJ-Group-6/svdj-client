@@ -19,19 +19,19 @@ public class ChangePassword implements ChangePasswordObservable {
     }
 
     @Override
-    public void registerObserver(ChangePasswordObserver recoveryCodeObserver) {
-        observers.add(recoveryCodeObserver);
+    public void registerObserver(ChangePasswordObserver changePasswordObserver) {
+        observers.add(changePasswordObserver);
     }
 
     @Override
-    public void unregisterObserver(ChangePasswordObserver recoveryCodeObserver) {
-        observers.remove(recoveryCodeObserver);
+    public void unregisterObserver(ChangePasswordObserver changePasswordObserver) {
+        observers.remove(changePasswordObserver);
     }
 
     @Override
     public void notifyObservers() {
-        for (ChangePasswordObserver recoveryCodeObserver: observers) {
-            recoveryCodeObserver.update(this);
+        for (ChangePasswordObserver changePasswordObserver: observers) {
+            changePasswordObserver.update(this);
         }
     }
 }

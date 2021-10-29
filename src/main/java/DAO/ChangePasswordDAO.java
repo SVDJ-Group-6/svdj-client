@@ -26,14 +26,8 @@ public class ChangePasswordDAO {
     public void postPassword(String newPassword, String recoveryCode) throws NoSuchAlgorithmException, IOException {
         String url = AdminVariables.API_URL + "/api/auth/change_password/" + recoveryCode;
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("new_passwordHash", convertMD5(newPassword));
+        jsonObject.addProperty("password",newPassword);
         requestService.postRequest(url, jsonObject.toString());
     }
 
-    private String convertMD5(String value) throws NoSuchAlgorithmException {
-        byte[] bytesOfMessage = value.getBytes(StandardCharsets.UTF_8);
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        BigInteger number = new BigInteger(1, md5.digest(bytesOfMessage));
-        return number.toString(16);
-    }
 }
