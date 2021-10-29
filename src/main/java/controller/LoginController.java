@@ -2,49 +2,51 @@ package controller;
 
 import Admin.AdminVariables;
 import DAO.LoginDAO;
+import javafx.scene.Scene;
+import model.Login;
 import observer.LoginObserver;
 import view.DashboardView;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 public class LoginController {
-    static private LoginController loginController;
-    private LoginDAO loginDAO;
 
-    public LoginController(){
-        loginDAO = LoginDAO.getInstance();
+    private final Login login;
+    private final LoginDAO loginDAO;
+
+    public LoginController() {
+        this.login = new Login();
+        this.loginDAO = LoginDAO.getInstance();
     }
 
-    static public LoginController getInstance(){
-        if(loginController == null){
-            loginController = new LoginController();
-        } 
-        return loginController;
-    }
-
-    public void login(String username, String password){
-        if (username.isEmpty() && password.isEmpty()) {
-            loginDAO.setMessage("Fill in all the required fields!");
-            return;
-        }
-
+    public void login(String username, String password) {
         try {
-            loginDAO.setMessage("Checking credentials...");
-            String token = loginDAO.requestToken(username, password);
-            AdminVariables.token = token;
-            switchToDashboard();
-        } catch (NoSuchAlgorithmException | IOException e) {
-            loginDAO.setMessage("Combination does not exists.");
-            e.printStackTrace();
+            if (username.isEmpty() && password.isEmpty()) {
+                String exceptionMessage = "Fill in all the fields";
+                login.setMessage(exceptionMessage);
+                return;
+            }
+            AdminVariables.token = loginDAO.getToken(username, password);
+            showDashboardView();
+        } catch (IOException e) {
+            String exceptionMessage = "Something went wrong";
+            login.setMessage(exceptionMessage);
+            System.out.println(e);
         }
     }
 
-    public void switchToDashboard() {
-        AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
+    public void showDashboardView() {
+        Scene dashboard = new DashboardView().getDashboardScene();
+        AdminVariables.stage.setScene(dashboard);
     }
 
-    public void registerObserver(LoginObserver loginObserver){
-        loginDAO.registerObserver(loginObserver);
+    public void registerObserver(LoginObserver loginObserver) {
+        login.registerObserver(loginObserver);
+    }
+
+    static LoginController loginController;
+    static public LoginController getInstance() {
+        if (loginController == null) loginController = new LoginController();
+        return loginController;
     }
 }

@@ -10,7 +10,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,11 +19,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,14 +29,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-
 public class LoginView implements LoginObserver {
-    private LoginController loginController = LoginController.getInstance();
-    private Text message;
+
+    private final Text message;
+    private final LoginController loginController;
 
     public LoginView() {
-        message = new Text();
-        loginController.registerObserver(this);
+        this.message = new Text();
+        this.loginController = LoginController.getInstance();
+
+        this.loginController.registerObserver(this);
     }
 
     public Scene getLoginScene() {
