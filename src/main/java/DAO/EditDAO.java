@@ -1,7 +1,6 @@
 package DAO;
 
 import Admin.AdminVariables;
-import Client.ClientVariables;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import model.*;
@@ -10,7 +9,6 @@ import service.RequestService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class EditDAO {
 
@@ -47,19 +45,19 @@ public class EditDAO {
     }
 
     public ArrayList<Question> getQuestionsFromAPI() throws IOException {
-        String questionURL = ClientVariables.API_URL + "/api/questions/";
+        String questionURL = AdminVariables.API_URL + "/api/questions/";
         ArrayList<Question> questions = gson.fromJson(requestService.getResponse(questionURL), new TypeToken<ArrayList<Question>>(){}.getType());
         return questions;
     }
 
     public ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
-        String answersURL = ClientVariables.API_URL + "/api/answers/question/" + questionID;
+        String answersURL = AdminVariables.API_URL + "/api/answers/question/" + questionID;
         ArrayList<Answer> answers = gson.fromJson(requestService.getResponse(answersURL), new TypeToken<ArrayList<Answer>>(){}.getType());
         return answers;
     }
 
     public ArrayList<Advice> getAdvicesFromAPI() throws IOException {
-        String advicesURL = ClientVariables.API_URL + "/api/advices/";
+        String advicesURL = AdminVariables.API_URL + "/api/advices/";
         ArrayList<Advice> advices = gson.fromJson(requestService.getResponse(advicesURL), new TypeToken<ArrayList<Advice>>(){}.getType());
         return advices;
     }
@@ -67,18 +65,18 @@ public class EditDAO {
     public void postChanges() throws IOException {
 
         for (int answerID : edit.getDeletedAnswerIds()) {
-            String answerURL = AdminVariables.API_URL + "/api/answers/" + answerID + "?token=a612078c8a93ccc084ee565cfc471bb6";
+            String answerURL = AdminVariables.API_URL + "/api/answers/" + answerID + "?token=" + AdminVariables.token;
             System.out.println(answerURL);
             requestService.deleteRequest(answerURL);
         }
 
         for (int adviceID : edit.getDeletedAdviceIds()) {
-            String adviceURL = AdminVariables.API_URL + "/api/advices/" + adviceID + "?token=a612078c8a93ccc084ee565cfc471bb6";
+            String adviceURL = AdminVariables.API_URL + "/api/advices/" + adviceID + "?token=" + AdminVariables.token;
             requestService.deleteRequest(adviceURL);
         }
 
         for (int questionID : edit.getDeletedQuestionIds()) {
-            String questionURL = AdminVariables.API_URL + "/api/questions/" + questionID + "?token=a612078c8a93ccc084ee565cfc471bb6";
+            String questionURL = AdminVariables.API_URL + "/api/questions/" + questionID + "?token=" + AdminVariables.token;
             requestService.deleteRequest(questionURL);
         }
 
@@ -98,7 +96,7 @@ public class EditDAO {
         }
 
         for (Question question: questions) {
-            String questionsURL = AdminVariables.API_URL + "/api/questions?token=a612078c8a93ccc084ee565cfc471bb6";
+            String questionsURL = AdminVariables.API_URL + "/api/questions?token=" + AdminVariables.token;
             try {
                 requestService.postRequest(questionsURL, question.toJsonString());
             } catch (IOException e) {
@@ -107,7 +105,7 @@ public class EditDAO {
         }
 
         for (Advice advice: advices) {
-            String advicesURL = AdminVariables.API_URL + "/api/advices?token=a612078c8a93ccc084ee565cfc471bb6";
+            String advicesURL = AdminVariables.API_URL + "/api/advices?token=" + AdminVariables.token;
             try {
                 requestService.postRequest(advicesURL, advice.toJsonString());
             } catch (IOException e) {
@@ -116,7 +114,7 @@ public class EditDAO {
         }
 
         for (Answer answer: answers) {
-            String answersURL = AdminVariables.API_URL + "/api/answers?token=a612078c8a93ccc084ee565cfc471bb6";
+            String answersURL = AdminVariables.API_URL + "/api/answers?token=" + AdminVariables.token;
             try {
                 requestService.postRequest(answersURL, answer.toJsonString());
             } catch (IOException e) {

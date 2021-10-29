@@ -10,7 +10,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,11 +19,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,18 +29,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-
 public class LoginView implements LoginObserver {
-    private LoginController loginController = LoginController.getInstance();
+
+    private final Text message;
+    private final LoginController loginController;
 
     public LoginView() {
-        loginController.registerObserver(this);
+        this.message = new Text();
+        this.loginController = LoginController.getInstance();
+
+        this.loginController.registerObserver(this);
     }
 
     public Scene getLoginScene() {
         final double buttonPadding = 17.5;
         final int headerFontSize = 64;
         final int buttonFontSize = 22;
+        final int messageFontSize = 20;
 
         final int logoWidth = 480;
         final int logoHeight = 128;
@@ -79,10 +80,16 @@ public class LoginView implements LoginObserver {
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.CENTER);
 
+        message.setFont(Font.font(fontFamily, FontWeight.NORMAL, messageFontSize));
+        message.setFill(Color.WHITE);
+        message.setTextAlignment(TextAlignment.CENTER);
+
         VBox headerContainer = new VBox();
         headerContainer.setPadding(new Insets(25, 0, 0, 0));
         headerContainer.setAlignment(Pos.CENTER);
         headerContainer.getChildren().add(headerText);
+        headerContainer.getChildren().add(message);
+
 
         TextField usernameField = new TextField();
         usernameField.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
@@ -101,7 +108,7 @@ public class LoginView implements LoginObserver {
         VBox loginFormBox = new VBox(20);
         loginFormBox.setAlignment(Pos.CENTER);
         loginFormBox.setMaxWidth(900);
-        loginFormBox.setPadding(new Insets(25, 0, 0, 0));
+        loginFormBox.setPadding(new Insets(0, 0, 0, 0));
         loginFormBox.getChildren().addAll(usernameField, passwordField);
 
         Button loginButton = new Button("Login");
@@ -122,8 +129,7 @@ public class LoginView implements LoginObserver {
             String password = passwordField.getText();
 
             loginController.login(username, password);
-
-            loginController.switchToDashboard();
+            passwordField.setText("");
         });
 
         GridPane actionList = new GridPane();
@@ -152,8 +158,6 @@ public class LoginView implements LoginObserver {
 
     @Override
     public void update(Login login) {
-        Platform.runLater(() -> {
-            System.out.println(login.getMessage());
-        });
+        message.setText(login.getMessage());
     }
 }
