@@ -65,8 +65,7 @@ public class EditDAO {
     public void postChanges() throws IOException {
 
         for (int answerID : edit.getDeletedAnswerIds()) {
-            String answerURL = AdminVariables.API_URL + "/api/answers/" + answerID + "?token=" + AdminVariables.token;
-            System.out.println(answerURL);
+            String answerURL = AdminVariables.API_URL + "/api/answers/" + answerID + "?token=a612078c8a93ccc084ee565cfc471bb6";
             requestService.deleteRequest(answerURL);
         }
 

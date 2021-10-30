@@ -3,8 +3,11 @@ package controller;
 import DAO.AdviceDAO;
 import model.Advice;
 import observer.AdviceObserver;
+import view.HomeView;
 
 import java.io.IOException;
+
+import Admin.AdminVariables;
 
 public class AdviceController {
 
@@ -25,10 +28,10 @@ public class AdviceController {
 
     }
     public void openUrl(String url){
-
+        
     }
     public void navigateHome(){
-
+        
     }
 
     public static AdviceController getInstance(){

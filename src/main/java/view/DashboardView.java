@@ -43,14 +43,12 @@ public class DashboardView {
         final int HORIZONTAL_GRID_GAP = 75;
         final int VERTICAL_GRID_GAP = 50;
 
-        /* Begin Temporary */
         final String BUTTON_COLOR = "#9CC2D4";
         final String HOVER_BUTTON_COLOR = "#E4F6FF";
 
         final String LOGOUT_BUTTON_COLOR = "#FFFFFF";
 
         final String FONT_FAMILY = "Arial";
-        /* End Temporary */
 
         FileInputStream logoInput, backgroundInput;
         Image logoImage, backgroundImage;

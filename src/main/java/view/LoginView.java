@@ -53,12 +53,10 @@ public class LoginView implements LoginObserver {
         final int gridHGap = 75;
         final int gridVGap = 50;
 
-        /* Begin Temporary */
         final String buttonColor = "#E4F6FF";
         final String hoverButtonColor = "#9CC2D4";
 
         final String fontFamily = "Arial";
-        /* End Temporary */
 
         FileInputStream logoInput, backgroundInput;
 
