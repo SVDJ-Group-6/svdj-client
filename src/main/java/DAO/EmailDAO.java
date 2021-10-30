@@ -3,7 +3,6 @@ package DAO;
 import Admin.AdminVariables;
 import model.Email;
 import observer.EmailObserver;
-import observer.RecoveryCodeObserver;
 import service.RequestService;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class EmailDAO {
 
     public void requestRecoveryCode(String emailInput) throws IOException {
         String URL = AdminVariables.API_URL + "/api/auth/request_recovery_code?email=" + emailInput;
-        requestService.getResponse(URL);
+        requestService.getRequest(URL, null);
     }
 
     public void registerObserver(EmailObserver emailObserver){

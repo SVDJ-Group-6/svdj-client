@@ -19,13 +19,13 @@ public class QuizDAO {
 
     public Question getQuestionFromAPI(String questionID) throws IOException {
         String questionURL = ClientVariables.API_URL + "/api/questions/" + questionID;
-        Question question = gson.fromJson(requestService.getResponse(questionURL), Question.class);
+        Question question = gson.fromJson(requestService.getRequest(questionURL, null), Question.class);
         return question;
     }
 
     public ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
         String answersURL = ClientVariables.API_URL + "/api/answers/question/" + questionID;
-        ArrayList<Answer> answers = gson.fromJson(requestService.getResponse(answersURL), new TypeToken<ArrayList<Answer>>(){}.getType());
+        ArrayList<Answer> answers = gson.fromJson(requestService.getRequest(answersURL, null), new TypeToken<ArrayList<Answer>>(){}.getType());
         return answers;
     }
 

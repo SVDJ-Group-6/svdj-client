@@ -20,7 +20,7 @@ public class StatsDAO {
     public void postStatsToAPI(Stats stats) throws IOException {
         String body = stats.toJsonString();
         String statsURL = ClientVariables.API_URL + "/api/stats";
-        requestService.postRequest(statsURL, body);
+        requestService.postRequest(statsURL, body, null);
     }
 
     public static StatsDAO getInstance() {

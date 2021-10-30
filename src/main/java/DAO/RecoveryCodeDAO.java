@@ -21,7 +21,7 @@ public class RecoveryCodeDAO {
 
     public Boolean checkRecoveryCode(String code) throws IOException {
         String URL = AdminVariables.API_URL + "/api/auth/check_recovery_code/" + code;
-        String response = requestService.getResponse(URL);
+        String response = requestService.getRequest(URL, null);
         Boolean isMatching = Boolean.parseBoolean(response);
         recoveryCode.setMatching(isMatching);
         return isMatching;

@@ -22,7 +22,7 @@ public class LoginDAO {
     public String getToken(String username, String password) throws IOException {
         String requestURL = AdminVariables.API_URL + "/api/auth/login";
         String requestBody = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", username, password);
-        String response = requestService.postRequest(requestURL, requestBody);
+        String response = requestService.postRequest(requestURL, requestBody, null);
         JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
         return jsonObject.get("token").getAsString();
     }

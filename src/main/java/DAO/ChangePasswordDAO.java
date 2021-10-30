@@ -27,7 +27,7 @@ public class ChangePasswordDAO {
         String url = AdminVariables.API_URL + "/api/auth/change_password/" + recoveryCode;
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("password",newPassword);
-        requestService.postRequest(url, jsonObject.toString());
+        requestService.postRequest(url, jsonObject.toString(), null);
     }
 
 }
