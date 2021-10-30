@@ -125,7 +125,7 @@ public class EditView implements EditObserver {
         }
 
         editController.registerObserver(this);
-        editController.loadAllNodes();
+        editController.initialize();
     }
 
     public Scene getEditScene() {
@@ -216,7 +216,7 @@ public class EditView implements EditObserver {
         addAdviceButton
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         addAdviceButton.setOnMouseClicked(e -> {
-            // editController.addAdvice();
+            editController.addAdvice();
         });
 
         questionItemList.setPadding(new Insets(0, 0, 10, 0));
@@ -484,7 +484,7 @@ public class EditView implements EditObserver {
 
         adviceField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
-                // editController.changeQuestion(advice.getId(), adviceField.getText());
+                editController.changeAdvice(advice.getId(), adviceField.getText());
             }
         });
 
@@ -524,8 +524,7 @@ public class EditView implements EditObserver {
         TextField adviceDescriptionField = createAdviceTextField(advice.getDescription());
         adviceDescriptionField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
-                // editController.changeDescription(advice.getId(),
-                // adviceDescriptionField.getText());
+                editController.changeAdviceDescription(advice.getId(), adviceDescriptionField.getText());
             }
         });
 
@@ -533,8 +532,7 @@ public class EditView implements EditObserver {
         TextField adviceInfoURLField = createAdviceTextField(advice.getMoreInfoURL());
         adviceInfoURLField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
-                // editController.changeDescription(advice.getId(),
-                // adviceDescriptionField.getText());
+                editController.changeAdviceMoreInfoURL(advice.getId(), adviceInfoURLField.getText());
             }
         });
 
@@ -542,8 +540,7 @@ public class EditView implements EditObserver {
         TextField adviceVideoURLField = createAdviceTextField(advice.getVideoURL());
         adviceVideoURLField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
-                // editController.changeDescription(advice.getId(),
-                // adviceDescriptionField.getText());
+                editController.changeAdviceVideoURL(advice.getId(), adviceVideoURLField.getText());
             }
         });
 
@@ -551,8 +548,7 @@ public class EditView implements EditObserver {
         TextField adviceOtherFundField = createAdviceTextField(advice.getOtherFundURL());
         adviceOtherFundField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
-                // editController.changeDescription(advice.getId(),
-                // adviceDescriptionField.getText());
+                editController.changeAdviceOtherFundURL(advice.getId(), adviceOtherFundField.getText());
             }
         });
 
@@ -598,8 +594,7 @@ public class EditView implements EditObserver {
             deleteAdviceButton.setStyle(String.format("-fx-background-color: %s;", HOVER_BUTTON_COLOR));
         });
         deleteAdviceButton.setOnMouseClicked(e -> {
-            // editController.removeAdvice(adviceID);
-            System.out.println(adviceID);
+            editController.removeAdvice(adviceID);
         });
 
         adviceactionrow.getChildren().addAll(deleteAdviceButton);

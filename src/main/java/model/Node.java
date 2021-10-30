@@ -8,6 +8,11 @@ public class Node {
     private ArrayList<Answer> answers;
     private Advice advice;
 
+    public Node(Question question){
+        this.question = question;
+        this.answers = new ArrayList<>();
+    }
+
     public Node(Question question, ArrayList<Answer> answers){
         this.question = question;
         this.answers = answers;
