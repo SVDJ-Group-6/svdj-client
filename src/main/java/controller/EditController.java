@@ -1,10 +1,7 @@
 package controller;
 
 import DAO.EditDAO;
-import model.Advice;
-import model.Edit;
-import model.Node;
-import model.Question;
+import model.*;
 import observer.EditObserver;
 
 import java.io.IOException;
@@ -84,7 +81,26 @@ public class EditController {
     }
 
     public void submitChanges() {
-        editDAO.postAddNodes();
+        try {
+            editDAO.deleteAnswersFromAPI(edit.getDeletedAnswerIds());
+            editDAO.deleteQuestionsFromAPI(edit.getDeletedQuestionIds());
+            editDAO.deleteAdviceFromAPI(edit.getDeletedAdviceIds());
+
+            ArrayList<Question> questions = edit.getAllQuestions();
+            editDAO.postQuestionsToAPI(questions);
+
+            ArrayList<Advice> advices = edit.getAllAdvices();
+            editDAO.postAdviceToAPI(advices);
+
+            ArrayList<Answer> answers = edit.getAllAnswers();
+            editDAO.postAnswersToAPI(answers);
+
+            initialize();
+
+            // TODO MVC bericht van status
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void registerObserver(EditObserver editObserver) {

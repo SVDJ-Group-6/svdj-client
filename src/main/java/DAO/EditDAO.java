@@ -3,6 +3,7 @@ package DAO;
 import Admin.AdminVariables;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.application.Application;
 import model.Advice;
 import model.Answer;
 import model.Node;
@@ -48,24 +49,66 @@ public class EditDAO {
 
     public ArrayList<Question> getQuestionsFromAPI() throws IOException {
         String URL = AdminVariables.API_URL + "/api/questions/";
-        String response = requestService.getResponse(URL);
+        String response = requestService.getRequest(URL, null);
         return gson.fromJson(response, new TypeToken<ArrayList<Question>>(){}.getType());
     }
 
     public ArrayList<Advice> getAdvicesFromAPI() throws IOException {
         String URL = AdminVariables.API_URL + "/api/advices/";
-        String response = requestService.getResponse(URL);
+        String response = requestService.getRequest(URL, null);
         return gson.fromJson(response, new TypeToken<ArrayList<Advice>>(){}.getType());
     }
 
     public ArrayList<Answer> getAnswersFromAPI(String questionID) throws IOException {
         String URL = AdminVariables.API_URL + "/api/answers/question/" + questionID;
-        String response = requestService.getResponse(URL);
+        String response = requestService.getRequest(URL, null);
         return gson.fromJson(response, new TypeToken<ArrayList<Answer>>(){}.getType());
     }
 
-    public void postAddNodes() {
-        // TODO POST ALL NODES
+    public void postQuestionsToAPI(ArrayList<Question> questions) throws IOException {
+        String body = gson.toJson(questions, new TypeToken<ArrayList<Question>>(){}.getType());
+        String URL = AdminVariables.API_URL + "/api/questions";
+        requestService.postRequest(URL, body, AdminVariables.token);
+    }
+
+    public void postAnswersToAPI(ArrayList<Answer> answers) throws IOException {
+        String body = gson.toJson(answers, new TypeToken<ArrayList<Answer>>(){}.getType());
+        String URL = AdminVariables.API_URL + "/api/answers";
+        requestService.postRequest(URL, body, AdminVariables.token);
+    }
+
+    public void postAdviceToAPI(ArrayList<Advice> advice) throws IOException {
+        String body = gson.toJson(advice, new TypeToken<ArrayList<Advice>>(){}.getType());
+        String URL = AdminVariables.API_URL + "/api/advices";
+        requestService.postRequest(URL, body, AdminVariables.token);
+    }
+
+    public void deleteQuestionsFromAPI(ArrayList<Integer> ids) throws IOException {
+        deleteEndpointFromAPI("questions", ids);
+    }
+
+    public void deleteAnswersFromAPI(ArrayList<Integer> ids) throws IOException {
+        deleteEndpointFromAPI("answers", ids);
+    }
+
+    public void deleteAdviceFromAPI(ArrayList<Integer> ids) throws IOException {
+        deleteEndpointFromAPI("advices", ids);
+    }
+
+    private void deleteEndpointFromAPI(String endpoint, ArrayList<Integer> ids) throws IOException {
+        if (ids.size() > 0 && endpoint != null && !endpoint.isEmpty()) {
+            StringBuilder params = new StringBuilder();
+            for (Integer id : ids) {
+                if (params.length() == 0) {
+                    params.append("?");
+                } else {
+                    params.append("&");
+                }
+                params.append("ids=").append(id);
+            }
+            String URL = AdminVariables.API_URL + "/api/" + endpoint + params;
+            requestService.deleteRequest(URL, AdminVariables.token);
+        }
     }
 
     static EditDAO editDAO;

@@ -306,6 +306,42 @@ public class Edit implements EditObservable {
         return deletedAdviceIds;
     }
 
+    public ArrayList<Question> getAllQuestions() {
+        ArrayList<Question> questions = new ArrayList<>();
+        Question question;
+        for (Node node : this.nodes) {
+            question = node.getQuestion();
+            if (question != null) {
+                questions.add(question);
+            }
+        }
+        return questions;
+    }
+
+    public ArrayList<Advice> getAllAdvices() {
+        ArrayList<Advice> advices = new ArrayList<>();
+        Advice advice;
+        for (Node node : this.nodes) {
+            advice = node.getAdvice();
+            if (advice != null) {
+                advices.add(advice);
+            }
+        }
+        return advices;
+    }
+
+    public ArrayList<Answer> getAllAnswers() {
+        ArrayList<Answer> answers = new ArrayList<>();
+        ArrayList<Answer> tmpAnswers;
+        for (Node node : this.nodes) {
+            tmpAnswers = node.getAnswers();
+            if (tmpAnswers != null) {
+                answers.addAll(tmpAnswers);
+            }
+        }
+        return answers;
+    }
+
     @Override
     public void registerObserver(EditObserver editObserver) {
         observers.add(editObserver);
