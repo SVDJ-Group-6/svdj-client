@@ -14,7 +14,7 @@ public class AdviceDAO {
 
     public Advice getAdviceFromAPI(int adviceId) throws IOException {
         String adviceURL = ClientVariables.API_URL + "/api/advices/" + adviceId;
-        Advice advice = gson.fromJson(requestService.getResponse(adviceURL), Advice.class);
+        Advice advice = gson.fromJson(requestService.getRequest(adviceURL, null), Advice.class);
         return advice;
     }
 

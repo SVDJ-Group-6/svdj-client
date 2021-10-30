@@ -17,7 +17,12 @@ public class Advice implements AdviceObservable {
     private String videoURL;
     private String otherFundURL;
 
-    public Advice() {}
+    public Advice() {
+    }
+
+    public Advice(int id) {
+        this.id = id;
+    }
 
     public Advice(int id, String value, String description, String moreInfoURL, String videoURL, String otherFundURL) {
         this.id = id;

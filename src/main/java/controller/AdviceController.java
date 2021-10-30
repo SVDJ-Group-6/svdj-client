@@ -17,6 +17,7 @@ public class AdviceController {
 
     public void loadAdvice(int adviceId){
         try {
+
             Advice newAdvice = adviceDAO.getAdviceFromAPI(adviceId);
             advice.replaceAdvice(newAdvice);
         } catch (IOException e) {

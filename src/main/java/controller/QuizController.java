@@ -4,6 +4,8 @@ import Client.ClientVariables;
 import DAO.AdviceDAO;
 import DAO.QuizDAO;
 import DAO.StatsDAO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.scene.Scene;
 import model.*;
 import observer.QuizObserver;
@@ -17,7 +19,8 @@ public class QuizController {
     private final QuizDAO quizDAO = QuizDAO.getInstance();
     private final StatsDAO statsDAO = StatsDAO.getInstance();
     private final AdviceDAO adviceDAO = AdviceDAO.getInstance();
-    private final Quiz quiz = new Quiz();
+    private Quiz quiz = new Quiz();
+    private final Gson gson = new Gson();
 
 
     /**
@@ -94,12 +97,11 @@ public class QuizController {
     }
 
     private void postAllStats() {
-        for (Stats stats : quiz.getStats()) {
-            try {
-                statsDAO.postStatsToAPI(stats);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            quizDAO.postStatsToAPI(quiz.getStats());
+            quiz = new Quiz();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

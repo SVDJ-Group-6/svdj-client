@@ -35,7 +35,7 @@ public class ThemeDAO {
 
     private Theme getThemeFromAPI() throws IOException {
         String themeURL = ClientVariables.API_URL + "/api/theme";
-        Theme theme = gson.fromJson(requestService.getResponse(themeURL), Theme.class);
+        Theme theme = gson.fromJson(requestService.getRequest(themeURL, null), Theme.class);
         return theme;
     }
 
