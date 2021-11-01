@@ -174,6 +174,7 @@ public class AdviceView implements AdviceObserver {
         homeButtonContainer.setPrefHeight(HOME_CONTAINER_HEIGHT);
         homeButtonContainer.setMaxWidth(HOME_CONTAINER_WIDTH);
         homeButtonContainer.setAlignment(Pos.CENTER_LEFT);
+        
         Button homeButton = new Button("Home");
         homeButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, BUTTON_FONT_SIZE));
         homeButton.setTextFill(Color.web(ClientVariables.theme.getPrimaryColor()));
@@ -190,15 +191,10 @@ public class AdviceView implements AdviceObserver {
         homeButton.setOnMouseClicked(e -> {
             buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
             adviceController.unregisterObserver(this);
-            stage.setScene(new Scene(new HomeView().getHomePane()));
+            ClientVariables.stage.setScene(new Scene(new HomeView().getHomePane()));
         });
         homeButtonContainer.getChildren().addAll(homeButton);
 
-
-
-
-
-//        contactContainer = new VBox();
         contactContainer.setMaxWidth(CONTACT_WIDTH);
         contactContainer.setAlignment(Pos.CENTER);
 
@@ -226,8 +222,6 @@ public class AdviceView implements AdviceObserver {
         });
         contactContainer.getChildren().addAll(contactButton);
 
-
-//        sendEmailContainer = new HBox();
         sendEmailContainer.setMaxWidth(EMAIL_CONTAINER_WIDTH);
         sendEmailContainer.setAlignment(Pos.CENTER);
 
@@ -264,7 +258,6 @@ public class AdviceView implements AdviceObserver {
             sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
         });
         sendEmailButton.setOnMouseClicked(e -> {
-//            dashboardController.navigateEditView();
             System.out.println("Email is verstuurd");
         });
         sendEmailContainer.getChildren().addAll(emailTextfield, sendEmailButton);
@@ -274,12 +267,8 @@ public class AdviceView implements AdviceObserver {
         textContainer.setMinHeight(TEXT_CONTAINER_HEIGHT);
         textContainer.getChildren().addAll(adviceContainer, descriptionContainer, moreInformationContainer,homeButtonContainer);
 
-
-//        buttonContainer = new VBox(BUTTON_CONTAINER_PADDING);
         buttonContainer.setPrefWidth(BUTTON_CONTAINER_WIDTH);
         buttonContainer.setAlignment(Pos.BOTTOM_CENTER);
-//        buttonContainer.getChildren().addAll(contactContainer, sendEmailContainer);
-//        buttonContainer.getChildren().addAll(adviceVideoContainer, contactContainer, sendEmailContainer);
 
         HBox bodyContainer = new HBox(BODY_CONTAINER_PADDING);
         bodyContainer.getChildren().addAll(textContainer, buttonContainer);
@@ -307,6 +296,7 @@ public class AdviceView implements AdviceObserver {
         VBox adviceVideoContainer = new VBox();
         adviceVideoContainer.setMaxWidth(ADVICE_WIDTH);
         adviceVideoContainer.setAlignment(Pos.CENTER);
+
         Button videoButton = new Button("Subsidie introductie video bekijken");
         videoButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
         videoButton.setTextFill(Color.BLACK);
