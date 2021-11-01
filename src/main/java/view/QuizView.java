@@ -1,6 +1,7 @@
 package view;
 
 import controller.QuizController;
+import controller.ThemeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.scene.text.Text;
 import model.Answer;
 import model.Question;
 import model.Quiz;
+import model.Theme;
 import observer.QuizObserver;
 
 import java.io.FileInputStream;
@@ -362,6 +364,9 @@ public class QuizView implements QuizObserver {
         updateAnswers(quiz);
 
         this.selectedAnswer = null;
+
+        ArrayList<Question> questions = quiz.getQuestions();
+        Question currentQuestion = questions.get(questions.size() - 1);
         this.currentQuestion = currentQuestion;
     }
 }

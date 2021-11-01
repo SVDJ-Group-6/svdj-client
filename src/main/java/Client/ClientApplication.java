@@ -20,7 +20,7 @@ public class ClientApplication extends Application {
         ClientVariables.stage = stage;
         ThemeController themeController = ThemeController.getInstance();
         ClientVariables.theme = themeController.getTheme();
-        Scene scene  = new Scene(new HomeView().getHomePane());
+        Scene scene = new Scene(new HomeView().getHomePane());
         stage.setScene(scene);
         stage.setTitle("svdj-client");
         stage.setWidth(1280);
