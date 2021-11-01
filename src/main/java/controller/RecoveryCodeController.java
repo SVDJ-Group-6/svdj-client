@@ -3,15 +3,12 @@ package controller;
 import Admin.AdminVariables;
 import DAO.RecoveryCodeDAO;
 import observer.RecoveryCodeObserver;
-import service.RequestService;
 import view.ChangePasswordView;
 
 
 import java.io.IOException;
 
 public class RecoveryCodeController {
-
-    private RequestService requestService = RequestService.getInstance();
     static private RecoveryCodeController recoveryCodeController;
     private RecoveryCodeDAO recoveryCodeDAO;
 

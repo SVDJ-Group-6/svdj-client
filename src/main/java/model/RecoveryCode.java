@@ -1,7 +1,6 @@
 package model;
 
 import observable.RecoveryCodeObservable;
-import observer.QuizObserver;
 import observer.RecoveryCodeObserver;
 
 import java.util.ArrayList;

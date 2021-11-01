@@ -1,7 +1,6 @@
 package view;
 
 import controller.QuizController;
-import controller.ThemeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,7 +14,6 @@ import javafx.scene.text.Text;
 import model.Answer;
 import model.Question;
 import model.Quiz;
-import model.Theme;
 import observer.QuizObserver;
 
 import java.io.FileInputStream;
@@ -23,10 +21,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class QuizView implements QuizObserver {
-
     private QuizController quizController = QuizController.getInstance();
-    private ThemeController themeController = ThemeController.getInstance();
-    private Theme theme = themeController.getTheme();
     private Question currentQuestion;
     private Answer selectedAnswer;
     private QuestionCreator questionCreator;
@@ -60,10 +55,10 @@ public class QuizView implements QuizObserver {
         answerButtonsContainer = new HBox();
 
         //initialize the back and next buttons
-        previous = new ButtonCreator("Previous","9CC2D4").createCustomButton();
+        previous = new ButtonCreator("Previous", "9CC2D4").createCustomButton();
         setActionListenerToPreviousButton();
 
-        next = new ButtonCreator("Next","9CC2D4").createCustomButton();
+        next = new ButtonCreator("Next", "9CC2D4").createCustomButton();
         setActionListenerToNextButton();
 
         quizController.registerObserver(this);

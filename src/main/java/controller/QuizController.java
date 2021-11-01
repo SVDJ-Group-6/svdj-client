@@ -3,9 +3,6 @@ package controller;
 import Client.ClientVariables;
 import DAO.AdviceDAO;
 import DAO.QuizDAO;
-import DAO.StatsDAO;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import javafx.scene.Scene;
 import model.*;
 import observer.QuizObserver;
@@ -17,11 +14,8 @@ import java.util.Objects;
 public class QuizController {
     private static QuizController quizController;
     private final QuizDAO quizDAO = QuizDAO.getInstance();
-    private final StatsDAO statsDAO = StatsDAO.getInstance();
     private final AdviceDAO adviceDAO = AdviceDAO.getInstance();
     private Quiz quiz = new Quiz();
-    private final Gson gson = new Gson();
-
 
     /**
      * This function is ran on initialization, after registerObserver.

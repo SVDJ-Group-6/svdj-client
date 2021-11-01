@@ -3,12 +3,8 @@ package Client;
 import controller.ThemeController;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import view.AdviceView;
-import view.EmailView;
 import view.HomeView;
-import view.QuizView;
 
 public class ClientApplication extends Application {
     public static void main(String[] args) {

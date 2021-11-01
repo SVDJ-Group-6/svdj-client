@@ -3,7 +3,6 @@ package DAO;
 import Admin.AdminVariables;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import javafx.application.Application;
 import model.Advice;
 import model.Answer;
 import model.Node;

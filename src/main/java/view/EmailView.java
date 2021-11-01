@@ -1,7 +1,6 @@
 package view;
 
 import controller.EmailController;
-import controller.LoginController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,7 +22,7 @@ public class EmailView implements EmailObserver {
     private EmailController emailController = EmailController.getInstance();
     private Text message = new Text();
 
-    public EmailView () {
+    public EmailView() {
         this.emailController.registerObserver(this);
     }
 
@@ -122,7 +121,7 @@ public class EmailView implements EmailObserver {
             requestButton.setStyle(String.format("-fx-background-color: %s;", buttonColor));
         });
         requestButton.setOnMouseClicked(e -> {
-//TODO verander naar recovery code scene
+            // TODO verander naar recovery code scene
             String emailInput = emailField.getText();
             emailController.checkEmailInput(emailInput);
         });
@@ -161,5 +160,3 @@ public class EmailView implements EmailObserver {
     }
 
 }
-
-

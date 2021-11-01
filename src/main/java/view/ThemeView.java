@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
@@ -26,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import Admin.AdminVariables;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -36,8 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
 public class ThemeView implements ThemeObserver {
-    private ThemeController themeController = ThemeController.getInstance();
-    private Theme theme;
+    ThemeController themeController = ThemeController.getInstance();
 
     final double BUTTON_PADDING = 17.5;
     final int HEADER_FONT_SIZE = 64;
@@ -50,10 +49,6 @@ public class ThemeView implements ThemeObserver {
     final int VERTICAL_GRID_GAP = 50;
 
     final String FONT_FAMILY = "Arial";
-
-    public ThemeView() {
-        theme = themeController.getTheme();
-    }
 
     public Scene getThemeScene() {
 
@@ -80,37 +75,39 @@ public class ThemeView implements ThemeObserver {
         headerText.setTextAlignment(TextAlignment.LEFT);
 
         Text primaryColorText = createColorText("Primary color");
-        ColorPicker primaryColorPicker = createColorPicker(Color.web(theme.getPrimaryColor()));
+        ColorPicker primaryColorPicker = createColorPicker(Color.web(AdminVariables.theme.getPrimaryColor()));
         HBox primaryColorPickerWrapper = createColorPickerWrapper(primaryColorPicker);
         HBox firstColumnBox = createColumnBox(primaryColorText, primaryColorPickerWrapper);
 
         Text callToActionColorText = createColorText("Call to action color");
-        ColorPicker callToActionColorPicker = createColorPicker(Color.web(theme.getCtaButtonColor()));
+        ColorPicker callToActionColorPicker = createColorPicker(Color.web(AdminVariables.theme.getCtaButtonColor()));
         HBox callToActionColorPickerWrapper = createColorPickerWrapper(callToActionColorPicker);
         HBox secondColumnBox = createColumnBox(callToActionColorText, callToActionColorPickerWrapper);
 
         Text secondaryColorText = createColorText("Secondary color");
-        ColorPicker secondaryColorPicker = createColorPicker(Color.web(theme.getSecondaryColor()));
+        ColorPicker secondaryColorPicker = createColorPicker(Color.web(AdminVariables.theme.getSecondaryColor()));
         HBox secondaryColorPickerWrapper = createColorPickerWrapper(secondaryColorPicker);
         HBox thirdColumnBox = createColumnBox(secondaryColorText, secondaryColorPickerWrapper);
 
         Text answerButtonColorText = createColorText("Answer button color");
-        ColorPicker answerColorPicker = createColorPicker(Color.web(theme.getAnswerButtonColor()));
+        ColorPicker answerColorPicker = createColorPicker(Color.web(AdminVariables.theme.getAnswerButtonColor()));
         HBox answerColorPickerWrapper = createColorPickerWrapper(answerColorPicker);
         HBox fourthColumnBox = createColumnBox(answerButtonColorText, answerColorPickerWrapper);
 
         Text tertaireColorText = createColorText("Tertaire color");
-        ColorPicker tertaireColorPicker = createColorPicker(Color.web(theme.getTertaireColor()));
+        ColorPicker tertaireColorPicker = createColorPicker(Color.web(AdminVariables.theme.getTertaireColor()));
         HBox tertaireColorPickerWrapper = createColorPickerWrapper(tertaireColorPicker);
         HBox fifthColumnBox = createColumnBox(tertaireColorText, tertaireColorPickerWrapper);
 
         Text selectedButtonColorText = createColorText("Selected button color");
-        ColorPicker selectedButtonColorPicker = createColorPicker(Color.web(theme.getSelectedButtonColor()));
+        ColorPicker selectedButtonColorPicker = createColorPicker(
+                Color.web(AdminVariables.theme.getSelectedButtonColor()));
         HBox selectedButtonColorPickerWrapper = createColorPickerWrapper(selectedButtonColorPicker);
         HBox sixthColumnBox = createColumnBox(selectedButtonColorText, selectedButtonColorPickerWrapper);
 
         Text previousButtonColorText = createColorText("Selected button color");
-        ColorPicker previousButtonColorPicker = createColorPicker(Color.web(theme.getPreviousButtonColor()));
+        ColorPicker previousButtonColorPicker = createColorPicker(
+                Color.web(AdminVariables.theme.getPreviousButtonColor()));
         HBox previousButtonColorPickerWrapper = createColorPickerWrapper(previousButtonColorPicker);
         HBox seventhColumnBox = createColumnBox(previousButtonColorText, previousButtonColorPickerWrapper);
 
@@ -140,16 +137,18 @@ public class ThemeView implements ThemeObserver {
             applyButton.setStyle(String.format("-fx-background-color: %s;", "#ffffff"));
         });
         applyButton.setOnMouseClicked(e -> {
-            theme.setPrimaryColor(toRGBCode(primaryColorPicker.getValue()));
-            theme.setSecondaryColor(toRGBCode(secondaryColorPicker.getValue()));
-            theme.setTertaireColor(toRGBCode(tertaireColorPicker.getValue()));
-            theme.setCtaButtonColor(toRGBCode(callToActionColorPicker.getValue()));
-            theme.setAnswerButtonColor(toRGBCode(answerColorPicker.getValue()));
-            theme.setSelectedButtonColor(toRGBCode(secondaryColorPicker.getValue()));
-            theme.setPreviousButtonColor(toRGBCode(previousButtonColorPicker.getValue()));
+            AdminVariables.theme.setPrimaryColor(themeController.toRGBCode(primaryColorPicker.getValue()));
+            AdminVariables.theme.setSecondaryColor(themeController.toRGBCode(secondaryColorPicker.getValue()));
+            AdminVariables.theme.setTertaireColor(themeController.toRGBCode(tertaireColorPicker.getValue()));
+            AdminVariables.theme.setCtaButtonColor(themeController.toRGBCode(callToActionColorPicker.getValue()));
+            AdminVariables.theme.setAnswerButtonColor(themeController.toRGBCode(answerColorPicker.getValue()));
+            AdminVariables.theme
+                    .setSelectedButtonColor(themeController.toRGBCode(selectedButtonColorPicker.getValue()));
+            AdminVariables.theme
+                    .setPreviousButtonColor(themeController.toRGBCode(previousButtonColorPicker.getValue()));
 
             try {
-                themeController.submitColors(theme);
+                themeController.submitColors(AdminVariables.theme);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -163,7 +162,7 @@ public class ThemeView implements ThemeObserver {
 
         HBox headerContainer = new HBox();
         headerContainer.setAlignment(Pos.CENTER_LEFT);
-        headerContainer.setHgrow(actionContainer, Priority.ALWAYS);
+        HBox.setHgrow(actionContainer, Priority.ALWAYS);
         headerContainer.getChildren().addAll(headerText, actionContainer);
 
         GridPane actionList = new GridPane();
@@ -205,11 +204,11 @@ public class ThemeView implements ThemeObserver {
 
     public ColorPicker createColorPicker(Color defaultcolor) {
         ColorPicker colorpicker = new ColorPicker(defaultcolor);
-        colorpicker.setBackground(new Background(
-                new BackgroundFill(Color.web(toRGBCode(colorpicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
+        colorpicker.setBackground(new Background(new BackgroundFill(
+                Color.web(themeController.toRGBCode(colorpicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
         colorpicker.setOnAction(e -> {
-            colorpicker.setBackground(new Background(
-                    new BackgroundFill(Color.web(toRGBCode(colorpicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
+            colorpicker.setBackground(new Background(new BackgroundFill(
+                    Color.web(themeController.toRGBCode(colorpicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
         });
 
         return colorpicker;
@@ -234,17 +233,8 @@ public class ThemeView implements ThemeObserver {
         return columnbox;
     }
 
-    public String toRGBCode(Color color) {
-        int red = (int) (color.getRed() * 255);
-        int green = (int) (color.getGreen() * 255);
-        int blue = (int) (color.getBlue() * 255);
-
-        return String.format("#%02X%02X%02X", red, green, blue);
-    }
-
     @Override
     public void update(Theme theme) {
-        // TODO Auto-generated method stub
         Platform.runLater(() -> {
 
         });

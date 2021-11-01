@@ -2,8 +2,6 @@ package model;
 
 import com.google.gson.JsonObject;
 
-import java.util.Formatter;
-
 public class Answer {
 
     private int id;

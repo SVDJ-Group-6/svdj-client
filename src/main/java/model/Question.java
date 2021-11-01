@@ -1,7 +1,5 @@
 package model;
 
-import com.google.gson.JsonObject;
-
 public class Question {
     private Integer id;
     private String value;
