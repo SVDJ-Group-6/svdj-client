@@ -14,14 +14,9 @@ public class QuestionCreator extends Text {
         this.questionText = questionText;
     }
 
-    public QuestionCreator(String questionText){
-        this.questionNumber = 0;
-        this.questionText = questionText;
-    }
-
     public Text createCustomQuestion(){
         final String STANDARD_TEXT = "Vraag";
-        Text text = new Text( String.format( "%s %d. %s ?", STANDARD_TEXT,questionNumber,questionText));
+        Text text = new Text( String.format( "%s %d. %s ?", STANDARD_TEXT, questionNumber, questionText));
         text.setFont(Font.font("Verdana",40));
         text.setFill(Color.WHITE);
         return text;

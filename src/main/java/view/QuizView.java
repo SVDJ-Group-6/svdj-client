@@ -44,13 +44,13 @@ public class QuizView implements QuizObserver {
     }
 
     private void intializeQuiz(){
-
         questionNumber = 0;
-       //increaseQuestionNumber();
+        increaseQuestionNumber();
+
         questionCreator = new QuestionCreator(questionNumber,"");
         questionBox = new HBox();
         // initialize the text element
-        question = "new Text()";
+
         //Make a new Container to hold buttons
         answerButtonsContainer = new HBox();
 
@@ -73,9 +73,6 @@ public class QuizView implements QuizObserver {
      */
     private void setActionListenerToPreviousButton(){
         previous.setOnAction((event -> {
-            //TODO fix wrong numbers
-
-            System.out.println(questionNumber);
             this.subtractQuestionNumber();
             questionCreator.setQuestionNumber(this.questionNumber);
             quizController.back();
@@ -89,12 +86,9 @@ public class QuizView implements QuizObserver {
         next.setOnAction((event -> {
 
             if (selectedAnswer != null) {
-                quizController.next(selectedAnswer);
-                System.out.println(questionNumber);
-                //TODO fix wrong numbers
                 this.increaseQuestionNumber();
                 questionCreator.setQuestionNumber(this.questionNumber);
-
+                quizController.next(selectedAnswer);
             }
         }));
     }
