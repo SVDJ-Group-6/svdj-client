@@ -32,6 +32,7 @@ public class AdviceView implements AdviceObserver {
     private Text description;
     private Text web_url;
     private Text intro_video;
+    private Advice advice;
 
     final double BUTTON_PADDING = 17.5;
     final int BUTTON_WIDTH = 326;
@@ -232,15 +233,13 @@ public class AdviceView implements AdviceObserver {
         emailTextfield.setStyle("-fx-background-radius: 0;");
 
         FileInputStream input = null;
-
         try {
             input = new FileInputStream("./src/main/resources/email_logo.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        
         Image image = new Image(input);
-
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(EMAIL_ICON);
         imageView.setFitWidth(EMAIL_ICON);
@@ -258,7 +257,13 @@ public class AdviceView implements AdviceObserver {
             sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
         });
         sendEmailButton.setOnMouseClicked(e -> {
-            System.out.println("Email is verstuurd");
+            String emailInput = emailTextfield.getText();
+            if (emailInput.contains("@") || !emailInput.isEmpty()){
+                adviceController.sendAdviceToMail(emailInput, advice);
+                buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
+                adviceController.unregisterObserver(this);
+                ClientVariables.stage.setScene(new Scene(new HomeView().getHomePane()));
+            }
         });
         sendEmailContainer.getChildren().addAll(emailTextfield, sendEmailButton);
 
@@ -288,6 +293,7 @@ public class AdviceView implements AdviceObserver {
 
     @Override
     public void update(Advice advice) {
+        this.advice = advice;
         buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
         givenAdvice.setText(advice.getValue());
         description.setText(advice.getDescription());

@@ -18,6 +18,11 @@ public class AdviceDAO {
         return advice;
     }
 
+    public void sendEmailWithAPI(int adviceId,String email) throws IOException {
+        String emailURL = ClientVariables.API_URL + "/api/advices/" + adviceId + "/email/" + email;
+        requestService.getRequest(emailURL, null);
+    }
+
     public static AdviceDAO getInstance() {
         if (adviceDAO == null) {
             adviceDAO = new AdviceDAO();

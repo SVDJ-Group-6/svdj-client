@@ -23,7 +23,11 @@ public class AdviceController {
     }
 
     public void sendAdviceToMail(String mail, Advice advice){
-
+        try {
+            adviceDAO.sendEmailWithAPI(advice.getId(), mail);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void openUrl(String url){
         
