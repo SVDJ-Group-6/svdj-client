@@ -29,9 +29,11 @@ public class AdviceController {
             e.printStackTrace();
         }
     }
+
     public void openUrl(String url){
         
     }
+
     public void navigateHome(){
         
     }
