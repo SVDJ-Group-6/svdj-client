@@ -1,6 +1,5 @@
 package DAO;
 
-import Admin.AdminApplication;
 import Admin.AdminVariables;
 import Client.ClientVariables;
 import com.google.gson.Gson;

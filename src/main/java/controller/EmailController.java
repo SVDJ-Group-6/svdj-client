@@ -3,7 +3,6 @@ package controller;
 import Admin.AdminVariables;
 import model.Email;
 import observer.EmailObserver;
-import observer.RecoveryCodeObserver;
 import view.LoginView;
 import view.RecoveryCodeView;
 import DAO.EmailDAO;

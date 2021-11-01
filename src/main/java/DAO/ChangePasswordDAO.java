@@ -5,9 +5,6 @@ import com.google.gson.JsonObject;
 import service.RequestService;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 

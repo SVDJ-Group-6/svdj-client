@@ -162,7 +162,7 @@ public class ThemeView implements ThemeObserver {
 
         HBox headerContainer = new HBox();
         headerContainer.setAlignment(Pos.CENTER_LEFT);
-        headerContainer.setHgrow(actionContainer, Priority.ALWAYS);
+        HBox.setHgrow(actionContainer, Priority.ALWAYS);
         headerContainer.getChildren().addAll(headerText, actionContainer);
 
         GridPane actionList = new GridPane();
@@ -235,7 +235,6 @@ public class ThemeView implements ThemeObserver {
 
     @Override
     public void update(Theme theme) {
-        // TODO Auto-generated method stub
         Platform.runLater(() -> {
 
         });

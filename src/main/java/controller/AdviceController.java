@@ -3,11 +3,8 @@ package controller;
 import DAO.AdviceDAO;
 import model.Advice;
 import observer.AdviceObserver;
-import view.HomeView;
 
 import java.io.IOException;
-
-import Admin.AdminVariables;
 
 public class AdviceController {
 

@@ -20,8 +20,6 @@ import observer.ChangePasswordObserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import Client.ClientVariables;
-
 public class ChangePasswordView implements ChangePasswordObserver {
     private ChangePasswordController changePasswordController = ChangePasswordController.getInstance();
     private String recoverycode;
