@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.Answer;
 import model.Question;
@@ -23,10 +24,11 @@ public class QuizView implements QuizObserver {
 
     private QuizController quizController;
     private Answer selectedAnswer;
-    private Text question;
+    private QuestionCreator questionCreator;
+    private String question;
     private HBox answerButtonsContainer;
-    HBox questionBox;
-
+    private HBox questionBox;
+    private int questionNumber;
     private Button previous;
     private Button next;
 
@@ -34,11 +36,21 @@ public class QuizView implements QuizObserver {
         this.intializeQuiz();
     }
 
+    public void subtractQuestionNumber(){
+        questionNumber = questionNumber - 1;
+    }
+    public void increaseQuestionNumber(){
+        questionNumber = questionNumber + 1;
+    }
+
     private void intializeQuiz(){
 
+        questionNumber = 0;
+       //increaseQuestionNumber();
+        questionCreator = new QuestionCreator(questionNumber,"");
         questionBox = new HBox();
         // initialize the text element
-        question = new Text();
+        question = "new Text()";
         //Make a new Container to hold buttons
         answerButtonsContainer = new HBox();
 
@@ -52,6 +64,8 @@ public class QuizView implements QuizObserver {
         quizController = QuizController.getInstance();
         quizController.registerObserver(this);
         quizController.loadFirst();
+
+
     }
 
     /**
@@ -59,7 +73,12 @@ public class QuizView implements QuizObserver {
      */
     private void setActionListenerToPreviousButton(){
         previous.setOnAction((event -> {
-        quizController.back();
+            //TODO fix wrong numbers
+
+            System.out.println(questionNumber);
+            this.subtractQuestionNumber();
+            questionCreator.setQuestionNumber(this.questionNumber);
+            quizController.back();
         }));
     }
 
@@ -68,13 +87,24 @@ public class QuizView implements QuizObserver {
      */
     private void setActionListenerToNextButton(){
         next.setOnAction((event -> {
-        if (selectedAnswer != null) {
-            quizController.next(selectedAnswer);
-        }}));
+
+            if (selectedAnswer != null) {
+                quizController.next(selectedAnswer);
+                System.out.println(questionNumber);
+                //TODO fix wrong numbers
+                this.increaseQuestionNumber();
+                questionCreator.setQuestionNumber(this.questionNumber);
+
+            }
+        }));
     }
 
 
-    //supporting methods
+    /**
+     * Makes a background.
+     * @param image an image source.
+     * @return a background with a background image.
+     */
     private Background makeBackground(String image){
         BackgroundImage background = null;
         try {
@@ -86,6 +116,12 @@ public class QuizView implements QuizObserver {
 
         return new Background(background);
     }
+
+    /**
+     * Makes a container with a logo in it.
+     * @param image an image source.
+     * @return a container with a logo in it.
+     */
     private VBox makeLogoContainer(String image){
 
         //put logo in container
@@ -104,19 +140,32 @@ public class QuizView implements QuizObserver {
 
         return logoContainer;
     }
-    private HBox makeQuestionContainer(){
 
-        //make a question
-        questionBox.getChildren().add(new QuestionCreator(question.getText()).createCustomQuestion());
-        //questionBox.setStyle("-fx-background-color: rgb(100, 6, 25); -fx-background-radius: 10;");
+    /**
+     * Makes a question container with a Text object in it.
+     * @return a container with a custom text.
+     */
+    private HBox makeQuestionContainer(){
+        questionBox.setPadding(new Insets(15, 12, 15, 12));
         return questionBox;
     }
+
+    /**
+     * Makes an answer container with a Text object in it.
+     * @return a empty container.
+     */
     private HBox makeAnswerContainer(){
         return answerButtonsContainer;
     }
+
+    /**
+     * Makes a container with navigation buttons in it.
+     * @return a container with navigation buttons.
+     */
     private HBox makeNavigationContainer(){
         //create navigation container
         HBox navGrid = new HBox(80);
+        navGrid.setPadding(new Insets(15, 12, 15, 12));
         //navGrid.setStyle("-fx-background-color: rgb(83,129,215); -fx-background-radius: 10;");
 
         //add first button
@@ -142,6 +191,8 @@ public class QuizView implements QuizObserver {
 
         Text text = new Text("OF");
         text.setFill(Color.WHITE);
+        text.setFont(Font.font("Verdana",20));
+        text.setFill(Color.WHITE);
         ofHbox.getChildren().add(text);
 
         //make the first left white line in that container
@@ -164,6 +215,11 @@ public class QuizView implements QuizObserver {
 
         return navGrid;
     }
+
+    /**
+     * Makes a container that is used to center another container.
+     * @return a container with a nested container.
+     */
     private VBox makeSecondaryContainer(){
 
         VBox secondaryContainer = new VBox();
@@ -172,7 +228,7 @@ public class QuizView implements QuizObserver {
         VBox question_Answers_box = new VBox(20);
 
         question_Answers_box.setMaxWidth(1000);
-        question_Answers_box.setMaxHeight(600);
+        //question_Answers_box.setMaxHeight(600);
         question_Answers_box.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5); -fx-background-radius: 10;");
 
         question_Answers_box.getChildren().add(makeQuestionContainer());
@@ -183,6 +239,11 @@ public class QuizView implements QuizObserver {
 
         return secondaryContainer;
     }
+
+    /**
+     * Makes a container with all containers nested inside
+     * @return a container with all nested containers.
+     */
     private VBox makeMainContainer(){
         VBox mainContainer = new VBox(20);
         // give the main container a background
@@ -192,23 +253,35 @@ public class QuizView implements QuizObserver {
         return mainContainer;
     }
 
-    //main method that draws shit
+    /**
+     * @return a main container with all containers in it for public use.
+     */
     public VBox drawQuiz() {
         return makeMainContainer();
     }
 
+    /**
+     * Retrieves question from database and draws it on screen
+     * @param quiz a Quiz object for question retrieval.
+     */
     private void updateQuestion(Quiz quiz){
         ArrayList<Question> questions = quiz.getQuestions();
         for (Question q: questions) {
 
-            System.out.println(q.getValue());
+            //System.out.println(q.getValue());
 
         }
         Question currentQuestion = questions.get(questions.size() - 1);
         // Change value of elements
         this.previous.setVisible(questions.size() != 1);
-        this.question.setText(currentQuestion.getValue());
+        this.question = currentQuestion.getValue();
+
     }
+
+    /**
+     * Retrieves all question answers and draws them on screen
+     * @param quiz a Quiz object for answer retrieval.
+     */
     private void updateAnswers(Quiz quiz){
         ArrayList<ArrayList<Answer>> allAnswers = quiz.getAnswers();
         ArrayList<Answer> currentAnswers = allAnswers.get(allAnswers.size() - 1);
@@ -241,8 +314,8 @@ public class QuizView implements QuizObserver {
         int rows;
         if(newButtons.size() % 2 == 0){
             rows = newButtons.size() / 2;
-        }else
-        {
+        }
+        else {
             rows = (int) Math.floor(((newButtons.size() / 2) + 1));
         }
 
@@ -275,14 +348,19 @@ public class QuizView implements QuizObserver {
         this.selectedAnswer = null;
 
     }
+
     @Override
     public void update(Quiz quiz) {
+        //System.out.println(questionNumber);
 
-        // Empty HBOX for the new Qeustion.
+       // System.out.println(questionCreator.getQuestionNumber());
+        // Empty HBOX for the new Question.
         this.questionBox.getChildren().removeAll(this.questionBox.getChildren());
         updateQuestion(quiz);
 
-        this.makeQuestionContainer();
+        questionCreator.setQuestionText(question);
+
+        questionBox.getChildren().add(questionCreator.createCustomQuestion());
 
         // Empty HBOX for the new Buttons.
         this.answerButtonsContainer.getChildren().removeAll(this.answerButtonsContainer.getChildren());
@@ -291,5 +369,4 @@ public class QuizView implements QuizObserver {
         this.selectedAnswer = null;
 
     }
-
 }

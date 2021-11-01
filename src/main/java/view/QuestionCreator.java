@@ -15,6 +15,7 @@ public class QuestionCreator extends Text {
     }
 
     public QuestionCreator(String questionText){
+        this.questionNumber = 0;
         this.questionText = questionText;
     }
 
@@ -26,7 +27,15 @@ public class QuestionCreator extends Text {
         return text;
     }
 
+    public void setQuestionNumber(int questionNumber) {
+        this.questionNumber = questionNumber;
+    }
+
     public void setQuestionText(String questionText) {
-        this.setText(questionText);
+        this.questionText = questionText;
+    }
+
+    public int getQuestionNumber() {
+        return questionNumber;
     }
 }
