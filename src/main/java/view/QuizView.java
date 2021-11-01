@@ -22,7 +22,10 @@ import java.util.ArrayList;
 
 public class QuizView implements QuizObserver {
 
-    private QuizController quizController;
+    private QuizController quizController = QuizController.getInstance();
+    private ThemeController themeController = ThemeController.getInstance();
+    private Theme theme = themeController.getTheme();
+    private Question currentQuestion;
     private Answer selectedAnswer;
     private QuestionCreator questionCreator;
     private String question;
@@ -61,7 +64,6 @@ public class QuizView implements QuizObserver {
         next = new ButtonCreator("Next","9CC2D4").createCustomButton();
         setActionListenerToNextButton();
 
-        quizController = QuizController.getInstance();
         quizController.registerObserver(this);
         quizController.loadFirst();
 
@@ -88,7 +90,7 @@ public class QuizView implements QuizObserver {
             if (selectedAnswer != null) {
                 this.increaseQuestionNumber();
                 questionCreator.setQuestionNumber(this.questionNumber);
-                quizController.next(selectedAnswer);
+                quizController.next(currentQuestion, selectedAnswer);
             }
         }));
     }
@@ -250,7 +252,7 @@ public class QuizView implements QuizObserver {
     /**
      * @return a main container with all containers in it for public use.
      */
-    public VBox drawQuiz() {
+    public VBox getQuizPane() {
         return makeMainContainer();
     }
 
@@ -282,7 +284,6 @@ public class QuizView implements QuizObserver {
         ArrayList<Button> newButtons = new ArrayList<>();
         for (Answer answer : currentAnswers) {
             Button tmpBtn = new ButtonCreator(answer.getValue()).createCustomButton();
-
             tmpBtn.setOnAction((event -> {
                 this.selectedAnswer = answer;
             }));
@@ -361,6 +362,6 @@ public class QuizView implements QuizObserver {
         updateAnswers(quiz);
 
         this.selectedAnswer = null;
-
+        this.currentQuestion = currentQuestion;
     }
 }

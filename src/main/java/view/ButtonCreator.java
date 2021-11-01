@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-
 public class ButtonCreator extends Button {
     final double buttonPadding = 17.5;
     private int preferedWidth;
@@ -17,24 +16,24 @@ public class ButtonCreator extends Button {
     final String hoverButtonColor = "#E4F6FF";
     final String fontFamily = "Arial";
     private String buttonText;
-    private String buttonColorHash;
-
-
+    private final double buttonPadding = 17.5;
+    private final int buttonFontSize = 22;
+    private String buttonColor;
+    final String hoverButtonColor = "#E4F6FF";
+    final String fontFamily = "Arial";
 
     public ButtonCreator(String buttonText, String buttonColor)
     {
         this.buttonText = buttonText;
-        this.buttonColorHash = "#" + buttonColor;
+        this.buttonColor = "#" + buttonColor;
         this.preferedWidth = 250;
-
     }
 
     public ButtonCreator(String buttonText)
     {
         this.buttonText = buttonText;
-        this.buttonColorHash = "#9CC2D4";
+        this.buttonColor = "#9CC2D4";
         this.preferedWidth = 500;
-
     }
 
     public Button createCustomButton(){

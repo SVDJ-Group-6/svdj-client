@@ -1,5 +1,7 @@
 package view;
 
+import Client.ClientVariables;
+import controller.ThemeController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,53 +14,56 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+import model.Theme;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class HomeView {
-    final double buttonPadding = 17.5;
-    final int headerFontSize = 64;
-    final int buttonFontSize = 22;
+    ThemeController themeController = ThemeController.getInstance();
+    Theme theme = themeController.getTheme();
+    final double BUTTON_PADDING = 17.5;
+    final int HEADER_FONT_SIZE = 64;
+    final int BUTTON_FONT_SIZE = 22;
 
-    final int logoWidth = 480;
-    final int logoHeight = 128;
+    final int LOGO_WIDTH = 480;
+    final int LOGO_HEIGHT = 128;
 
-    final int gridHGap = 75;
-    final int gridVGap = 50;
-    final String buttonColor = "#9CC2D4";
-    final String hoverButtonColor = "#E4F6FF";
-
-    final String logoutButtonColor = "#FFFFFF";
+    final String BUTTON_COLOR = theme.getCtaButtonColor();
+    final String HOVER_BUTTON_COLOR = theme.getPrimaryColor();
+    final String BUTTON_STYLE = "-fx-background-color: %s;";
+    final int NODE_SPACING = 25;
 
     final String fontFamily = "Arial";
-    public Scene homeScreen() throws FileNotFoundException {
-
-        BackgroundSize backgroundSize = new BackgroundSize(1280, 800, true, true, true, false);
+    public VBox getHomePane(){
         BackgroundImage bgImage = null;
+        FileInputStream logoInput = null;
+
         try {
             bgImage = new BackgroundImage(new Image(new FileInputStream("./src/main/resources/background.png")),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            logoInput = new FileInputStream("src/main/resources/logo.png");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        FileInputStream inputstream = new FileInputStream("src/main/resources/logo.png");
-        Image logoImage = new Image(inputstream, logoWidth, logoHeight, false, false);
+        Image logoImage = new Image(logoInput, LOGO_WIDTH, LOGO_HEIGHT, false, false);
         ImageView logoView = new ImageView(logoImage);
 
-        HBox logoContainer = new HBox(25);
-//        logoContainer.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        HBox logoContainer = new HBox(NODE_SPACING);
         logoContainer.setPadding(new Insets(20, 0, 0,20));
         logoContainer.getChildren().addAll(logoView);
 
 
-        VBox TitleContainer = new VBox(25);
+        VBox TitleContainer = new VBox(NODE_SPACING);
         TitleContainer.setPadding(new Insets(0,0,0,40));
-//        TitleContainer.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 
         Text title = new Text("Weten welke subsidie bij jou past?");
-        title.setFont(Font.font (fontFamily, FontWeight.BOLD, headerFontSize));
+        title.setFont(Font.font (fontFamily, FontWeight.BOLD, HEADER_FONT_SIZE));
         title.setFill(Color.WHITE);
 
         Text text = new Text("Maak nu onze vragenlijst");
@@ -70,40 +75,54 @@ public class HomeView {
 
         HBox bottomContainer = new HBox(400);
         bottomContainer.setPadding(new Insets(0, 0, 0,40));
-//        bottomContainer.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         bottomContainer.setAlignment(Pos.BOTTOM_LEFT);
         bottomContainer.setPrefHeight(300);
         Button start_vragenlijst = new Button("Start vragenlijst");
-        start_vragenlijst.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
+        start_vragenlijst.setFont(Font.font(fontFamily, FontWeight.BOLD, BUTTON_FONT_SIZE));
         start_vragenlijst.setTextFill(Color.BLACK);
         start_vragenlijst.setAlignment(Pos.CENTER_LEFT);
-        start_vragenlijst.setPadding(new Insets(buttonPadding));
+        start_vragenlijst.setPadding(new Insets(BUTTON_PADDING));
         start_vragenlijst.setPrefWidth(326);
-        start_vragenlijst.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        start_vragenlijst.setStyle(String.format(BUTTON_STYLE, BUTTON_COLOR));
         start_vragenlijst.setOnMouseEntered(e -> {
-            start_vragenlijst.setStyle(String.format("-fx-background-color: %s;", hoverButtonColor));
+            start_vragenlijst.setStyle(String.format(BUTTON_STYLE, HOVER_BUTTON_COLOR));
         });
         start_vragenlijst.setOnMouseExited(e -> {
-            start_vragenlijst.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+            start_vragenlijst.setStyle(String.format(BUTTON_STYLE, BUTTON_COLOR));
         });
-        Text madeBy = new Text("De beslissingsmatrix wordt medemogelijk gemaakt door\n" +
-                "het Stimuleringsfonds voor de Journalistiek\n");
+        start_vragenlijst.setOnAction(e->{
+            Scene scene = new Scene(new QuizView().getQuizPane());
+            ClientVariables.stage.setScene(scene);
+        });
+        Text madeBy = new Text("De beslissingsmatrix wordt medemogelijk gemaakt door\n" + "het Stimuleringsfonds voor de Journalistiek\n");
         madeBy.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
         madeBy.setFill(Color.WHITE);
 
-        TextFlow madeByText = new TextFlow(
-                madeBy, new Hyperlink("www.svdj.nl")
-        );
+        Hyperlink svdjHyperLink = new Hyperlink("svdj.nl");
+
+        svdjHyperLink.setStyle("-fx-border-color: transparent;");
+        svdjHyperLink.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
+        svdjHyperLink.setOnAction(e-> {
+            try {
+                svdjHyperLink.setVisited(false);
+                Desktop.getDesktop().browse(new URI("https://www.svdj.nl/"));
+            } catch (IOException | URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        VBox madeByText = new VBox(madeBy,svdjHyperLink);
+        madeByText.setAlignment(Pos.BOTTOM_LEFT);
 
 
         bottomContainer.getChildren().addAll(start_vragenlijst,madeByText);
 
-        VBox layout = new VBox(25);
-        layout.setSpacing(25);
+        
+        VBox layout = new VBox(NODE_SPACING);
         layout.setMinWidth(1000);
         layout.setBackground(new Background(bgImage));
         layout.getChildren().addAll(logoContainer,TitleContainer,bottomContainer);
 
-        return new Scene(layout, 1280,720);
+        return layout;
     }
 }

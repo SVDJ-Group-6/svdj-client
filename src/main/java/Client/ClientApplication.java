@@ -1,10 +1,14 @@
 package Client;
 
+import controller.ThemeController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import view.*;
+import view.AdviceView;
+import view.EmailView;
+import view.HomeView;
+import view.QuizView;
 
 public class ClientApplication extends Application {
     public static void main(String[] args) {
@@ -14,13 +18,13 @@ public class ClientApplication extends Application {
     @Override
     public void start(Stage stage){
         ClientVariables.stage = stage;
-        // Set own scene!
-        QuizView quizView = new QuizView();
-        Scene scene = new Scene(quizView.drawQuiz());
+        ThemeController themeController = ThemeController.getInstance();
+        ClientVariables.theme = themeController.getTheme();
+        Scene scene  = new Scene(new HomeView().getHomePane());
         stage.setScene(scene);
-
-        stage.setHeight(720);
+        stage.setTitle("svdj-client");
         stage.setWidth(1280);
+        stage.setHeight(720);
         stage.setResizable(false);
         stage.show();
     }

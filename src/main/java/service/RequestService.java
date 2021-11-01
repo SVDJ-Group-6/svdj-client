@@ -1,37 +1,53 @@
 package service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class RequestService {
     private static RequestService requestService;
 
-    public String getResponse(String URL) throws IOException {
-        URL endpointURL = new URL(URL);
-        HttpURLConnection connection = (HttpURLConnection) endpointURL.openConnection();
-        connection.setRequestMethod("GET");
+    public String getRequest(String URL, String token) throws IOException {
+        return createRequest(URL, null, token, "GET");
+    }
 
-        InputStream inputStream = connection.getInputStream();
+    public String postRequest(String URL, String body, String token) throws IOException {
+        return createRequest(URL, body, token, "POST");
+    }
+
+    public String deleteRequest(String URL, String token) throws IOException {
+        return createRequest(URL, null, token, "DELETE");
+    }
+
+
+    private String createRequest(String URL, String body, String token, String requestMethod) throws IOException {
+        URL url = new URL(URL);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        httpURLConnection.setRequestMethod(requestMethod);
+        if (token != null) {
+            httpURLConnection.setRequestProperty("Authorization", "Bearer " + token);
+        }
+        if (Objects.equals(requestMethod, "POST") && body != null) {
+            httpURLConnection.setRequestProperty("Content-Type", "application/json");
+            httpURLConnection.setDoOutput(true);
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            byte[] input = body.getBytes(StandardCharsets.UTF_8);
+            outputStream.write(input);
+            outputStream.flush();
+            outputStream.close();
+        }
+        InputStream inputStream = httpURLConnection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
         StringBuilder stringBuilder = new StringBuilder();
-
-        while (true) {
-            String line = bufferedReader.readLine();
-
-            if (line == null) {
-                break;
-            }
-
+        String line;
+        while((line = bufferedReader.readLine()) != null) {
             stringBuilder.append(line);
         }
-
-        return stringBuilder.toString();
+        return  stringBuilder.toString();
     }
 
     public static RequestService getInstance() {
