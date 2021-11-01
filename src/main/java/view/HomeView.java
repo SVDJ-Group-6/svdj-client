@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 public class HomeView {
     ThemeController themeController = ThemeController.getInstance();
     Theme theme = themeController.getTheme();
+    
     final double BUTTON_PADDING = 17.5;
     final int HEADER_FONT_SIZE = 64;
     final int BUTTON_FONT_SIZE = 22;
@@ -33,9 +34,7 @@ public class HomeView {
     final int LOGO_WIDTH = 480;
     final int LOGO_HEIGHT = 128;
 
-    final String BUTTON_COLOR = theme.getCtaButtonColor();
-    final String HOVER_BUTTON_COLOR = theme.getPrimaryColor();
-    final String BUTTON_STYLE = "-fx-background-color: %s;";
+   final String BUTTON_STYLE = "-fx-background-color: %s;";
     final int NODE_SPACING = 25;
 
     final String fontFamily = "Arial";
@@ -64,39 +63,40 @@ public class HomeView {
 
         Text title = new Text("Weten welke subsidie bij jou past?");
         title.setFont(Font.font (fontFamily, FontWeight.BOLD, HEADER_FONT_SIZE));
-        title.setFill(Color.WHITE);
+        title.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
 
         Text text = new Text("Maak nu onze vragenlijst");
         text.setFont(Font.font (fontFamily, FontWeight.BOLD, 34));
-        text.setFill(Color.WHITE);
+        text.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
 
         TitleContainer.getChildren().addAll(title,text);
-
 
         HBox bottomContainer = new HBox(400);
         bottomContainer.setPadding(new Insets(0, 0, 0,40));
         bottomContainer.setAlignment(Pos.BOTTOM_LEFT);
         bottomContainer.setPrefHeight(300);
+
         Button start_vragenlijst = new Button("Start vragenlijst");
         start_vragenlijst.setFont(Font.font(fontFamily, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        start_vragenlijst.setTextFill(Color.BLACK);
+        start_vragenlijst.setTextFill(Color.web(ClientVariables.theme.getSecondaryColor()));
         start_vragenlijst.setAlignment(Pos.CENTER_LEFT);
         start_vragenlijst.setPadding(new Insets(BUTTON_PADDING));
         start_vragenlijst.setPrefWidth(326);
-        start_vragenlijst.setStyle(String.format(BUTTON_STYLE, BUTTON_COLOR));
+        start_vragenlijst.setStyle(String.format(BUTTON_STYLE, ClientVariables.theme.getCtaButtonColor()));
         start_vragenlijst.setOnMouseEntered(e -> {
-            start_vragenlijst.setStyle(String.format(BUTTON_STYLE, HOVER_BUTTON_COLOR));
+            start_vragenlijst.setStyle(String.format(BUTTON_STYLE, ClientVariables.theme.getSelectedButtonColor()));
         });
         start_vragenlijst.setOnMouseExited(e -> {
-            start_vragenlijst.setStyle(String.format(BUTTON_STYLE, BUTTON_COLOR));
+            start_vragenlijst.setStyle(String.format(BUTTON_STYLE, ClientVariables.theme.getCtaButtonColor()));
         });
         start_vragenlijst.setOnAction(e->{
             Scene scene = new Scene(new QuizView().getQuizPane());
             ClientVariables.stage.setScene(scene);
         });
+
         Text madeBy = new Text("De beslissingsmatrix wordt medemogelijk gemaakt door\n" + "het Stimuleringsfonds voor de Journalistiek\n");
         madeBy.setFont(Font.font (fontFamily, FontWeight.BOLD, 16));
-        madeBy.setFill(Color.WHITE);
+        madeBy.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
 
         Hyperlink svdjHyperLink = new Hyperlink("svdj.nl");
 
@@ -114,9 +114,7 @@ public class HomeView {
         VBox madeByText = new VBox(madeBy,svdjHyperLink);
         madeByText.setAlignment(Pos.BOTTOM_LEFT);
 
-
         bottomContainer.getChildren().addAll(start_vragenlijst,madeByText);
-
         
         VBox layout = new VBox(NODE_SPACING);
         layout.setMinWidth(1000);

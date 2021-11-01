@@ -2,7 +2,6 @@ package service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
@@ -21,7 +20,6 @@ public class RequestService {
     public String deleteRequest(String URL, String token) throws IOException {
         return createRequest(URL, null, token, "DELETE");
     }
-
 
     private String createRequest(String URL, String body, String token, String requestMethod) throws IOException {
         URL url = new URL(URL);

@@ -88,7 +88,6 @@ public class LoginView implements LoginObserver {
         headerContainer.getChildren().add(headerText);
         headerContainer.getChildren().add(message);
 
-
         TextField usernameField = new TextField();
         usernameField.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
         usernameField.setPrefWidth(867);
@@ -127,6 +126,7 @@ public class LoginView implements LoginObserver {
             String password = passwordField.getText();
 
             loginController.login(username, password);
+        
             passwordField.setText("");
         });
 

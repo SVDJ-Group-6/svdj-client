@@ -3,8 +3,6 @@ package DAO;
 import Admin.AdminVariables;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import model.Login;
-import observer.LoginObserver;
 import service.RequestService;
 
 import java.io.IOException;

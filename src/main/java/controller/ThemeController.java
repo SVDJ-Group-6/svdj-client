@@ -5,6 +5,7 @@ import model.Theme;
 import view.DashboardView;
 import Admin.AdminVariables;
 
+import javafx.scene.paint.Color;
 import java.io.IOException;
 
 public class ThemeController {
@@ -35,6 +36,14 @@ public class ThemeController {
 
     public void navigateBack() {
         AdminVariables.stage.setScene(new DashboardView().getDashboardScene());
+    }
+
+    public String toRGBCode(Color color) {
+        int red = (int) (color.getRed() * 255);
+        int green = (int) (color.getGreen() * 255);
+        int blue = (int) (color.getBlue() * 255);
+
+        return String.format("#%02X%02X%02X", red, green, blue);
     }
 
     public static ThemeController getInstance() {
