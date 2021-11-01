@@ -20,6 +20,8 @@ import observer.ChangePasswordObserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import Client.ClientVariables;
+
 public class ChangePasswordView implements ChangePasswordObserver {
     private ChangePasswordController changePasswordController = ChangePasswordController.getInstance();
     private String recoverycode;
@@ -43,12 +45,7 @@ public class ChangePasswordView implements ChangePasswordObserver {
         final int gridHGap = 75;
         final int gridVGap = 50;
 
-        /* Begin Temporary */
-        final String buttonColor = "#E4F6FF";
-        final String hoverButtonColor = "#9CC2D4";
-
         final String fontFamily = "Arial";
-        /* End Temporary */
 
         FileInputStream logoInput, backgroundInput;
 
@@ -105,12 +102,12 @@ public class ChangePasswordView implements ChangePasswordObserver {
         ChangePassword.setAlignment(Pos.CENTER_LEFT);
         ChangePassword.setPadding(new Insets(buttonPadding));
         ChangePassword.setPrefWidth(326);
-        ChangePassword.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        ChangePassword.setStyle(String.format("-fx-background-color: %s;", "#E4F6FF"));
         ChangePassword.setOnMouseEntered(e -> {
-            ChangePassword.setStyle(String.format("-fx-background-color: %s;", hoverButtonColor));
+            ChangePassword.setStyle(String.format("-fx-background-color: %s;", "#9CC2D4"));
         });
         ChangePassword.setOnMouseExited(e -> {
-            ChangePassword.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+            ChangePassword.setStyle(String.format("-fx-background-color: %s;", "#E4F6FF"));
         });
         ChangePassword.setOnMouseClicked(e -> {
             String password1 = NewPassword.getText();

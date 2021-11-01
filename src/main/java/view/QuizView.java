@@ -1,26 +1,18 @@
 package view;
 
 import controller.QuizController;
-import controller.ThemeController;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Answer;
 import model.Question;
 import model.Quiz;
-import model.Theme;
 import observer.QuizObserver;
 
 import java.util.ArrayList;
 
 public class QuizView implements QuizObserver {
-
     private QuizController quizController = QuizController.getInstance();
-    private ThemeController themeController = ThemeController.getInstance();
-    private Theme theme = themeController.getTheme();
 
     private Question currentQuestion;
     private Answer selectedAnswer;

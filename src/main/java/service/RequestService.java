@@ -22,7 +22,6 @@ public class RequestService {
         return createRequest(URL, null, token, "DELETE");
     }
 
-
     private String createRequest(String URL, String body, String token, String requestMethod) throws IOException {
         URL url = new URL(URL);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

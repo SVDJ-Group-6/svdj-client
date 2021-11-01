@@ -1,6 +1,5 @@
 package view;
 
-import Admin.AdminVariables;
 import controller.DashboardController;
 
 import javafx.scene.layout.Background;

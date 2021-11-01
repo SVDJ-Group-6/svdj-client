@@ -8,9 +8,7 @@ import java.util.ArrayList;
 
 public class QuizComponent {
 
-
     //Todo add a json object or something
-
 
     private Text question;
     private ArrayList<Button> answers;
