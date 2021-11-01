@@ -16,9 +16,9 @@ public class QuestionCreator extends Text {
 
     public Text createCustomQuestion(){
         final String STANDARD_TEXT = "Vraag";
-        Text text = new Text( String.format( "%s %d. %s ?", STANDARD_TEXT,questionNumber,questionText));
-        text.setFont(Font.font("Verdana",20));
-        text.setFill(Color.RED);
+        Text text = new Text( String.format( "%s %d. %s ?", STANDARD_TEXT, questionNumber, questionText));
+        text.setFont(Font.font("Verdana",40));
+        text.setFill(Color.WHITE);
         return text;
     }
 
@@ -28,5 +28,9 @@ public class QuestionCreator extends Text {
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    public int getQuestionNumber() {
+        return questionNumber;
     }
 }

@@ -32,7 +32,7 @@ public class Advice implements AdviceObservable {
         this.videoURL = videoURL;
         this.otherFundURL = otherFundURL;
     }
-
+ 
     public int getId() {
         return id;
     }
@@ -71,6 +71,14 @@ public class Advice implements AdviceObservable {
 
     public String getVideoURL() {
         return videoURL;
+    }
+
+    public boolean hasVideoURL() {
+        if (videoURL == null){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void setVideoURL(String videoURL) {

@@ -3,6 +3,7 @@ package Client;
 import controller.ThemeController;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import view.AdviceView;
 import view.EmailView;
@@ -15,16 +16,12 @@ public class ClientApplication extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage){
         ClientVariables.stage = stage;
-
         ThemeController themeController = ThemeController.getInstance();
         ClientVariables.theme = themeController.getTheme();
-
-        // Set own scene!
-        Scene scene  = new Scene(new HomeView().getHomePane());
+        Scene scene = new Scene(new HomeView().getHomePane());
         stage.setScene(scene);
-
         stage.setTitle("svdj-client");
         stage.setWidth(1280);
         stage.setHeight(720);
@@ -32,3 +29,4 @@ public class ClientApplication extends Application {
         stage.show();
     }
 }
+
