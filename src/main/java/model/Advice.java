@@ -24,7 +24,7 @@ public class Advice implements AdviceObservable {
         this.description = description;
         this.moreInfoURL = moreInfoURL;
         this.videoURL = videoURL;
-        this.otherFundURL = otherFundURL; 
+        this.otherFundURL = otherFundURL;
     }
  
     public int getId() {
@@ -54,20 +54,20 @@ public class Advice implements AdviceObservable {
         notifyObservers();
     }
 
-    public String getMoreInfoUrl() {
+    public String getMoreInfoURL() {
         return moreInfoURL;
     }
 
-    public void setMoreInfoUrl(String moreInfoUrl) {
-        this.moreInfoURL = moreInfoUrl;
+    public void setMoreInfoURL(String moreInfoURL) {
+        this.moreInfoURL = moreInfoURL;
         notifyObservers();
     }
 
-    public String getVideoUrl() {
+    public String getVideoURL() {
         return videoURL;
     }
 
-    public boolean hasVideoUrl() {
+    public boolean hasVideoURL() {
         if (videoURL == null){
             return false;
         } else {
@@ -75,17 +75,17 @@ public class Advice implements AdviceObservable {
         }
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoURL = videoUrl;
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
         notifyObservers();
     }
 
-    public String getOtherFundUrl() {
+    public String getOtherFundURL() {
         return otherFundURL;
     }
 
-    public void setOtherFundUrl(String otherFundUrl) {
-        this.otherFundURL = otherFundUrl;
+    public void setOtherFundURL(String otherFundURL) {
+        this.otherFundURL = otherFundURL;
         notifyObservers();
     }
 
@@ -93,9 +93,9 @@ public class Advice implements AdviceObservable {
         this.id = newAdvice.getId();
         this.value = newAdvice.getValue();
         this.description = newAdvice.getDescription();
-        this.moreInfoURL = newAdvice.getMoreInfoUrl();
-        this.videoURL = newAdvice.getVideoUrl();
-        this.otherFundURL = newAdvice.getOtherFundUrl();
+        this.moreInfoURL = newAdvice.getMoreInfoURL();
+        this.videoURL = newAdvice.getVideoURL();
+        this.otherFundURL = newAdvice.getOtherFundURL();
         notifyObservers();
     }
 

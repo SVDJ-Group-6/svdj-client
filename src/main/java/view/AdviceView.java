@@ -309,7 +309,7 @@ public class AdviceView implements AdviceObserver {
         buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
         givenAdvice.setText(advice.getValue());
         description.setText(advice.getDescription());
-        intro_video.setText(advice.getVideoUrl());
+        intro_video.setText(advice.getVideoURL());
 
         VBox adviceVideoContainer = new VBox();
         adviceVideoContainer.setMaxWidth(ADVICE_WIDTH);
@@ -338,7 +338,7 @@ public class AdviceView implements AdviceObserver {
             }
         });
         adviceVideoContainer.getChildren().addAll(videoButton);
-        if (advice.hasVideoUrl()){
+        if (advice.hasVideoURL()){
             buttonContainer.getChildren().addAll(adviceVideoContainer, contactContainer, sendEmailContainer);
         } else {
             buttonContainer.getChildren().addAll(contactContainer, sendEmailContainer);
