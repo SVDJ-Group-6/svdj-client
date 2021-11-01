@@ -1,5 +1,6 @@
 package Client;
 
+import controller.ThemeController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -16,6 +17,9 @@ public class ClientApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         ClientVariables.stage = stage;
+
+        ThemeController themeController = ThemeController.getInstance();
+        ClientVariables.theme = themeController.getTheme();
 
         // Set own scene!
         Scene scene  = new Scene(new HomeView().getHomePane());
