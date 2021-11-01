@@ -18,7 +18,15 @@ public class ThemeController {
             e.printStackTrace();
         }
         // TODO If theme fetch fails, return default theme
-        return new Theme();
+        return new Theme(
+                "#ffffff",
+                "#000000",
+                "#989898",
+                "#9cc2d4",
+                "#afccdb",
+                "#e4f6ff",
+                "#ffffff"
+        );
     }
 
     public void submitColors(Theme theme) throws IOException {
