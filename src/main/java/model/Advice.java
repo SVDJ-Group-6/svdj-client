@@ -1,5 +1,6 @@
 package model;
 
+import com.google.gson.JsonObject;
 import observable.AdviceObservable;
 import observer.AdviceObserver;
 
@@ -16,7 +17,12 @@ public class Advice implements AdviceObservable {
     private String videoURL;
     private String otherFundURL;
 
-    public Advice() {}
+    public Advice() {
+    }
+
+    public Advice(int id) {
+        this.id = id;
+    }
 
     public Advice(int id, String value, String description, String moreInfoURL, String videoURL, String otherFundURL) {
         this.id = id;
@@ -114,5 +120,16 @@ public class Advice implements AdviceObservable {
         for (AdviceObserver adviceObserver: observers) {
             adviceObserver.update(this);
         }
+    }
+
+    public String toJsonString() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        jsonObject.addProperty("value", value);
+        jsonObject.addProperty("description", description);
+        jsonObject.addProperty("moreInfoURL", moreInfoURL);
+        jsonObject.addProperty("videoURL", videoURL);
+        jsonObject.addProperty("otherFundURL", otherFundURL);
+        return jsonObject.toString();
     }
 }
