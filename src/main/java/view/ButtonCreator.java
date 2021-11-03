@@ -8,11 +8,30 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.Answer;
 
 public class ButtonCreator extends Button {
     final double buttonPadding = 17.5;
     private int preferedWidth;
     private int buttonFontSize = 22;
+    private Boolean selected = false;
+    private Answer answer;
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
 
     private String buttonColor;
 
@@ -40,11 +59,16 @@ public class ButtonCreator extends Button {
         button.setPadding(new Insets(buttonPadding));
         button.setPrefWidth(preferedWidth);
         button.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getAnswerButtonColor()));
+
         button.setOnMouseEntered(e -> {
-            button.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getSelectedButtonColor()));
+            if (!selected) {
+                button.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getSelectedButtonColor()));
+            }
         });
         button.setOnMouseExited(e -> {
-            button.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getAnswerButtonColor()));
+            if (!selected) {
+                button.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getAnswerButtonColor()));
+            }
         });
 
         return button;

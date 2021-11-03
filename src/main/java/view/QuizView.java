@@ -287,14 +287,30 @@ public class QuizView implements QuizObserver {
     private void updateAnswers(Quiz quiz) {
         ArrayList<ArrayList<Answer>> allAnswers = quiz.getAnswers();
         ArrayList<Answer> currentAnswers = allAnswers.get(allAnswers.size() - 1);
-        ArrayList<Button> newButtons = new ArrayList<>();
-        for (Answer answer : currentAnswers) {
-            Button tmpBtn = new ButtonCreator(answer.getValue()).createCustomButton();
-            tmpBtn.setOnAction(e -> {
-                this.selectedAnswer = answer;
-            });
 
-            newButtons.add(tmpBtn);
+        ArrayList<ButtonCreator> buttonCreators = new ArrayList<>();
+        for (Answer answer : currentAnswers) {
+            ButtonCreator buttonCreator = new ButtonCreator(answer.getValue());
+            buttonCreator.setAnswer(answer);
+            buttonCreators.add(buttonCreator);
+        }
+
+        ArrayList<Button> newButtons = new ArrayList<>();
+        for (ButtonCreator buttonCreator : buttonCreators) {
+            Button tmpButton = buttonCreator.createCustomButton();
+            tmpButton.setOnAction(e -> {
+                this.selectedAnswer = buttonCreator.getAnswer();
+                for (ButtonCreator buttonCreator1 : buttonCreators) {
+                    buttonCreator1.setSelected(false);
+                }
+
+                for (Button button : newButtons) {
+                    button.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getAnswerButtonColor()));
+                }
+                buttonCreator.setSelected(true);
+                tmpButton.setStyle(String.format("-fx-background-color: %s;", ClientVariables.theme.getSelectedButtonColor()));
+            });
+            newButtons.add(tmpButton);
         }
 
         // Creating a Grid Pane
