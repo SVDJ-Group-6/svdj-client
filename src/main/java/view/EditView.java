@@ -228,6 +228,7 @@ public class EditView implements EditObserver {
         questionScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         questionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         questionScrollPane.setMinWidth(SCROLLPANE_CONTAINER_WIDTH);
+        questionScrollPane.setMaxWidth(SCROLLPANE_CONTAINER_WIDTH);
         questionScrollPane.setContent(questionItemList);
 
         leftSideScrollPane.setAlignment(Pos.BASELINE_LEFT);
@@ -238,6 +239,7 @@ public class EditView implements EditObserver {
         adviceScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         adviceScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         adviceScrollPane.setMinWidth(SCROLLPANE_CONTAINER_WIDTH);
+        adviceScrollPane.setMaxWidth(SCROLLPANE_CONTAINER_WIDTH);
         adviceScrollPane.setContent(adviceItemList);
 
         rightSideScrollPane.setAlignment(Pos.BASELINE_RIGHT);
@@ -282,6 +284,7 @@ public class EditView implements EditObserver {
         HBox actionRow = createQuestionActionRow(node.getQuestion().getId());
 
         questionBox.setMinWidth(SCROLLPANE_CONTENT_WIDTH);
+        questionBox.setMaxWidth(SCROLLPANE_CONTENT_WIDTH);
         questionBox.getChildren().add(actionRow);
 
         return questionBox;
@@ -467,6 +470,7 @@ public class EditView implements EditObserver {
         VBox adviceBody = createAdviceBody(advice);
 
         adviceBox.setMinWidth(SCROLLPANE_CONTENT_WIDTH);
+        adviceBox.setMaxWidth(SCROLLPANE_CONTENT_WIDTH);
         adviceBox.getChildren().addAll(adviceHeader, adviceBody);
 
         return adviceBox;
