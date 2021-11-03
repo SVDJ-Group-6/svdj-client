@@ -74,11 +74,24 @@ public class Advice implements AdviceObservable {
     }
 
     public boolean hasVideoURL() {
-        if (videoURL == null){
+        if (videoURL == null) {
             return false;
-        } else {
-            return true;
         }
+        return true;
+    }
+
+    public boolean hasOtherFundURL() {
+        if (otherFundURL == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasHyperlinkURL() {
+        if (moreInfoURL == null){
+            return false;
+        }
+        return true;
     }
 
     public void setVideoURL(String videoURL) {

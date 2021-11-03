@@ -32,7 +32,9 @@ public class AdviceView implements AdviceObserver {
     private Text description;
     private Text web_url;
     private Text intro_video;
+    private Text other_fund;
     private Advice advice;
+    private  Hyperlink infoLink;
 
     final double BUTTON_PADDING = 17.5;
     final int BUTTON_WIDTH = 326;
@@ -76,12 +78,16 @@ public class AdviceView implements AdviceObserver {
     private VBox buttonContainer = new VBox(BUTTON_CONTAINER_PADDING);
     private VBox contactContainer = new VBox();
     private HBox sendEmailContainer = new HBox();
+    private VBox moreInformationContainer = new VBox();
+    private Text moreInformationText = new Text("Voor meer informatie, ga naar: ");
 
     public AdviceView(int adviceId) {
         givenAdvice = new Text();
         description = new Text();
         web_url = new Text();
         intro_video = new Text();
+        other_fund = new Text();
+        infoLink = new Hyperlink();
 
         adviceController.registerObserver(this);
         adviceController.loadAdvice(adviceId);
@@ -148,12 +154,11 @@ public class AdviceView implements AdviceObserver {
                 + "-fx-background-color: transparent");
         descriptionContainer.getChildren().addAll(sp);
 
-        Hyperlink svdjLink = new Hyperlink("www.svdj.nl");
-        svdjLink.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, DEFAULT_TEXT_FONT_SIZE));
-        web_url.setText("https://www.svdj.nl/");
-        svdjLink.setOnAction(e -> {
+
+        infoLink.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, DEFAULT_TEXT_FONT_SIZE));
+        infoLink.setOnAction(e -> {
             try {
-                svdjLink.setVisited(false);
+                infoLink.setVisited(false);
                 Desktop.getDesktop().browse(new URI(web_url.getText()));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
@@ -163,16 +168,14 @@ public class AdviceView implements AdviceObserver {
 
         });
 
-        svdjLink.setStyle("-fx-border-color: transparent;");
+        infoLink.setStyle("-fx-border-color: transparent;");
 
-        Text moreInformationText = new Text("Voor meer informatie, ga naar: ");
+
         moreInformationText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, DEFAULT_TEXT_FONT_SIZE));
         moreInformationText.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
 
-        VBox moreInformationContainer = new VBox();
         moreInformationContainer.setMaxWidth(INFORMATION_WIDTH);
         moreInformationContainer.setStyle(paddingSize(8));
-        moreInformationContainer.getChildren().addAll(moreInformationText, svdjLink);
 
         VBox homeButtonContainer = new VBox();
         homeButtonContainer.setPrefHeight(HOME_CONTAINER_HEIGHT);
@@ -331,7 +334,7 @@ public class AdviceView implements AdviceObserver {
         videoButton.setOnMouseExited(e -> {
             videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
         });
-        intro_video.setText("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        intro_video.setText(advice.getVideoURL());
         videoButton.setOnMouseClicked(e -> {
             try {
                 Desktop.getDesktop().browse(new URI(intro_video.getText()));
@@ -342,10 +345,60 @@ public class AdviceView implements AdviceObserver {
             }
         });
         adviceVideoContainer.getChildren().addAll(videoButton);
+
+        VBox otherFundContainer = new VBox();
+        otherFundContainer.setMaxWidth(ADVICE_WIDTH);
+        otherFundContainer.setAlignment(Pos.CENTER);
+
+        Button otherFundButton = new Button("Andere fondsen bekijken");
+        otherFundButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
+        otherFundButton.setTextFill(Color.web(ClientVariables.theme.getSecondaryColor()));
+        otherFundButton.setAlignment(Pos.CENTER_LEFT);
+        otherFundButton.setPadding(new Insets(BUTTON_PADDING));
+        otherFundButton.setPrefWidth(BUTTON_WIDTH);
+        otherFundButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
+        otherFundButton.setOnMouseEntered(e -> {
+            otherFundButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getSelectedButtonColor()) + "-fx-background-radius: 0;");
+        });
+        otherFundButton.setOnMouseExited(e -> {
+            otherFundButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
+        });
+        other_fund.setText(advice.getOtherFundURL());
+        otherFundButton.setOnMouseClicked(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI(other_fund.getText()));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
+        otherFundContainer.getChildren().addAll(otherFundButton);
+
+        if (advice.hasOtherFundURL()) {
+            buttonContainer.getChildren().add(otherFundContainer);
+        }
         if (advice.hasVideoURL()) {
-            buttonContainer.getChildren().addAll(adviceVideoContainer, contactContainer, sendEmailContainer);
-        } else {
-            buttonContainer.getChildren().addAll(contactContainer, sendEmailContainer);
+            buttonContainer.getChildren().add(adviceVideoContainer);
+        }
+        buttonContainer.getChildren().addAll(contactContainer, sendEmailContainer);
+
+        if(advice.hasHyperlinkURL()){
+            moreInformationContainer.getChildren().removeAll(moreInformationContainer.getChildren());
+            web_url.setText(advice.getMoreInfoURL());
+            infoLink.setText(advice.getMoreInfoURL());
+            System.out.println(infoLink);
+            infoLink.setOnAction(e -> {
+                try {
+                    infoLink.setVisited(false);
+                    Desktop.getDesktop().browse(new URI(web_url.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (URISyntaxException uriSyntaxException) {
+                    uriSyntaxException.printStackTrace();
+                }
+            });
+            moreInformationContainer.getChildren().addAll(moreInformationText, infoLink);
         }
     }
 
