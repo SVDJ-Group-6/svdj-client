@@ -105,7 +105,7 @@ public class ThemeView implements ThemeObserver {
         HBox selectedButtonColorPickerWrapper = createColorPickerWrapper(selectedButtonColorPicker);
         HBox sixthColumnBox = createColumnBox(selectedButtonColorText, selectedButtonColorPickerWrapper);
 
-        Text previousButtonColorText = createColorText("Selected button color");
+        Text previousButtonColorText = createColorText("Previous button color");
         ColorPicker previousButtonColorPicker = createColorPicker(
                 Color.web(AdminVariables.theme.getPreviousButtonColor()));
         HBox previousButtonColorPickerWrapper = createColorPickerWrapper(previousButtonColorPicker);

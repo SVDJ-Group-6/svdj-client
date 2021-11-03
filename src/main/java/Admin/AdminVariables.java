@@ -6,6 +6,6 @@ import model.Theme;
 public class AdminVariables {
     static public Stage stage;
     static public String token;
-    public static String API_URL = "http://localhost:8080";
+    public static String API_URL = "http://96cf-84-87-167-193.ngrok.io";
     public static Theme theme;
 }
