@@ -3,7 +3,6 @@ package controller;
 import Client.ClientVariables;
 import DAO.AdviceDAO;
 import DAO.QuizDAO;
-import DAO.StatsDAO;
 import javafx.scene.Scene;
 import model.*;
 import observer.QuizObserver;
@@ -15,10 +14,8 @@ import java.util.Objects;
 public class QuizController {
     private static QuizController quizController;
     private final QuizDAO quizDAO = QuizDAO.getInstance();
-    private final StatsDAO statsDAO = StatsDAO.getInstance();
     private final AdviceDAO adviceDAO = AdviceDAO.getInstance();
-    private final Quiz quiz = new Quiz();
-
+    private Quiz quiz = new Quiz();
 
     /**
      * This function is ran on initialization, after registerObserver.
@@ -94,12 +91,11 @@ public class QuizController {
     }
 
     private void postAllStats() {
-        for (Stats stats : quiz.getStats()) {
-            try {
-                statsDAO.postStatsToAPI(stats);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            quizDAO.postStatsToAPI(quiz.getStats());
+            quiz = new Quiz();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

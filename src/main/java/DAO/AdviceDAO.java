@@ -14,8 +14,13 @@ public class AdviceDAO {
 
     public Advice getAdviceFromAPI(int adviceId) throws IOException {
         String adviceURL = ClientVariables.API_URL + "/api/advices/" + adviceId;
-        Advice advice = gson.fromJson(requestService.getResponse(adviceURL), Advice.class);
+        Advice advice = gson.fromJson(requestService.getRequest(adviceURL, null), Advice.class);
         return advice;
+    }
+
+    public void sendEmailWithAPI(int adviceId,String email) throws IOException {
+        String emailURL = ClientVariables.API_URL + "/api/advices/" + adviceId + "/email/" + email;
+        requestService.getRequest(emailURL, null);
     }
 
     public static AdviceDAO getInstance() {

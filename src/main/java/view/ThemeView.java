@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import Admin.AdminVariables;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,26 +36,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
 public class ThemeView implements ThemeObserver {
-    private ThemeController themeController = ThemeController.getInstance();
-    private Theme theme;
+    ThemeController themeController = ThemeController.getInstance();
 
-    public ThemeView() {
-        theme = themeController.getTheme();
-    }
+    final double BUTTON_PADDING = 17.5;
+    final int HEADER_FONT_SIZE = 64;
+    final int BUTTON_FONT_SIZE = 22;
+
+    final int LOGO_WIDTH = 480;
+    final int LOGO_HEIGHT = 128;
+
+    final int HORIZONTAL_GRID_GAP = 75;
+    final int VERTICAL_GRID_GAP = 50;
+
+    final String FONT_FAMILY = "Arial";
 
     public Scene getThemeScene() {
-        final double BUTTON_PADDING = 17.5;
-        final int HEADER_FONT_SIZE = 64;
-        final int BUTTON_FONT_SIZE = 22;
-
-        final int LOGO_WIDTH = 480;
-        final int LOGO_HEIGHT = 128;
-
-        final int HORIZONTAL_GRID_GAP = 75;
-        final int VERTICAL_GRID_GAP = 50;
-
-        final String FONT_FAMILY = "Arial";
-        /* End Temporary */
 
         FileInputStream logoInput, backgroundInput;
         Image logoImage, backgroundImage;
@@ -78,108 +74,54 @@ public class ThemeView implements ThemeObserver {
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.LEFT);
 
-        HBox firstColumnBox = new HBox(10);
-        HBox secondColumnBox = new HBox(10);
-        HBox thirdColumnBox = new HBox(10);
-        HBox fourthColumnBox = new HBox(10);
-        HBox fifthColumnBox = new HBox(10);
-        HBox sixthColumnBox = new HBox(10);
-        HBox seventhColumnBox = new HBox(10);
+        Text primaryColorText = createColorText("Primary color");
+        ColorPicker primaryColorPicker = createColorPicker(Color.web(AdminVariables.theme.getPrimaryColor()));
+        HBox primaryColorPickerWrapper = createColorPickerWrapper(primaryColorPicker);
+        HBox firstColumnBox = createColumnBox(primaryColorText, primaryColorPickerWrapper);
 
-        Text primaryColorText = new Text("Primary Color");
-        primaryColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker primaryColorPicker = new ColorPicker(Color.web(theme.getPrimaryColor())); // Get color from model
-                                                                                              // from api ofzo
-        primaryColorPicker
-                .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(primaryColorPicker.getValue())),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-        primaryColorPicker.setOnAction(e -> {
-            primaryColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(primaryColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        firstColumnBox.getChildren().addAll(primaryColorText, primaryColorPicker);
+        Text callToActionColorText = createColorText("Call to action color");
+        ColorPicker callToActionColorPicker = createColorPicker(Color.web(AdminVariables.theme.getCtaButtonColor()));
+        HBox callToActionColorPickerWrapper = createColorPickerWrapper(callToActionColorPicker);
+        HBox secondColumnBox = createColumnBox(callToActionColorText, callToActionColorPickerWrapper);
 
-        Text ctaButtonColorText = new Text("Cta Button Color");
-        ctaButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker ctaButtonColorPicker = new ColorPicker(Color.web(theme.getCtaButtonColor()));
-        ctaButtonColorPicker
-                .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(ctaButtonColorPicker.getValue())),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-        ctaButtonColorPicker.setOnAction(e -> {
-            ctaButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(ctaButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        secondColumnBox.getChildren().addAll(ctaButtonColorText, ctaButtonColorPicker);
+        Text secondaryColorText = createColorText("Secondary color");
+        ColorPicker secondaryColorPicker = createColorPicker(Color.web(AdminVariables.theme.getSecondaryColor()));
+        HBox secondaryColorPickerWrapper = createColorPickerWrapper(secondaryColorPicker);
+        HBox thirdColumnBox = createColumnBox(secondaryColorText, secondaryColorPickerWrapper);
 
-        Text secondaryColorText = new Text("Secondary Color");
-        secondaryColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker secondaryColorPicker = new ColorPicker(Color.web(theme.getSecondaryColor()));
-        secondaryColorPicker
-                .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(secondaryColorPicker.getValue())),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-        secondaryColorPicker.setOnAction(e -> {
-            secondaryColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(secondaryColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        thirdColumnBox.getChildren().addAll(secondaryColorText, secondaryColorPicker);
+        Text answerButtonColorText = createColorText("Answer button color");
+        ColorPicker answerColorPicker = createColorPicker(Color.web(AdminVariables.theme.getAnswerButtonColor()));
+        HBox answerColorPickerWrapper = createColorPickerWrapper(answerColorPicker);
+        HBox fourthColumnBox = createColumnBox(answerButtonColorText, answerColorPickerWrapper);
 
-        Text answerButtonColorText = new Text("Answer Button Color");
-        answerButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker answerButtonColorPicker = new ColorPicker(Color.web(theme.getAnswerButtonColor()));
-        answerButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                Color.web(toRGBCode(answerButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        answerButtonColorPicker.setOnAction(e -> {
-            answerButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(answerButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        fourthColumnBox.getChildren().addAll(answerButtonColorText, answerButtonColorPicker);
+        Text tertaireColorText = createColorText("Tertaire color");
+        ColorPicker tertaireColorPicker = createColorPicker(Color.web(AdminVariables.theme.getTertaireColor()));
+        HBox tertaireColorPickerWrapper = createColorPickerWrapper(tertaireColorPicker);
+        HBox fifthColumnBox = createColumnBox(tertaireColorText, tertaireColorPickerWrapper);
 
-        Text tertaireColorText = new Text("Tertaire Color");
-        tertaireColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker tertaireColorPicker = new ColorPicker(Color.web(theme.getTertaireColor()));
-        tertaireColorPicker
-                .setBackground(new Background(new BackgroundFill(Color.web(toRGBCode(tertaireColorPicker.getValue())),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-        tertaireColorPicker.setOnAction(e -> {
-            tertaireColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(tertaireColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        fifthColumnBox.getChildren().addAll(tertaireColorText, tertaireColorPicker);
+        Text selectedButtonColorText = createColorText("Selected button color");
+        ColorPicker selectedButtonColorPicker = createColorPicker(
+                Color.web(AdminVariables.theme.getSelectedButtonColor()));
+        HBox selectedButtonColorPickerWrapper = createColorPickerWrapper(selectedButtonColorPicker);
+        HBox sixthColumnBox = createColumnBox(selectedButtonColorText, selectedButtonColorPickerWrapper);
 
-        Text selectedButtonColorText = new Text("Selected Button Color");
-        selectedButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker selectedButtonColorPicker = new ColorPicker(Color.web(theme.getSelectedButtonColor()));
-        selectedButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                Color.web(toRGBCode(selectedButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        selectedButtonColorPicker.setOnAction(e -> {
-            selectedButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(selectedButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        sixthColumnBox.getChildren().addAll(selectedButtonColorText, selectedButtonColorPicker);
-
-        Text previousButtonColorText = new Text("Previous Button Color");
-        previousButtonColorText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
-        ColorPicker previousButtonColorPicker = new ColorPicker(Color.web(theme.getPreviousButtonColor()));
-        previousButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                Color.web(toRGBCode(previousButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        previousButtonColorPicker.setOnAction(e -> {
-            previousButtonColorPicker.setBackground(new Background(new BackgroundFill(
-                    Color.web(toRGBCode(previousButtonColorPicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
-        });
-        seventhColumnBox.getChildren().addAll(previousButtonColorText, previousButtonColorPicker);
+        Text previousButtonColorText = createColorText("Selected button color");
+        ColorPicker previousButtonColorPicker = createColorPicker(
+                Color.web(AdminVariables.theme.getPreviousButtonColor()));
+        HBox previousButtonColorPickerWrapper = createColorPickerWrapper(previousButtonColorPicker);
+        HBox seventhColumnBox = createColumnBox(previousButtonColorText, previousButtonColorPickerWrapper);
 
         Button backButton = new Button("Terug");
         backButton.setPadding(new Insets(BUTTON_PADDING));
         backButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         backButton.setTextFill(Color.BLACK);
-        backButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
+        backButton.setStyle(String.format("-fx-background-color: %s;", "#ffffff"));
         backButton.setOnMouseClicked(e -> themeController.navigateBack());
         backButton.setOnMouseEntered(e -> {
-            backButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;", theme.getSecondaryColor(),
-                    theme.getPrimaryColor()));
+            backButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;", "#000000", "#ffffff"));
         });
         backButton.setOnMouseExited(e -> {
-            backButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
+            backButton.setStyle(String.format("-fx-background-color: %s;", "#ffffff"));
         });
 
         Button applyButton = new Button("Bevestigen");
@@ -187,25 +129,26 @@ public class ThemeView implements ThemeObserver {
         applyButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
         applyButton.setTextFill(Color.BLACK);
         applyButton.setPrefWidth(160);
-        applyButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
+        applyButton.setStyle(String.format("-fx-background-color: %s;", "#ffffff"));
         applyButton.setOnMouseEntered(e -> {
-            applyButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;",
-                    theme.getSecondaryColor(), theme.getPrimaryColor()));
+            applyButton.setStyle(String.format("-fx-background-color: %s; -fx-text-fill: %s;", "#000000", "#ffffff"));
         });
         applyButton.setOnMouseExited(e -> {
-            applyButton.setStyle(String.format("-fx-background-color: %s;", theme.getPrimaryColor()));
+            applyButton.setStyle(String.format("-fx-background-color: %s;", "#ffffff"));
         });
         applyButton.setOnMouseClicked(e -> {
-            theme.setPrimaryColor(toRGBCode(primaryColorPicker.getValue()));
-            theme.setSecondaryColor(toRGBCode(secondaryColorPicker.getValue()));
-            theme.setTertaireColor(toRGBCode(tertaireColorPicker.getValue()));
-            theme.setCtaButtonColor(toRGBCode(ctaButtonColorPicker.getValue()));
-            theme.setAnswerButtonColor(toRGBCode(answerButtonColorPicker.getValue()));
-            theme.setSelectedButtonColor(toRGBCode(secondaryColorPicker.getValue()));
-            theme.setPreviousButtonColor(toRGBCode(previousButtonColorPicker.getValue()));
+            AdminVariables.theme.setPrimaryColor(themeController.toRGBCode(primaryColorPicker.getValue()));
+            AdminVariables.theme.setSecondaryColor(themeController.toRGBCode(secondaryColorPicker.getValue()));
+            AdminVariables.theme.setTertaireColor(themeController.toRGBCode(tertaireColorPicker.getValue()));
+            AdminVariables.theme.setCtaButtonColor(themeController.toRGBCode(callToActionColorPicker.getValue()));
+            AdminVariables.theme.setAnswerButtonColor(themeController.toRGBCode(answerColorPicker.getValue()));
+            AdminVariables.theme
+                    .setSelectedButtonColor(themeController.toRGBCode(selectedButtonColorPicker.getValue()));
+            AdminVariables.theme
+                    .setPreviousButtonColor(themeController.toRGBCode(previousButtonColorPicker.getValue()));
 
             try {
-                themeController.submitColors(theme);
+                themeController.submitColors(AdminVariables.theme);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -219,11 +162,11 @@ public class ThemeView implements ThemeObserver {
 
         HBox headerContainer = new HBox();
         headerContainer.setAlignment(Pos.CENTER_LEFT);
-        headerContainer.setHgrow(actionContainer, Priority.ALWAYS);
+        HBox.setHgrow(actionContainer, Priority.ALWAYS);
         headerContainer.getChildren().addAll(headerText, actionContainer);
 
         GridPane actionList = new GridPane();
-        actionList.setPadding(new Insets(50, 0, 100, 0));
+        actionList.setPadding(new Insets(75, 0, 100, 50));
         actionList.setBackground(
                 new Background(new BackgroundFill(Color.web("#E8F1F6"), CornerRadii.EMPTY, Insets.EMPTY)));
         actionList.setHgap(HORIZONTAL_GRID_GAP);
@@ -252,17 +195,46 @@ public class ThemeView implements ThemeObserver {
         return new Scene(root);
     }
 
-    public String toRGBCode(Color color) {
-        int red = (int) (color.getRed() * 255);
-        int green = (int) (color.getGreen() * 255);
-        int blue = (int) (color.getBlue() * 255);
+    public Text createColorText(String text) {
+        Text colortext = new Text(text);
+        colortext.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
 
-        return String.format("#%02X%02X%02X", red, green, blue);
+        return colortext;
+    }
+
+    public ColorPicker createColorPicker(Color defaultcolor) {
+        ColorPicker colorpicker = new ColorPicker(defaultcolor);
+        colorpicker.setBackground(new Background(new BackgroundFill(
+                Color.web(themeController.toRGBCode(colorpicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
+        colorpicker.setOnAction(e -> {
+            colorpicker.setBackground(new Background(new BackgroundFill(
+                    Color.web(themeController.toRGBCode(colorpicker.getValue())), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+
+        return colorpicker;
+    }
+
+    public HBox createColorPickerWrapper(ColorPicker colorpicker) {
+        HBox colorpickerwrapper = new HBox();
+        HBox.setHgrow(colorpickerwrapper, Priority.ALWAYS);
+
+        colorpickerwrapper.setAlignment(Pos.BASELINE_RIGHT);
+        colorpickerwrapper.setMinWidth(200);
+        colorpickerwrapper.setMaxWidth(300);
+        colorpickerwrapper.getChildren().add(colorpicker);
+
+        return colorpickerwrapper;
+    }
+
+    public HBox createColumnBox(Text text, HBox colorpickerwrapper) {
+        HBox columnbox = new HBox(10);
+        columnbox.getChildren().addAll(text, colorpickerwrapper);
+
+        return columnbox;
     }
 
     @Override
     public void update(Theme theme) {
-        // TODO Auto-generated method stub
         Platform.runLater(() -> {
 
         });

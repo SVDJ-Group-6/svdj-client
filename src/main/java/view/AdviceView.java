@@ -3,7 +3,6 @@ package view;
 import Client.ClientVariables;
 import controller.AdviceController;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,9 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import model.Advice;
 import observer.AdviceObserver;
 
@@ -31,104 +28,112 @@ import java.net.URISyntaxException;
 
 public class AdviceView implements AdviceObserver {
     private AdviceController adviceController = AdviceController.getInstance();
-    private Text advice;
+    private Text givenAdvice;
     private Text description;
     private Text web_url;
     private Text intro_video;
+    private Text other_fund;
+    private Advice advice;
+    private  Hyperlink infoLink;
 
+    final double BUTTON_PADDING = 17.5;
+    final int BUTTON_WIDTH = 326;
+    final int BUTTON_FONT_SIZE = 22;
 
-    public AdviceView(int adviceId){
-        advice = new Text();
+    final int TITLE_FONT_SIZE = 50;
+    final int UNDER_TITLE_FONT_SIZE = 24;
+    final int DEFAULT_TEXT_FONT_SIZE = 16;
+    final String FONT_FAMILY = "Arial";
+
+    final int LOGO_WIDTH = 480;
+    final int LOGO_HEIGHT = 128;
+
+    final int ADVICE_CONTAINER_WIDTH = 670;
+    final int ADVICE_CONTAINER_WRAPPING_WIDTH = 650;
+    final int DESCRIPTION_WIDTH = 800;
+    final int DESCRIPTION_CONTAINER_HEIGHT = 170;
+    final int DESCRIPTION_WRAPPING_WIDTH = 750;
+    final int INFORMATION_WIDTH = 500;
+    final int HOME_CONTAINER_HEIGHT = 100;
+    final int HOME_CONTAINER_WIDTH = 400;
+    final int ADVICE_WIDTH = 400;
+    final int CONTACT_WIDTH = 400;
+    final int EMAIL_CONTAINER_WIDTH = 400;
+    final int EMAIL_TEXTFIELD_WIDTH = 270;
+    final int EMAIL_TEXTFIELD_HEIGHT = 59;
+    final int EMAIL_ICON = 22;
+    final int TEXT_CONTAINER_PADDING = 10;
+    final int TEXT_CONTAINER_WIDTH = 800;
+    final int TEXT_CONTAINER_HEIGHT = 400;
+    final int BUTTON_CONTAINER_PADDING = 30;
+    final int BUTTON_CONTAINER_WIDTH = 500;
+    final int BODY_CONTAINER_PADDING = 30;
+    final int LAYOUT_CONTAINER_PADDING = 10;
+    final int TEXT_CONTAINER_INSETS = 25;
+
+    final String CONTACT_URL = "https://www.svdj.nl/contact/";
+
+    final String FX_BACKGROUND_COLOR = "-fx-background-color: %s;";
+
+    private VBox buttonContainer = new VBox(BUTTON_CONTAINER_PADDING);
+    private VBox contactContainer = new VBox();
+    private HBox sendEmailContainer = new HBox();
+    private VBox moreInformationContainer = new VBox();
+    private Text moreInformationText = new Text("Voor meer informatie, ga naar: ");
+
+    public AdviceView(int adviceId) {
+        givenAdvice = new Text();
         description = new Text();
         web_url = new Text();
         intro_video = new Text();
+        other_fund = new Text();
+        infoLink = new Hyperlink();
 
         adviceController.registerObserver(this);
         adviceController.loadAdvice(adviceId);
     }
 
     public VBox getAdvicePane() {
-        final double BUTTON_PADDING = 17.5;
-        final int BUTTON_WIDTH = 326;
-        final int BUTTON_FONT_SIZE = 22;
-        final String BUTTON_COLOR = "#9CC2D4";
-        final String HOVER_BUTTON_COLOR = "#E4F6FF";
-
-        final int TITLE_FONT_SIZE = 50;
-        final int UNDER_TITLE_FONT_SIZE = 24;
-        final int DEFAULT_TEXT_FONT_SIZE = 16;
-        final String FONT_FAMILY = "Arial";
-
-        final int LOGO_WIDTH = 480;
-        final int LOGO_HEIGHT = 128;
-
-        final int ADVICE_CONTAINER_WIDTH = 670;
-        final int ADVICE_CONTAINER_WRAPPING_WIDTH = 650;
-        final int DESCRIPTION_WIDTH = 800;
-        final int DESCRIPTION_CONTAINER_HEIGHT = 170;
-        final int DESCRIPTION_WRAPPING_WIDTH = 750;
-        final int INFORMATION_WIDTH = 500;
-        final int HOME_CONTAINER_HEIGHT = 100;
-        final int HOME_CONTAINER_WIDTH = 400;
-        final int ADVICE_WIDTH = 400;
-        final int CONTACT_WIDTH = 400;
-        final int EMAIL_CONTAINER_WIDTH = 400;
-        final int EMAIL_TEXTFIELD_WIDTH = 270;
-        final int EMAIL_TEXTFIELD_HEIGHT = 59;
-        final int EMAIL_ICON = 22;
-        final int TEXT_CONTAINER_PADDING = 10;
-        final int TEXT_CONTAINER_WIDTH = 800;
-        final int TEXT_CONTAINER_HEIGHT = 400;
-        final int BUTTON_CONTAINER_PADDING = 30;
-        final int BUTTON_CONTAINER_WIDTH = 500;
-        final int BODY_CONTAINER_PADDING = 30;
-        final int LAYOUT_CONTAINER_PADDING = 10;
-        final int TEXT_CONTAINER_INSETS = 25;
-
-        final String CONTACT_URL = "https://www.svdj.nl/contact/";
-
-        final String FX_BACKGROUND_COLOR = "-fx-background-color: %s;";
-
-        Stage stage = ClientVariables.stage;
-
-
         BackgroundImage background = null;
+        Image logo = null;
+
         try {
             background = new BackgroundImage(new Image(new FileInputStream("./src/main/resources/background.png")),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        Image logo = null;
         try {
             logo = new Image(new FileInputStream("./src/main/resources/SVDJ_logo.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         ImageView logoView = new ImageView(logo);
         logoView.setFitHeight(LOGO_HEIGHT);
         logoView.setFitWidth(LOGO_WIDTH);
         logoView.setPreserveRatio(true);
 
         VBox titleContainer = new VBox();
-        titleContainer.setStyle(paddingSize(16));
+        titleContainer.setPadding(new Insets(16, 16, 16, 10));
+        // titleContainer.setStyle(paddingSize(16));
         Text title = new Text();
         title.setText("Bedankt voor het gebruiken van ons applicatie");
         title.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, FontPosture.REGULAR, TITLE_FONT_SIZE));
-        title.setFill(Color.WHITE);
+        title.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
         titleContainer.getChildren().addAll(title);
 
-        //TODO moet nog naar database connecten om de advies te halen
         VBox adviceContainer = new VBox();
         adviceContainer.setMaxWidth(ADVICE_CONTAINER_WIDTH);
         adviceContainer.setStyle(paddingSize(10));
         Text adviceText = new Text();
-        advice.setText("'Talent Ontwikkeling'");
         adviceText.setWrappingWidth(ADVICE_CONTAINER_WRAPPING_WIDTH);
-        adviceText.setText("Uit het vragenlijst is gebleken dat u mogelijk in aanmerking kom voor " + advice.getText());
+        adviceText.setText(
+                "Uit het vragenlijst is gebleken dat u mogelijk in aanmerking komt voor: " + givenAdvice.getText());
         adviceText.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, UNDER_TITLE_FONT_SIZE));
-        adviceText.setFill(Color.WHITE);
+        adviceText.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
         adviceContainer.getChildren().addAll(adviceText);
 
         VBox descriptionContainer = new VBox();
@@ -138,24 +143,22 @@ public class AdviceView implements AdviceObserver {
         descriptionContainer.setMaxHeight(DESCRIPTION_CONTAINER_HEIGHT);
         Text descriptionText = new Text();
         descriptionText.setWrappingWidth(DESCRIPTION_WRAPPING_WIDTH);
-//        descriptionText.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.");
-        description.setText("Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk dshjkfds hjkfdsfdshjkf dhjklsfdshjklf dshjkfdsjkfem lorem LoreLorem lorem Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk.Lorem lorem Lorem lorem Lorem lorem Lorfdfdsfdsfdsfdsfd fdfdsf dfehfh dsf hk fhjkdshjk f df dhf hkdfhkdsf hjkd fhjk");
         descriptionText.setText(description.getText());
         descriptionText.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
-        descriptionText.setFill(Color.WHITE);
+        descriptionText.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
         ScrollPane sp = new ScrollPane();
         sp.setContent(descriptionText);
         sp.setHbarPolicy(ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-        sp.setStyle("-fx-background: transparent;" + "-fx-border-color: transparent;" + "-fx-background-color: transparent");
+        sp.setStyle("-fx-background: transparent;" + "-fx-border-color: transparent;"
+                + "-fx-background-color: transparent");
         descriptionContainer.getChildren().addAll(sp);
 
-        Hyperlink svdjLink = new Hyperlink("www.svdj.nl");
-        svdjLink.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
-        web_url.setText("https://www.svdj.nl/");
-        svdjLink.setOnAction(e-> {
+
+        infoLink.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, DEFAULT_TEXT_FONT_SIZE));
+        infoLink.setOnAction(e -> {
             try {
-                svdjLink.setVisited(false);
+                infoLink.setVisited(false);
                 Desktop.getDesktop().browse(new URI(web_url.getText()));
             } catch (IOException ioException) {
                 ioException.printStackTrace();
@@ -164,86 +167,63 @@ public class AdviceView implements AdviceObserver {
             }
 
         });
-        svdjLink.setStyle("-fx-border-color: transparent;");
 
-        Text moreInformationText = new Text("Voor meer informatie, ga naar: ");
-        moreInformationText.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
-        moreInformationText.setFill(Color.WHITE);
+        infoLink.setStyle("-fx-border-color: transparent;");
 
-        VBox moreInformationContainer = new VBox(moreInformationText, svdjLink);
+
+        moreInformationText.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, DEFAULT_TEXT_FONT_SIZE));
+        moreInformationText.setFill(Color.web(ClientVariables.theme.getPrimaryColor()));
+
         moreInformationContainer.setMaxWidth(INFORMATION_WIDTH);
         moreInformationContainer.setStyle(paddingSize(8));
-
 
         VBox homeButtonContainer = new VBox();
         homeButtonContainer.setPrefHeight(HOME_CONTAINER_HEIGHT);
         homeButtonContainer.setMaxWidth(HOME_CONTAINER_WIDTH);
         homeButtonContainer.setAlignment(Pos.CENTER_LEFT);
+
         Button homeButton = new Button("Home");
-        homeButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, BUTTON_FONT_SIZE));
-        homeButton.setTextFill(Color.BLACK);
+        homeButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, BUTTON_FONT_SIZE));
+        homeButton.setTextFill(Color.web(ClientVariables.theme.getSecondaryColor()));
         homeButton.setAlignment(Pos.CENTER_LEFT);
         homeButton.setPadding(new Insets(BUTTON_PADDING));
         homeButton.setPrefWidth(BUTTON_WIDTH);
-        homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
+        homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getPrimaryColor())
+                + "-fx-background-radius: 0;");
         homeButton.setOnMouseEntered(e -> {
-            homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, HOVER_BUTTON_COLOR) + "-fx-background-radius: 0;");
+            homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getSelectedButtonColor())
+                    + "-fx-background-radius: 0;");
         });
         homeButton.setOnMouseExited(e -> {
-            homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
+            homeButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getPrimaryColor())
+                    + "-fx-background-radius: 0;");
         });
         homeButton.setOnMouseClicked(e -> {
-            stage.setScene(new Scene(new HomeView().getHomePane()));
+            buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
+            adviceController.unregisterObserver(this);
+            ClientVariables.stage.setScene(new Scene(new HomeView().getHomePane()));
         });
         homeButtonContainer.getChildren().addAll(homeButton);
 
-
-        VBox adviceVideoContainer = new VBox();
-        adviceVideoContainer.setMaxWidth(ADVICE_WIDTH);
-        adviceVideoContainer.setAlignment(Pos.CENTER);
-        Button videoButton = new Button("Subsidie introductie video bekijken");
-        videoButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
-        videoButton.setTextFill(Color.BLACK);
-        videoButton.setAlignment(Pos.CENTER_LEFT);
-        videoButton.setPadding(new Insets(BUTTON_PADDING));
-        videoButton.setPrefWidth(BUTTON_WIDTH);
-        videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
-        videoButton.setOnMouseEntered(e -> {
-            videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, HOVER_BUTTON_COLOR) + "-fx-background-radius: 0;");
-        });
-        videoButton.setOnMouseExited(e -> {
-            videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
-        });
-        intro_video.setText("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-        videoButton.setOnMouseClicked(e -> {
-            try {
-                Desktop.getDesktop().browse(new URI(intro_video.getText()));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (URISyntaxException ex) {
-                ex.printStackTrace();
-            }
-        });
-        adviceVideoContainer.getChildren().addAll(videoButton);
-
-
-        VBox contactContainer = new VBox();
         contactContainer.setMaxWidth(CONTACT_WIDTH);
         contactContainer.setAlignment(Pos.CENTER);
+
         Button contactButton = new Button("Ik wil graag contact opnemen");
-        contactButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
-        contactButton.setTextFill(Color.BLACK);
+        contactButton.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, DEFAULT_TEXT_FONT_SIZE));
+        contactButton.setTextFill(Color.web(ClientVariables.theme.getSecondaryColor()));
         contactButton.setAlignment(Pos.CENTER_LEFT);
         contactButton.setPadding(new Insets(BUTTON_PADDING));
         contactButton.setPrefWidth(BUTTON_WIDTH);
-        contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
+        contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor())
+                + "-fx-background-radius: 0;");
         contactButton.setOnMouseEntered(e -> {
-            contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, HOVER_BUTTON_COLOR) + "-fx-background-radius: 0;");
+            contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getSelectedButtonColor())
+                    + "-fx-background-radius: 0;");
         });
         contactButton.setOnMouseExited(e -> {
-            contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
+            contactButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor())
+                    + "-fx-background-radius: 0;");
         });
-        //TODO verander naar website
         contactButton.setOnMouseClicked(e -> {
             try {
                 Desktop.getDesktop().browse(new URI(CONTACT_URL));
@@ -255,15 +235,16 @@ public class AdviceView implements AdviceObserver {
         });
         contactContainer.getChildren().addAll(contactButton);
 
-
-        HBox sendEmailContainer = new HBox();
         sendEmailContainer.setMaxWidth(EMAIL_CONTAINER_WIDTH);
         sendEmailContainer.setAlignment(Pos.CENTER);
+
         TextField emailTextfield = new TextField();
         emailTextfield.setPrefWidth(EMAIL_TEXTFIELD_WIDTH);
         emailTextfield.setPrefHeight(EMAIL_TEXTFIELD_HEIGHT);
+        emailTextfield.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, DEFAULT_TEXT_FONT_SIZE));
+        emailTextfield.setPadding(new Insets(0, 0, 0, 12));
         emailTextfield.setPromptText("Mail mijn advies!");
-        emailTextfield.setStyle("-fx-background-radius: 0;");
+        emailTextfield.setStyle("-fx-background-radius: 0; -fx-text-fill: #000000");
 
         FileInputStream input = null;
         try {
@@ -271,46 +252,49 @@ public class AdviceView implements AdviceObserver {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        
         Image image = new Image(input);
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(EMAIL_ICON);
         imageView.setFitWidth(EMAIL_ICON);
 
-        Button sendEmailButton = new Button("",imageView);
+        Button sendEmailButton = new Button("", imageView);
         sendEmailButton.setFont(Font.font(FONT_FAMILY, FontWeight.BOLD, DEFAULT_TEXT_FONT_SIZE));
-        sendEmailButton.setTextFill(Color.BLACK);
-        sendEmailButton.setAlignment(Pos.CENTER_LEFT);
+        sendEmailButton.setTextFill(Color.web(ClientVariables.theme.getPrimaryColor()));
+        sendEmailButton.setAlignment(Pos.BASELINE_CENTER);
         sendEmailButton.setPadding(new Insets(BUTTON_PADDING));
-        sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
+        sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor())
+                + "-fx-background-radius: 0;");
         sendEmailButton.setOnMouseEntered(e -> {
-            sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, HOVER_BUTTON_COLOR) + "-fx-background-radius: 0;");
+            sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getSelectedButtonColor())
+                    + "-fx-background-radius: 0;");
         });
         sendEmailButton.setOnMouseExited(e -> {
-            sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, BUTTON_COLOR) + "-fx-background-radius: 0;");
+            sendEmailButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor())
+                    + "-fx-background-radius: 0;");
         });
         sendEmailButton.setOnMouseClicked(e -> {
-//            dashboardController.navigateEditView();
-
-            System.out.println("Email is verstuurd");
+            String emailInput = emailTextfield.getText();
+            if (emailInput.contains("@") || !emailInput.isEmpty()){
+                adviceController.sendAdviceToMail(emailInput, advice);
+                buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
+                adviceController.unregisterObserver(this);
+                ClientVariables.stage.setScene(new Scene(new HomeView().getHomePane()));
+            }
         });
         sendEmailContainer.getChildren().addAll(emailTextfield, sendEmailButton);
-
 
         VBox textContainer = new VBox(TEXT_CONTAINER_PADDING);
         textContainer.setMaxWidth(TEXT_CONTAINER_WIDTH);
         textContainer.setMinHeight(TEXT_CONTAINER_HEIGHT);
-        textContainer.getChildren().addAll(adviceContainer, descriptionContainer, moreInformationContainer,homeButtonContainer);
+        textContainer.getChildren().addAll(adviceContainer, descriptionContainer, moreInformationContainer,
+                homeButtonContainer);
 
-
-        VBox buttonContainer = new VBox(BUTTON_CONTAINER_PADDING);
         buttonContainer.setPrefWidth(BUTTON_CONTAINER_WIDTH);
         buttonContainer.setAlignment(Pos.BOTTOM_CENTER);
-        buttonContainer.getChildren().addAll(adviceVideoContainer, contactContainer, sendEmailContainer);
-
 
         HBox bodyContainer = new HBox(BODY_CONTAINER_PADDING);
         bodyContainer.getChildren().addAll(textContainer, buttonContainer);
-
 
         VBox layout = new VBox(LAYOUT_CONTAINER_PADDING);
         layout.setBackground(new Background(background));
@@ -325,12 +309,97 @@ public class AdviceView implements AdviceObserver {
         return fxPadding + desiredPadding + ";";
     }
 
-
-
-
-
     @Override
     public void update(Advice advice) {
+        this.advice = advice;
+        buttonContainer.getChildren().removeAll(buttonContainer.getChildren());
+        givenAdvice.setText(advice.getValue());
+        description.setText(advice.getDescription());
+        intro_video.setText(advice.getVideoURL());
 
+        VBox adviceVideoContainer = new VBox();
+        adviceVideoContainer.setMaxWidth(ADVICE_WIDTH);
+        adviceVideoContainer.setAlignment(Pos.CENTER);
+
+        Button videoButton = new Button("Subsidie introductie video bekijken");
+        videoButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
+        videoButton.setTextFill(Color.web(ClientVariables.theme.getSecondaryColor()));
+        videoButton.setAlignment(Pos.CENTER_LEFT);
+        videoButton.setPadding(new Insets(BUTTON_PADDING));
+        videoButton.setPrefWidth(BUTTON_WIDTH);
+        videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
+        videoButton.setOnMouseEntered(e -> {
+            videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getSelectedButtonColor()) + "-fx-background-radius: 0;");
+        });
+        videoButton.setOnMouseExited(e -> {
+            videoButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
+        });
+        intro_video.setText(advice.getVideoURL());
+        videoButton.setOnMouseClicked(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI(intro_video.getText()));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
+        adviceVideoContainer.getChildren().addAll(videoButton);
+
+        VBox otherFundContainer = new VBox();
+        otherFundContainer.setMaxWidth(ADVICE_WIDTH);
+        otherFundContainer.setAlignment(Pos.CENTER);
+
+        Button otherFundButton = new Button("Andere fondsen bekijken");
+        otherFundButton.setFont(Font.font(FONT_FAMILY, FontPosture.REGULAR, DEFAULT_TEXT_FONT_SIZE));
+        otherFundButton.setTextFill(Color.web(ClientVariables.theme.getSecondaryColor()));
+        otherFundButton.setAlignment(Pos.CENTER_LEFT);
+        otherFundButton.setPadding(new Insets(BUTTON_PADDING));
+        otherFundButton.setPrefWidth(BUTTON_WIDTH);
+        otherFundButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
+        otherFundButton.setOnMouseEntered(e -> {
+            otherFundButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getSelectedButtonColor()) + "-fx-background-radius: 0;");
+        });
+        otherFundButton.setOnMouseExited(e -> {
+            otherFundButton.setStyle(String.format(FX_BACKGROUND_COLOR, ClientVariables.theme.getCtaButtonColor()) + "-fx-background-radius: 0;");
+        });
+        other_fund.setText(advice.getOtherFundURL());
+        otherFundButton.setOnMouseClicked(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI(other_fund.getText()));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (URISyntaxException ex) {
+                ex.printStackTrace();
+            }
+        });
+        otherFundContainer.getChildren().addAll(otherFundButton);
+
+        if (advice.hasOtherFundURL()) {
+            buttonContainer.getChildren().add(otherFundContainer);
+        }
+        if (advice.hasVideoURL()) {
+            buttonContainer.getChildren().add(adviceVideoContainer);
+        }
+        buttonContainer.getChildren().addAll(contactContainer, sendEmailContainer);
+
+        if(advice.hasHyperlinkURL()){
+            moreInformationContainer.getChildren().removeAll(moreInformationContainer.getChildren());
+            web_url.setText(advice.getMoreInfoURL());
+            infoLink.setText(advice.getMoreInfoURL());
+            System.out.println(infoLink);
+            infoLink.setOnAction(e -> {
+                try {
+                    infoLink.setVisited(false);
+                    Desktop.getDesktop().browse(new URI(web_url.getText()));
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (URISyntaxException uriSyntaxException) {
+                    uriSyntaxException.printStackTrace();
+                }
+            });
+            moreInformationContainer.getChildren().addAll(moreInformationText, infoLink);
+        }
     }
+
 }

@@ -10,7 +10,6 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -20,11 +19,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,18 +29,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-
 public class LoginView implements LoginObserver {
-    private LoginController loginController = LoginController.getInstance();
+
+    private final Text message;
+    private final LoginController loginController;
 
     public LoginView() {
-        loginController.registerObserver(this);
+        this.message = new Text();
+        this.loginController = LoginController.getInstance();
+
+        this.loginController.registerObserver(this);
     }
 
     public Scene getLoginScene() {
         final double buttonPadding = 17.5;
         final int headerFontSize = 64;
         final int buttonFontSize = 22;
+        final int messageFontSize = 20;
 
         final int logoWidth = 480;
         final int logoHeight = 128;
@@ -52,12 +53,10 @@ public class LoginView implements LoginObserver {
         final int gridHGap = 75;
         final int gridVGap = 50;
 
-        /* Begin Temporary */
         final String buttonColor = "#E4F6FF";
         final String hoverButtonColor = "#9CC2D4";
 
         final String fontFamily = "Arial";
-        /* End Temporary */
 
         FileInputStream logoInput, backgroundInput;
 
@@ -79,10 +78,15 @@ public class LoginView implements LoginObserver {
         headerText.setFill(Color.WHITE);
         headerText.setTextAlignment(TextAlignment.CENTER);
 
+        message.setFont(Font.font(fontFamily, FontWeight.NORMAL, messageFontSize));
+        message.setFill(Color.WHITE);
+        message.setTextAlignment(TextAlignment.CENTER);
+
         VBox headerContainer = new VBox();
         headerContainer.setPadding(new Insets(25, 0, 0, 0));
         headerContainer.setAlignment(Pos.CENTER);
         headerContainer.getChildren().add(headerText);
+        headerContainer.getChildren().add(message);
 
         TextField usernameField = new TextField();
         usernameField.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
@@ -101,7 +105,7 @@ public class LoginView implements LoginObserver {
         VBox loginFormBox = new VBox(20);
         loginFormBox.setAlignment(Pos.CENTER);
         loginFormBox.setMaxWidth(900);
-        loginFormBox.setPadding(new Insets(25, 0, 0, 0));
+        loginFormBox.setPadding(new Insets(0, 0, 0, 0));
         loginFormBox.getChildren().addAll(usernameField, passwordField);
 
         Button loginButton = new Button("Login");
@@ -122,8 +126,26 @@ public class LoginView implements LoginObserver {
             String password = passwordField.getText();
 
             loginController.login(username, password);
+        
+            passwordField.setText("");
+        });
 
-            loginController.switchToDashboard();
+        Button ChangePassword = new Button("Change Password");
+        ChangePassword.setFont(Font.font(fontFamily, FontWeight.BOLD, buttonFontSize));
+        ChangePassword.setTextFill(Color.BLACK);
+        ChangePassword.setAlignment(Pos.CENTER_LEFT);
+        ChangePassword.setPadding(new Insets(buttonPadding));
+        ChangePassword.setPrefWidth(326);
+        ChangePassword.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        ChangePassword.setOnMouseEntered(e -> {
+            ChangePassword.setStyle(String.format("-fx-background-color: %s;", hoverButtonColor));
+        });
+        ChangePassword.setOnMouseExited(e -> {
+            ChangePassword.setStyle(String.format("-fx-background-color: %s;", buttonColor));
+        });
+        ChangePassword.setOnMouseClicked(e -> {
+
+            loginController.switchToEmail();
         });
 
         GridPane actionList = new GridPane();
@@ -132,6 +154,7 @@ public class LoginView implements LoginObserver {
         actionList.setHgap(gridHGap);
         actionList.setVgap(gridVGap);
         actionList.add(loginButton, 1, 0);
+        actionList.add(ChangePassword, 2, 0);
 
         VBox root = new VBox(25);
         root.setAlignment(Pos.TOP_CENTER);
@@ -152,8 +175,6 @@ public class LoginView implements LoginObserver {
 
     @Override
     public void update(Login login) {
-        Platform.runLater(() -> {
-            System.out.println(login.getMessage());
-        });
+        message.setText(login.getMessage());
     }
 }

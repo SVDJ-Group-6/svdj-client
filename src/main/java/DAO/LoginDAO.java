@@ -1,29 +1,33 @@
 package DAO;
 
-import model.Login;
-import observer.LoginObserver;
+import Admin.AdminVariables;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import service.RequestService;
+
+import java.io.IOException;
 
 public class LoginDAO {
-    static LoginDAO loginDAO;
-    public Login login;
+
+    private final RequestService requestService;
+    private final Gson gson;
 
     public LoginDAO() {
-        login = new Login();
+        this.requestService = RequestService.getInstance();
+        this.gson = new Gson();
     }
 
+    public String getToken(String username, String password) throws IOException {
+        String requestURL = AdminVariables.API_URL + "/api/auth/login";
+        String requestBody = String.format("{ \"username\": \"%s\", \"password\": \"%s\" }", username, password);
+        String response = requestService.postRequest(requestURL, requestBody, null);
+        JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
+        return jsonObject.get("token").getAsString();
+    }
+
+    static LoginDAO loginDAO;
     static public LoginDAO getInstance() {
-        if (loginDAO == null) {
-            loginDAO = new LoginDAO();
-        }
+        if (loginDAO == null) loginDAO = new LoginDAO();
         return loginDAO;
-    }
-
-    public String requestToken(String username, String password_hash) {
-        login.setMessage("This is working");
-        return "Token";
-    }
-
-    public void registerObserver(LoginObserver loginObserver) {
-        login.registerObserver(loginObserver);
     }
 }
