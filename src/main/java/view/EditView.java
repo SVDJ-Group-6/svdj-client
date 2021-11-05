@@ -99,27 +99,23 @@ public class EditView implements EditObserver {
     private ImageView logoImageView, deleteImageView, addQuestionImageView, addAdviceImageView;
 
     public EditView() {
-        try {
-            logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), LOGO_WIDTH, LOGO_HEIGHT, true, false);
-            logoImageView = new ImageView(logoImage);
+        logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), LOGO_WIDTH, LOGO_HEIGHT, true, false);
+        logoImageView = new ImageView(logoImage);
 
-            backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
+        backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
 
-            addImage = new Image(getClass().getClassLoader().getResourceAsStream("add_btn.png"));
-            addQuestionImageView = new ImageView(addImage);
-            addQuestionImageView.setFitWidth(ADD_BUTTON_WIDTH);
-            addQuestionImageView.setFitHeight(ADD_BUTTON_HEIGHT);
+        addImage = new Image(getClass().getClassLoader().getResourceAsStream("add_btn.png"));
+        addQuestionImageView = new ImageView(addImage);
+        addQuestionImageView.setFitWidth(ADD_BUTTON_WIDTH);
+        addQuestionImageView.setFitHeight(ADD_BUTTON_HEIGHT);
 
-            addAdviceImageView = new ImageView(addImage);
-            addAdviceImageView.setFitWidth(ADD_BUTTON_WIDTH);
-            addAdviceImageView.setFitHeight(ADD_BUTTON_HEIGHT);
+        addAdviceImageView = new ImageView(addImage);
+        addAdviceImageView.setFitWidth(ADD_BUTTON_WIDTH);
+        addAdviceImageView.setFitHeight(ADD_BUTTON_HEIGHT);
 
-            logoHeader.setBackground(
-                    new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-            logoHeader.getChildren().add(logoImageView);
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
+        logoHeader.setBackground(
+                new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        logoHeader.getChildren().add(logoImageView);
 
         editController.registerObserver(this);
         editController.initialize();

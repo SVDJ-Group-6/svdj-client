@@ -51,13 +51,9 @@ public class ChangePasswordView implements ChangePasswordObserver {
         logoHeader
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        try {
-            Image logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), logoWidth, logoHeight, true, false);
-            ImageView logoImageView = new ImageView(logoImage);
-            logoHeader.getChildren().add(logoImageView);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Image logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), logoWidth, logoHeight, true, false);
+        ImageView logoImageView = new ImageView(logoImage);
+        logoHeader.getChildren().add(logoImageView);
 
         Text headerText = new Text("Change Password");
         headerText.setFont(Font.font(fontFamily, FontWeight.NORMAL, headerFontSize));
@@ -126,14 +122,10 @@ public class ChangePasswordView implements ChangePasswordObserver {
         VBox root = new VBox(25);
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(25));
-        try {
-            Image backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
+        Image backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
 
-            root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         root.getChildren().addAll(logoHeader, headerContainer, loginFormBox, actionList);
 
         return new Scene(root);
