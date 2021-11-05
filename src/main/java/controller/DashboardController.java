@@ -13,7 +13,6 @@ import java.net.URISyntaxException;
 
 public class DashboardController {
     static private DashboardController dashboardController;
-    private StatsService statsService = StatsService.getInstance();
 
     static public DashboardController getInstance() {
         if (dashboardController == null) {
