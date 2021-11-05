@@ -60,8 +60,7 @@ public class ThemeView implements ThemeObserver {
         logoHeader
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         try {
-            logoInput = new FileInputStream("./src/main/resources/logo.png");
-            logoImage = new Image(logoInput, LOGO_WIDTH, LOGO_HEIGHT, true, false);
+            logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), LOGO_WIDTH, LOGO_HEIGHT, true, false);
             logoImageView = new ImageView(logoImage);
 
             logoHeader.getChildren().add(logoImageView);
@@ -183,8 +182,7 @@ public class ThemeView implements ThemeObserver {
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(25));
         try {
-            backgroundInput = new FileInputStream("./src/main/resources/background.png");
-            backgroundImage = new Image(backgroundInput);
+            backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
             root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         } catch (FileNotFoundException ex) {

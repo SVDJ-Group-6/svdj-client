@@ -53,8 +53,7 @@ public class EmailView implements EmailObserver {
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 
         try {
-            logoInput = new FileInputStream("./src/main/resources/logo.png");
-            Image logoImage = new Image(logoInput, logoWidth, logoHeight, true, false);
+            Image logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), logoWidth, logoHeight, true, false);
             ImageView logoImageView = new ImageView(logoImage);
             logoHeader.getChildren().add(logoImageView);
         } catch (FileNotFoundException e) {
@@ -138,8 +137,7 @@ public class EmailView implements EmailObserver {
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(25));
         try {
-            backgroundInput = new FileInputStream("./src/main/resources/background.png");
-            Image backgroundImage = new Image(backgroundInput);
+            Image backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
 
             root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));

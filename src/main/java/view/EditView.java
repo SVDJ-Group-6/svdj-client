@@ -100,15 +100,12 @@ public class EditView implements EditObserver {
 
     public EditView() {
         try {
-            logoInput = new FileInputStream("./src/main/resources/logo.png");
-            logoImage = new Image(logoInput, LOGO_WIDTH, LOGO_HEIGHT, true, false);
+            logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), LOGO_WIDTH, LOGO_HEIGHT, true, false);
             logoImageView = new ImageView(logoImage);
 
-            backgroundInput = new FileInputStream("./src/main/resources/background.png");
-            backgroundImage = new Image(backgroundInput);
+            backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
 
-            addInput = new FileInputStream("./src/main/resources/add_btn.png");
-            addImage = new Image(addInput);
+            addImage = new Image(getClass().getClassLoader().getResourceAsStream("add_btn.png"));
             addQuestionImageView = new ImageView(addImage);
             addQuestionImageView.setFitWidth(ADD_BUTTON_WIDTH);
             addQuestionImageView.setFitHeight(ADD_BUTTON_HEIGHT);
@@ -325,8 +322,7 @@ public class EditView implements EditObserver {
         });
 
         try {
-            deleteInput = new FileInputStream("./src/main/resources/delete_btn.png");
-            deleteImage = new Image(deleteInput);
+            deleteImage = new Image(getClass().getClassLoader().getResourceAsStream("delete_btn.png"));
             deleteImageView = new ImageView(deleteImage);
         } catch (Exception ex) {
             ex.printStackTrace();
