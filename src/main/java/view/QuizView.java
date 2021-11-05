@@ -20,6 +20,7 @@ import observer.QuizObserver;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import Client.ClientVariables;
 
@@ -103,13 +104,8 @@ public class QuizView implements QuizObserver {
      * @return a background with a background image.
      */
     private Background makeBackground(String image) {
-        BackgroundImage background = null;
-        try {
-            background = new BackgroundImage(new Image(new FileInputStream(image)), BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        BackgroundImage background = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(image))), BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 
         return new Background(background);
     }
@@ -124,12 +120,7 @@ public class QuizView implements QuizObserver {
 
         // put logo in container
         VBox logoContainer = new VBox();
-        Image logo = null;
-        try {
-            logo = new Image(new FileInputStream(image));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        Image logo = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(image)));
         ImageView logoView = new ImageView(logo);
         logoView.setFitHeight(128);
         logoView.setFitWidth(480);
@@ -247,8 +238,8 @@ public class QuizView implements QuizObserver {
     private VBox makeMainContainer() {
         VBox mainContainer = new VBox(20);
         // give the main container a background
-        mainContainer.setBackground(makeBackground("./src/main/resources/background.png"));
-        mainContainer.getChildren().add(makeLogoContainer("./src/main/resources/SVDJ_logo.png"));
+        mainContainer.setBackground(makeBackground("background.png"));
+        mainContainer.getChildren().add(makeLogoContainer("SVDJ_logo.png"));
         mainContainer.getChildren().add(makeSecondaryContainer());
         return mainContainer;
     }
