@@ -59,14 +59,10 @@ public class ThemeView implements ThemeObserver {
         HBox logoHeader = new HBox();
         logoHeader
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-        try {
-            logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), LOGO_WIDTH, LOGO_HEIGHT, true, false);
-            logoImageView = new ImageView(logoImage);
+        logoImage = new Image(getClass().getClassLoader().getResourceAsStream("logo.png"), LOGO_WIDTH, LOGO_HEIGHT, true, false);
+        logoImageView = new ImageView(logoImage);
 
-            logoHeader.getChildren().add(logoImageView);
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
+        logoHeader.getChildren().add(logoImageView);
 
         Text headerText = new Text("Kleuren aanpassen");
         headerText.setFont(Font.font(FONT_FAMILY, FontWeight.NORMAL, HEADER_FONT_SIZE));
@@ -181,13 +177,9 @@ public class ThemeView implements ThemeObserver {
         VBox root = new VBox(25);
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(25));
-        try {
-            backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
-            root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
+        backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
+        root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         root.getChildren().addAll(logoHeader, headerContainer, actionList);
 
         return new Scene(root);
