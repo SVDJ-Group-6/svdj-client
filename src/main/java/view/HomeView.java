@@ -17,9 +17,7 @@ import javafx.scene.text.Text;
 import model.Theme;
 
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -34,21 +32,18 @@ public class HomeView {
     final int LOGO_WIDTH = 480;
     final int LOGO_HEIGHT = 128;
 
-   final String BUTTON_STYLE = "-fx-background-color: %s;";
+    final String BUTTON_STYLE = "-fx-background-color: %s;";
     final int NODE_SPACING = 25;
 
     final String fontFamily = "Arial";
     public VBox getHomePane(){
         BackgroundImage bgImage = null;
-        FileInputStream logoInput = null;
+        InputStream logoInput = null;
 
-        try {
-            bgImage = new BackgroundImage(new Image(new FileInputStream("./src/main/resources/background.png")),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-            logoInput = new FileInputStream("src/main/resources/logo.png");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        bgImage = new BackgroundImage(new Image(getClass().getClassLoader().getResourceAsStream("background.png")),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        logoInput = getClass().getClassLoader().getResourceAsStream("logo.png");
+
         Image logoImage = new Image(logoInput, LOGO_WIDTH, LOGO_HEIGHT, false, false);
         ImageView logoView = new ImageView(logoImage);
 

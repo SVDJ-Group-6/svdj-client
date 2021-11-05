@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class AdviceView implements AdviceObserver {
     private AdviceController adviceController = AdviceController.getInstance();
@@ -94,24 +95,11 @@ public class AdviceView implements AdviceObserver {
     }
 
     public VBox getAdvicePane() {
-        BackgroundImage background = null;
-        Image logo = null;
+        BackgroundImage background = new BackgroundImage(new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("background.png"))),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
 
-        try {
-            background = new BackgroundImage(new Image(new FileInputStream("./src/main/resources/background.png")),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                    BackgroundSize.DEFAULT);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            logo = new Image(new FileInputStream("./src/main/resources/SVDJ_logo.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        ImageView logoView = new ImageView(logo);
+        ImageView logoView = new ImageView(new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("SVDJ_logo.png"))));
         logoView.setFitHeight(LOGO_HEIGHT);
         logoView.setFitWidth(LOGO_WIDTH);
         logoView.setPreserveRatio(true);
@@ -245,15 +233,8 @@ public class AdviceView implements AdviceObserver {
         emailTextfield.setPadding(new Insets(0, 0, 0, 12));
         emailTextfield.setPromptText("Mail mijn advies!");
         emailTextfield.setStyle("-fx-background-radius: 0; -fx-text-fill: #000000");
-
-        FileInputStream input = null;
-        try {
-            input = new FileInputStream("./src/main/resources/email_logo.png");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         
-        Image image = new Image(input);
+        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("email_logo.png")));
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(EMAIL_ICON);
         imageView.setFitWidth(EMAIL_ICON);
