@@ -32,7 +32,7 @@ public class HomeView {
     final int LOGO_WIDTH = 480;
     final int LOGO_HEIGHT = 128;
 
-   final String BUTTON_STYLE = "-fx-background-color: %s;";
+    final String BUTTON_STYLE = "-fx-background-color: %s;";
     final int NODE_SPACING = 25;
 
     final String fontFamily = "Arial";
