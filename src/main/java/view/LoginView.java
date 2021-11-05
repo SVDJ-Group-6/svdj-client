@@ -21,6 +21,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -58,20 +60,17 @@ public class LoginView implements LoginObserver {
 
         final String fontFamily = "Arial";
 
-        FileInputStream logoInput, backgroundInput;
+        InputStream logoInput;
+        FileInputStream backgroundInput;
 
         HBox logoHeader = new HBox();
         logoHeader
                 .setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        try {
-            logoInput = new FileInputStream("./src/main/resources/logo.png");
-            Image logoImage = new Image(logoInput, logoWidth, logoHeight, true, false);
-            ImageView logoImageView = new ImageView(logoImage);
-            logoHeader.getChildren().add(logoImageView);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        logoInput = getClass().getClassLoader().getResourceAsStream("logo.png");
+        Image logoImage = new Image(logoInput, logoWidth, logoHeight, true, false);
+        ImageView logoImageView = new ImageView(logoImage);
+        logoHeader.getChildren().add(logoImageView);
 
         Text headerText = new Text("Admin login");
         headerText.setFont(Font.font(fontFamily, FontWeight.NORMAL, headerFontSize));
@@ -159,15 +158,10 @@ public class LoginView implements LoginObserver {
         VBox root = new VBox(25);
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(25));
-        try {
-            backgroundInput = new FileInputStream("./src/main/resources/background.png");
-            Image backgroundImage = new Image(backgroundInput);
+        Image backgroundImage = new Image(getClass().getClassLoader().getResourceAsStream("background.png"));
 
-            root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
-                    BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        root.setBackground(new Background(new BackgroundImage(backgroundImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
         root.getChildren().addAll(logoHeader, headerContainer, loginFormBox, actionList);
 
         return new Scene(root);
